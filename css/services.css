@@ -1,0 +1,519 @@
+.services-topBodyCont{
+    width: 100vw;
+    height: 650px;
+}
+
+.services-topBody{
+    width: 100%;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.topBody-title{
+    color: #BD0F03;
+    font-size: 45px;
+    width: 60%;
+    height: 150px;
+    text-align: center;
+    line-height: .99;
+    padding-top: 50px;
+    margin-bottom: 0;
+}
+
+.topBody-subText{
+    color: black;
+    font-size: 20px;
+}
+
+.service-img1{
+    background-image: url(../imgs/services1.jpg);
+    background-position: center;
+    width: 350px;
+    height: 350px;
+    border-radius: 100%;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: -50px; /* Move it left to clip */
+    top: 29%;
+    transform: translateY(-50%);
+}
+
+.service-img2{
+    background-image: url(../imgs/services2.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 450px;
+    height: 450px;
+    border-radius: 100%;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    right: -50px; /* Move it left to clip */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.AcadExcelCont{
+    width: 100%;
+    height: 800px;
+}
+
+.AcadExcelTitleCont{
+    width: 70%;
+    height: 116px;
+    margin-top: 150px;
+    background-color: #EEEEEE;
+    border-radius: 0 0 75px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.AcadExcelTitle{
+    color: #BD0F03;
+    font-size: 58px;
+    margin: 0;
+}
+
+.AcadExcelContent{
+    padding-left: 100px;
+    padding-top: 25px;
+    width: 70%;
+    height: 35%;
+}
+
+.AcadExcelText{
+    font-size: 24px;
+}
+
+.AcadExcelBtn{
+    background-color: #7C0A02;
+    font-size: 21px;
+    color: white;
+    width: 280px;
+    height: 60px;
+    border-radius: 25px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out .3s;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.AcadExcelBtn:hover{
+    color: #BD0F03;
+    background-color: white;
+    transition: ease-in-out .3s;
+}
+
+.services-middleBodyCont{
+    width: 100vw;
+    height: 700px;
+    margin-top: 20px;
+}
+
+.services-middleBody{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.SupportTitleCont{
+    width: 67%;
+    height: 116px;
+    margin-top: 20px;
+    background-color: #EEEEEE;
+    border-radius: 0 0 0 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.SupportTitle{
+    color: #BD0F03;
+    font-size: 58px;
+    margin: 0;
+}
+
+.SupportContent{
+    padding-top: 25px;
+    width: 55%;
+    height: 29%;
+}
+
+.SupportText{
+    font-size: 24px;
+}
+
+.SupportBtn{
+    background-color: #7C0A02;
+    font-size: 21px;
+    color: white;
+    width: 280px;
+    height: 60px;
+    border-radius: 25px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out .3s;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.SupportBtn:hover{
+    color: #BD0F03;
+    background-color: white;
+    transition: ease-in-out .3s;
+}
+
+.service-img3{
+    background-image: url(../imgs/services3.jpg);
+    background-position: center;
+    background-size: cover;
+    width: 550px;
+    height: 550px;
+    border-radius: 100%;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: -35px; /* Move it left to clip */
+    top: 53%;
+    transform: translateY(-50%);
+}
+
+.ResDevTitleCont{
+    width: 67%;
+    height: 116px;
+    margin-top: 20px;
+    background-color: #EEEEEE;
+    border-radius: 0 0 0 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResDevTitle{
+    color: #BD0F03;
+    font-size: 58px;
+    margin: 0;
+}
+
+.ResDevContent{
+    padding-top: 25px;
+    width: 55%;
+    height: 15%;
+}
+
+.ResDevText{
+    font-size: 24px;
+}
+
+.ResDevBtn{
+    background-color: #7C0A02;
+    font-size: 21px;
+    color: white;
+    width: 280px;
+    height: 60px;
+    border-radius: 25px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out .3s;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.ResDevBtn:hover{
+    color: #BD0F03;
+    background-color: white;
+    transition: ease-in-out .3s;
+}
+
+.services-lowerBodyCont{
+    width: 100vw;
+    height: 1000px;
+}
+
+.services-lowerBody{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.service-img4{
+    background-image: url(../imgs/services4.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 450px;
+    height: 450px;
+    border-radius: 100%;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    right: -40px; /* Move it left to clip */
+    top: 25%;
+    transform: translateY(-50%);
+}
+
+.LinkParCont{
+    width: 100%;
+    height: 500px;
+}
+
+.LinkParTitleCont{
+    width: 70%;
+    height: 116px;
+    margin-top: 110px;
+    background-color: #EEEEEE;
+    border-radius: 0 0 75px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.LinkParTitle{
+    color: #BD0F03;
+    font-size: 46px;
+    margin: 0;
+}
+
+.LinkParContent{
+    padding-left: 100px;
+    padding-top: 25px;
+    width: 70%;
+    height: 35%;
+}
+
+.LinkParText{
+    font-size: 24px;
+}
+
+.LinkParBtn{
+    background-color: #7C0A02;
+    font-size: 21px;
+    color: white;
+    width: 280px;
+    height: 60px;
+    border-radius: 25px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out .3s;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.LinkParBtn:hover{
+    color: #BD0F03;
+    background-color: white;
+    transition: ease-in-out .3s;
+}
+
+.AdTechCont{
+    width: 100%;
+    height: 600px;
+}
+
+.AdTechTitleCont{
+    width: 70%;
+    height: 116px;
+    background-color: #EEEEEE;
+    border-radius: 0 0 75px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.AdTechTitle{
+    color: #BD0F03;
+    font-size: 46px;
+    margin: 0;
+}
+
+.AdTechContent{
+    padding-left: 100px;
+    padding-top: 25px;
+    width: 70%;
+    height: 35%;
+}
+
+.AdTechText{
+    font-size: 24px;
+}
+
+.AdTechBtn{
+    background-color: #7C0A02;
+    font-size: 21px;
+    color: white;
+    width: 280px;
+    height: 60px;
+    border-radius: 25px 25px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    transition: ease-in-out .3s;
+    margin-top: 25px;
+    text-transform: uppercase;
+}
+
+.AdTechBtn:hover{
+    color: #BD0F03;
+    background-color: white;
+    transition: ease-in-out .3s;
+}
+
+/* Shared Services Section Styles */
+.guidance_services_section,
+.health_services_section {
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+}
+
+.guidance_services_container,
+.health_services_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.guidance_services_title,
+.health_services_title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #7C0A02;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.guidance_services_list,
+.health_services_list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guidance_service_item,
+.health_service_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    background: white;
+    border-left: 4px solid #7C0A02;
+    transition: all 0.3s ease;
+}
+
+.guidance_service_item:hover,
+.health_service_item:hover {
+    transform: translateX(10px);
+}
+
+.guidance_service_icon,
+.health_service_icon {
+    font-size: 2rem;
+    color: #7C0A02;
+    margin-top: 0.5rem;
+}
+
+.guidance_service_content,
+.health_service_content {
+    flex: 1;
+}
+
+.guidance_service_content h3,
+.health_service_content h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.guidance_service_content p,
+.health_service_content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.guidance_service_steps,
+.health_service_steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guidance_service_steps li,
+.health_service_steps li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.guidance_service_steps li::before,
+.health_service_steps li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #7C0A02;
+    border-radius: 50%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .guidance_services_section,
+    .health_services_section {
+        padding: 3rem 1rem;
+    }
+
+    .guidance_services_title,
+    .health_services_title {
+        font-size: 2rem;
+    }
+
+    .guidance_service_item,
+    .health_service_item {
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .guidance_service_icon,
+    .health_service_icon {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .guidance_services_title,
+    .health_services_title {
+        font-size: 1.8rem;
+    }
+
+    .guidance_service_item,
+    .health_service_item {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .guidance_service_icon,
+    .health_service_icon {
+        margin-top: 0;
+    }
+
+    .guidance_service_content h3,
+    .health_service_content h3 {
+        font-size: 1.3rem;
+    }
+
+    .guidance_service_content p,
+    .health_service_content p {
+        font-size: 0.9rem;
+    }
+}

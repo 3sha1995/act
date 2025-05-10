@@ -1,0 +1,65 @@
+.ResExtContainerWhite{
+    width: 100vw;
+    height: 400px;
+    background-color: white;
+}
+
+.ResExtWhite{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 50px;
+}
+
+.ResExtWhiteTitle{
+    color: #BD0F03;
+    font-size: 36px;
+    margin: 0;
+    width: 40%;
+}
+
+.ResExtWhiteDivider{
+    width: 1.5px;
+    height: 160px;
+    background-color: #BD0F03;
+    margin: 0 30px;
+}
+
+.ResExtWhiteText{
+    font-size: 24;
+}
+
+.ResExtContainerRed{
+    width: 100vw;
+    height: 400px;
+    background-color: #BD0F03;
+}
+
+.ResExtRed{
+    height: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    margin: 0 50px;
+}
+
+.ResExtRedTitle{
+    color: white;
+    font-size: 36px;
+    margin: 0;
+    width: 40%;
+}
+
+.ResExtRedDivider{
+    width: 1.5px;
+    height: 160px;
+    background-color: white;
+    margin: 0 30px;
+}
+
+.ResExtRedText{
+    font-size: 24;
+    color: white;
+}

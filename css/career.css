@@ -1,0 +1,528 @@
+/* Career About Section */
+.career_about_section {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.career_about_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+}
+
+.career_about_header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.career_about_title {
+    font-size: 3.5rem;
+    color: #7c0a02;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    position: relative;
+    display: inline-block;
+}
+
+.career_about_title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #7c0a02, transparent);
+    border-radius: 2px;
+}
+
+.career_about_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: 0 auto 2rem;
+}
+
+.career_about_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.career_about_text {
+    padding: 2rem;
+}
+
+.career_about_description {
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.career_about_image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+.career_about_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+/* Mission and Vision Section */
+.career_mv_wrapper {
+    padding: 6rem 0;
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+.career_mv_main_title {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.career_mv_main_title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #7c0a02, transparent);
+    border-radius: 2px;
+}
+
+.career_mv_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem;
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+}
+
+.career_mv_box_mission {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.career_mv_box_mission.expanded {
+    height: 500px;
+    max-height: none;
+}
+
+.career_mv_box_mission img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.career_mv_overlay_mission {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.9) 0%,
+        rgba(124, 10, 2, 0.7) 50%,
+        rgba(124, 10, 2, 0.4) 100%
+    );
+    transition: all 0.3s ease;
+}
+
+.career_mv_box_mission:hover .career_mv_overlay_mission {
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.95) 0%,
+        rgba(124, 10, 2, 0.85) 50%,
+        rgba(124, 10, 2, 0.7) 100%
+    );
+}
+
+.career_mv_box_vision {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.career_mv_box_vision.expanded {
+    height: 500px;
+    max-height: none;
+}
+
+.career_mv_box_vision img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.career_mv_overlay_vision {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.9) 0%,
+        rgba(124, 10, 2, 0.7) 50%,
+        rgba(124, 10, 2, 0.4) 100%
+    );
+    transition: all 0.3s ease;
+}
+
+.career_mv_box_vision:hover .career_mv_overlay_vision {
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.95) 0%,
+        rgba(124, 10, 2, 0.85) 50%,
+        rgba(124, 10, 2, 0.7) 100%
+    );
+}
+
+.career_mv_content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    z-index: 2;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.career_mv_title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.career_mv_show_more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.show_more_icon {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.show_more_text {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.career_mv_full_content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+    margin-top: 1rem;
+}
+
+.career_mv_box_mission.expanded .career_mv_full_content,
+.career_mv_box_vision.expanded .career_mv_full_content {
+    height: auto;
+    opacity: 1;
+}
+
+.career_mv_full_content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.career_mv_full_content ul {
+    padding-left: 1.2rem;
+    margin-top: 1rem;
+}
+
+.career_mv_full_content li {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.career_mv_full_content li:before {
+    content: "•";
+    color: #fff;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.career_mv_box_mission.expanded .career_mv_show_more,
+.career_mv_box_vision.expanded .career_mv_show_more {
+    display: none;
+}
+
+.career_mv_box_mission:hover .career_mv_show_more,
+.career_mv_box_vision:hover .career_mv_show_more {
+    color: #fff;
+}
+
+@media (max-width: 1200px) {
+    .career_mv_title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .career_mv_container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .career_mv_box_mission,
+    .career_mv_box_vision {
+        max-width: 100%;
+    }
+    
+    .career_mv_title {
+        font-size: 1.6rem;
+    }
+    
+    .career_mv_content {
+        padding: 1.5rem;
+    }
+    
+    .career_mv_full_content {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .career_mv_title {
+        font-size: 1.4rem;
+    }
+    
+    .career_mv_content {
+        padding: 1rem;
+    }
+}
+
+/* Services Offered Section */
+.career_services_section {
+    padding: 6rem 0;
+    background: #fff;
+}
+
+.career_services_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+}
+
+.career_services_header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.career_services_title {
+    font-size: 3rem;
+    color: #7c0a02;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.career_services_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.career_service_card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-top: 4px solid #7c0a02;
+}
+
+.career_service_card:hover {
+    transform: translateY(-10px);
+}
+
+.career_service_title {
+    font-size: 1.5rem;
+    color: #7c0a02;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.career_service_description {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* How to Avail Section */
+.career_avail_section {
+    padding: 7rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
+}
+
+.career_avail_container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 3rem;
+}
+
+.career_avail_header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.career_avail_title {
+    font-size: 3rem;
+    color: #7c0a02;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.career_avail_title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #7c0a02, transparent);
+    border-radius: 2px;
+}
+
+.career_avail_steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.career_step_card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.career_step_card:hover {
+    transform: translateY(-5px);
+}
+
+.career_step_number {
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background: #7c0a02;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.career_step_title {
+    font-size: 1.3rem;
+    color: #333;
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.career_step_description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .career_about_content {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .career_about_image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .career_about_section,
+    .career_services_section,
+    .career_avail_section {
+        padding: 4rem 0;
+    }
+    
+    .career_about_title,
+    .career_services_title,
+    .career_avail_title {
+        font-size: 2.5rem;
+    }
+    
+    .career_about_description {
+        font-size: 1.1rem;
+    }
+    
+    .career_service_card,
+    .career_step_card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .career_about_container,
+    .career_services_container,
+    .career_avail_container {
+        padding: 0 1.5rem;
+    }
+    
+    .career_about_title,
+    .career_services_title,
+    .career_avail_title {
+        font-size: 2rem;
+    }
+}

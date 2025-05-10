@@ -1,0 +1,523 @@
+.ResExtHeroCont{
+    width: 100vw;
+    height: 700px;
+    background-image: linear-gradient(rgba(86, 7, 1, 0.8), rgba(88, 8, 2, 0.8)), url(../imgs/CTE-Field.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ResExtHero{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 250px;
+}
+
+.ResExtHeroTitle{
+    font-size: 156px;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.ResExtHeroSubTitle{
+    font-size: 39px;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    margin-top: -60px;
+}
+
+.ResExtLinkBoxCont{
+    width: 100vw;
+    height: 150px;
+    position: relative;
+}
+
+.ResExtLinkBoxes{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: -50px;
+    gap: 40px;
+}
+
+.ResExtLinkBox{
+    width: 200px;
+    height: 120px;
+    background-color: #EEEEEE;
+    border: 10px solid white;
+    border-radius: 25px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.RexExtLinkBoxLogo{
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    left: -15px;
+    top: -28px;
+}
+
+.RexExtLinkBoxText{
+    font-size: 16px;
+    color: #BD0F03;
+    margin: 0;
+    line-height: .99;
+    max-width: 80%; /* Ensures text doesn't overflow */
+    word-wrap: break-word; /* Ensures long words wrap */
+}
+
+.RexExtLinkBoxAddIcon{
+    font-size: 26px;
+    color: #BD0F03;
+    position: absolute;
+    bottom: -16px;
+    right: 10px;
+}
+
+.ResExtLinkBox:hover {
+    background-color: #BD0F03;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Change text color inside when hovering */
+.ResExtLinkBox:hover .RexExtLinkBoxText,
+.ResExtLinkBox:hover .RexExtLinkBoxAddIcon {
+    color: white;
+}
+
+.ResExtDividerCont{
+    width: 100vw;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 55px;
+}
+
+.ResExtDivider{
+    width: .5px;
+    height: 125%;
+    background-color: #BD0F03;
+}
+
+.ResExtOffDescCont{
+    width: 100vw;
+    height: 600px;
+    margin-bottom: 50px;
+}
+
+.ResExtOffDesc{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResExtOffDescTitle{
+    color: #BD0F03;
+    font-size: 48px;
+    text-transform: uppercase;
+}
+
+.ResExtOffDescContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResExtOffDescImg{
+    width: 517px;
+    height: 419px;
+    background-image: url(../imgs/Admin-Office1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0 35px;
+    border: 2px solid #BD0F03;
+    border-radius: 0 40px 0 40px;
+}
+
+.ResExtOffDescText{
+    font-size: 17px;
+    width: 30%;
+    text-align: justify;
+    margin: 0 35px;
+}
+
+.ResExtMisVisCont{
+    width: 100vw;
+    height: 800px;
+    position: relative;
+}
+
+.ResExtMisVisTop{
+    width: 100%;
+    height: 50%;
+    background-color: #EEEEEE;
+    position: relative;
+}
+
+.ResExtMisVisTitle{
+    color: #BD0F03;
+    font-size: 48px;
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    left: 16%;
+    top: 15%;
+}
+
+.ResExtMisVisTitleLine{
+    width: 13%;
+    height: 3px;
+    background-color: #BD0F03;
+    position: absolute;
+    left: 16%;
+    top: 35%;
+}
+
+.ResExtMisVisBoxCont{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 25%;
+}
+
+.ResExtMisVisBox{
+    width: 540px;
+    height: 400px;
+    background-color: #BD0F03;
+    margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.ResExtMisVisBoxText{
+    color: white;
+    width: 80%;
+    font-size: 18px;
+    margin-top: 50px;
+}
+
+.ResExtMisVisBoxBtn{
+    width: 155px;
+    height: 50px;
+    border: 1px solid white;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    transition: ease-in-out .3s;
+}
+
+.ResExtMisVisBoxBtn:hover{
+    background-color: white;
+    border-color: black;
+    color: #BD0F03;
+    transition: ease-in-out .3s;
+}
+
+.ResExtCoreCompCont{
+    width: 100vw;
+    height: 600px;
+    background-color: #BD0F03;
+}
+
+.ResExtCoreComp{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResExtCoreCompTitleCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.ResExtCoreCompTitle{
+    color: white;
+    font-size: 48px;
+    text-transform: uppercase;
+}
+
+.ResExtCoreCompArrow{
+    position: absolute;
+    left: 88%;
+}
+
+.ResExtCoreCompScrollable {
+    display: flex;
+    align-items: center;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+    cursor: grab; /* Show grab cursor */
+    width: 100vw; /* Ensure enough space */
+    padding: 70px 60px; /* Prevent accidental clicks */
+    -webkit-overflow-scrolling: touch; /* Enables smooth inertia scrolling on iOS */
+    overscroll-behavior: contain; /* Prevents accidental page scrolling */
+}
+
+/* Hide scrollbar in Chrome, Safari */
+.ResExtCoreCompScrollable::-webkit-scrollbar {
+    display: none;
+}
+
+.ResExtCoreCompScrollElem {
+    width: 400px;
+    height: 300px;
+    background-color: white;
+    border-radius: 0 20px 0 20px;
+    margin: 0 25px;
+    flex-shrink: 0; /* Prevents items from shrinking */
+    user-select: none; /* Prevents accidental text selection */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ResExtCoreCompScrollElemText{
+    color: #BD0F03;
+    font-size: 24px;
+    width: 70%;
+    margin: 0;
+}
+
+.ResExtGoalsCont{
+    width: 100vw;
+    height: 900px;
+}
+
+.ResExtGoals{
+    width: 100%;
+    height: 100%;
+}
+
+.ResExtGoalsTitleCont{
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 20%;
+}
+
+.ResExtGoalsTitle{
+    color: #BD0F03;
+    font-size: 48px;
+    text-transform: uppercase;
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    left: 20%;
+}
+
+.ResExtGoalsTitleLine{
+    width: 230px;
+    height: 2px;
+    margin-left: 35px;
+    background-color: #BD0F03;
+    position: absolute;
+    top: 80%;
+    left: 30%;
+}
+
+.ResExtGoalsContent{
+    width: 100%;
+    height: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.ResExtGoalsImg{
+    background-image: url(../imgs/Admin-Office2.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 0 0 0 25px;
+    width: 560px;
+    height: 460px;
+    margin:0 30px;
+}
+
+.ResExtGoalsInfo{
+    margin: 0 30px;
+}
+
+.ResExtGoalsTextCont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ResExtGoalsNumTitle{
+    color: #BD0F03;
+    font-size: 17px;
+    margin: 0;
+    margin-top: 15px;
+}
+
+.ResExtGoalsSubText{
+    margin: 0;
+}
+
+.ResExtObjectivesCont{
+    width: 100vw;
+    height: 600px;
+}
+
+.ResExtObjectives{
+    width: 100%;
+    height: 100%;
+}
+
+.ResExtObjectivesTitleCont{
+    width: 100%;
+    height: 20%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ResExtObjectivesTitle{
+    color: #BD0F03;
+    font-size: 48px;
+    text-transform: uppercase;
+}
+
+.ResExtObjectivesArrow{
+    position: absolute;
+    left: 88%;
+}
+
+.ResExtObjectivesContent{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ResExtObjectivesTimeline{
+    height: 20%;
+    display: flex;
+    align-items: center;
+    margin-left: 180px;
+}
+
+.ResExtObjectivesTimelineCircle{
+    width: 60px;
+    height: 60px;
+    border: 2px solid #BD0F03;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+    color: #BD0F03;
+    flex-shrink: 0;
+}
+
+.ResExtactive{
+    color: white;
+}
+
+.ResExtObjectivesTimelineLine{
+    width: 250px;
+    height: 2px;
+    background-color: #BD0F03;
+    flex-shrink: 0;
+}
+
+.ResExtObjectivesTimelineText{
+    display: flex;
+    justify-content: space-evenly;
+    flex-shrink: 0;
+}
+
+.ResExtObjectivesTLtext{
+    width: 200px;
+    height: 140px;
+    font-size: 11px;
+    margin-left: 110px;
+    flex-shrink: 0;
+}
+
+.ResExtOrgChartCont{
+    width: 100vw;
+    height: 600px;
+}
+
+.ResExtOrgChart{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ResExtOrgChartTextCont{
+    position: absolute;
+    left: 220px;
+    top: 20px;
+}
+
+.ResExtOrgChartTitle{
+    color: #BD0F03;
+    font-size: 60px;
+    text-transform: uppercase;
+    width: 50px;
+}
+
+.ResExtOrgChartText{
+    font-size: 20px;
+    width: 600px;
+}
+
+.ResExtOrgChartImg{
+    position: absolute;
+    right: 80px;
+    z-index: -1;
+}

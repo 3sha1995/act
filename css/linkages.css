@@ -1,0 +1,395 @@
+.linkages-hero-cont{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.linkages-hero-textCont{
+    width: 50%;
+    height: 100%;
+    background-color: #BD0F03;
+    display: flex;
+}
+
+.linkages-heroTextContent{
+    margin-left: 70px;
+    margin-right: 40px;
+    padding-bottom: 80px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.linkages-textTitleBgImg{
+    position: absolute;
+    bottom: 42px;
+    left: -200px;
+    z-index: -1;
+    width: 583px;
+    height: 583px;
+    opacity: 15%;
+}
+
+.linkages-heroTextTitle{
+    font-size: 48px;
+    line-height: 98%;
+    z-index: 1;
+}
+
+.linkages-heroTextBody{
+    font-size: 26px;
+    line-height: 99%;
+    z-index: 1;
+}
+
+.linkages-hero-imgContent{
+    width: 50%;
+}
+
+.linkages-hero-imgContent>img{
+    width: 100%;
+    height: 100%;
+}
+
+.linkages-statistics{
+    background: linear-gradient(rgba(124, 10, 2, 0.8), rgba(124, 10, 2, 0.8)), url(../imgs/Admin.jpg);
+    background-position: center;
+    width: 100vw;
+    height: 200px;
+    filter: drop-shadow(10px);
+}
+
+.linkages-statisticsCont{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.linkages-statisticsContent{
+    color: white;
+    text-align: center;
+}
+
+.statisticsNumber{
+    font-size: 69px;
+    margin-bottom: -15px;
+}
+
+.statisticsText{
+    font-size: 25px;
+}
+
+.statisticsDivider{
+    height: 45%;
+    width: 1px;
+    border: 5px solid white;
+}
+
+.Linkages-Gallery {
+    width: 100vw;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.Linkages-GalleryCont {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.Linkages-HoverableImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: max-content;
+    animation: scroll 25s linear infinite;
+}
+
+.Linkages-ImagesCarousel {
+    width: 440px;
+    height: 290px;
+    border-radius: 50px;
+    transition: 0.3s ease-in-out;
+}
+
+.Linkages-ImagesCarousel:hover {
+    width: 600px;
+    height: 400px;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3); 
+}
+
+/* Infinite scrolling effect */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Moves only half so that duplicate images fill the gap */
+}
+
+.Linkages-Office{
+    width: 100vw;
+    height: 450px;
+    margin-bottom: 40px;
+    background: linear-gradient(rgba(179, 33, 52, 0.8), rgba(179, 33, 52, 0.8)), url(../imgs/Office.jpg);
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+.LinkagesContent{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    text-align: center;
+    position: relative;
+    overflow: visible;
+}
+
+.LinkagesContentTitle{
+    font-size: 53px;
+    line-height: 98%;
+    margin-bottom: 15px;
+}
+
+.LinkagesContentText{
+    font-size: 17px;
+}
+
+.Linkages-OfficeBtn{
+    color: white;
+    font-size: 26px;
+    width: 280px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #BD0F03;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: absolute;
+    top: 410px; /* Fixed distance from top */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.Linkages-Partners{
+    width: 100vw;
+    height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 140px;
+    position: relative;
+}
+
+.Partners-LeftBox{
+    width: 23%;
+    height: 100%;
+    background: linear-gradient(rgba(179, 33, 52, 0.8), rgba(179, 33, 52, 0.8)), url(../imgs/Ribbon-Cut.jpg);
+    background-size: cover;
+    background-position: right center;
+    background-size: 155%;
+    background-repeat: no-repeat;
+    border-radius: 0 60px 60px 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.Partners-WMSULOGO{
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    left: 70%; /* Distance from the edge */
+    top: 50%;
+    transform: translateY(-50%); /* Centers vertically */
+}
+
+.Partners-Content{
+    display: flex;
+    align-items: center;
+    position: relative;
+    position: absolute;
+    left: 150%; /* Distance from the edge */
+    top: 50%;
+    transform: translateY(-50%); /* Centers vertically */
+}
+
+.Partners-Title{
+    color: #BD0F03;
+    font-size: 75px;
+    width: 800px;
+}
+
+.Partners-SubTitle{
+    font-size: 30px;
+    margin-top: -35px;
+}
+
+.Partners-Button{
+    color: white;
+    font-size: 26px;
+    width: 250px;
+    height: 50px;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #BD0F03;
+    border-radius: 0 25px 0 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Partners-RightBox{
+    width: 15%;
+    height: 100%;
+    background: linear-gradient(rgba(179, 33, 52, 0.8), rgba(179, 33, 52, 0.8)), url(../imgs/Ribbon-Cut.jpg);
+    background-size: cover;
+    background-position: left center;
+    background-size: 250%;
+    background-repeat: no-repeat;
+    border-radius: 60px 0 0 60px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Linkages-PartnersList{
+    width: 100vw;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.Partners-Left{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-right: 25px;
+}
+
+.Partners-Right{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 25px;
+}
+
+.Linkages-PartnersBox{
+    background-color: #EEEEEE;
+    width: 75%;
+    height: 23%;
+    margin-bottom: 18px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.PartnersBoxTitle{
+    color: #BD0F03;
+    font-size: 26px;
+    margin-bottom: 0;
+    margin-left: 45px;
+}
+
+.PartnersBoxSubText{
+    font-size: 16px;
+    margin-top: -8px;
+    margin-left: 45px;
+    margin-bottom: 0;
+}
+
+.Linkages-Globe{
+    width: 100%;
+    height: 700px; /* Adjust as needed */
+    background: linear-gradient(rgba(167, 20, 20, 0.8), rgba(87, 7, 1, 1)), url('../imgs/World-Map.png') no-repeat center center;
+    background-size: 60%;
+    clip-path: ellipse(50% 100% at 50% 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Globe-List{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+}
+
+.Globe-List .Partners-Left,
+.Globe-List .Partners-Right{
+    height: 400px;
+    margin-top: 200px;
+}
+
+.Globe-Title{
+    color: white;
+    font-size: 84px;
+    margin-bottom: 0;
+}
+
+.Globe-Text{
+    color: white;
+    font-size: 30px;
+    margin-top: -20px;
+}
+
+.Globe-Section{
+    width: 100vw;
+    height: 300px;
+    background-color: #570701;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.Globe-Subtext{
+    color: white;
+    font-size: 24px;
+    width: 50%;
+    text-align: center;
+    line-height: 1.1;
+    margin-top: 50px;
+}
+
+.Globe-Btn{
+    background-color: #BD0F03;
+    width: 200px;
+    height: 45px;
+    border: 1px solid black;
+    border-radius: 0 20px 0 20px;
+    color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}

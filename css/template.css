@@ -1,0 +1,4957 @@
+/* Section */
+.student_affairs_about_section {
+    padding: 5rem 0;
+    background: #fff;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Add animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@keyframes pulse-circle {
+    0% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(124, 10, 2, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0);
+    }
+}
+
+@keyframes pulse-square {
+    0% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(124, 10, 2, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0);
+    }
+}
+
+.student_affairs_about_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+/* HEADER Section */
+.student_affairs_about_header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.student_affairs_about_ontop_title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #7C0A02; /* Dark Burgundy */
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
+.student_affairs_about_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    
+}
+
+.student_affair_about_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+.student_affairs_about_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.student_affairs_about_image {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.student_affairs_about_image:hover {
+    transform: translateY(-10px);
+}
+
+.student_affairs_about_image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.student_affairs_about_image:hover img {
+    transform: scale(1.05);
+}
+
+.student_affairs_about_text {
+    padding: 1rem;
+}
+
+.student_affairs_about_description {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.student_affairs_about_button {
+    display: inline-block;
+    background: #7c0a02;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(124, 10, 2, 0.2);
+}
+
+.student_affairs_about_button:hover {
+    background: #5c0801;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(124, 10, 2, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .student_affairs_about_content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .student_affairs_about_image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .student_affairs_about_section {
+        padding: 3rem 0;
+    }
+    
+    .student_affairs_about_title {
+        font-size: 2rem;
+    }
+    
+    .student_affairs_about_subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .student_affairs_about_description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_about_container {
+        padding: 0 1.5rem;
+    }
+    
+    .student_affairs_about_title {
+        font-size: 1.8rem;
+    }
+    
+    .student_affairs_about_button {
+        padding: 0.7rem 1.8rem;
+    }
+}
+
+/* Image Background */
+.student_affairs_about_image_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.student_affairs_about_image_wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    transition: opacity 1.5s ease-in-out;
+    filter: contrast(110%) saturate(105%);
+}
+
+/* Image Transition */
+.student_affairs_about_fade_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.student_affairs_about_fade_image:first-child {
+    opacity: 1;
+}
+
+.student_affairs_about_content_wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+.student_affairs_about_header h2 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.student_affairs_about_text_content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 900px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Initial state (before scroll) */
+.scroll-fade {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* When in view */
+.scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* -------------------------------------------------------------------------------------------------------- */      
+/* Student Affairs Objectives Section */
+.student_affairs_objectives_section {
+    padding: 8rem 0;
+    background-color: #7C0A02;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.student_affairs_objectives_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ 
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.student_affairs_objectives_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.student_affairs_objectives_title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    color: #fff;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+}
+
+.student_affairs_objectives_divider {
+    width: 80px;
+    height: 4px;
+    background-color: #fff;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+
+.student_affairs_objectives_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.student_affairs_objectives_description {
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.student_affairs_objectives_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.student_affairs_objectives_list li {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.student_affairs_objectives_list li::marker {
+    color: #7c0a02;
+}
+
+.student_affairs_objectives_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+@media (min-width: 1200px) {
+    .student_affairs_objectives_section {
+        padding: 8rem 0;
+    }
+
+    .student_affairs_objectives_container {
+        max-width: 1400px;
+    }
+
+    .student_affairs_objectives_title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .student_affairs_objectives_section {
+        padding: 7rem 0;
+    }
+
+    .student_affairs_objectives_container {
+        max-width: 960px;
+    }
+
+    .student_affairs_objectives_title {
+        font-size: 2.7rem;
+    }
+
+    .student_affairs_objectives_content {
+        max-width: 800px;
+    }
+
+    .student_affairs_objectives_description {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .student_affairs_objectives_section {
+        padding: 5rem 0;
+    }
+
+    .student_affairs_objectives_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .student_affairs_objectives_title {
+        font-size: 2.5rem;
+    }
+
+    .student_affairs_objectives_divider {
+        margin-bottom: 2.5rem;
+    }
+
+    .student_affairs_objectives_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .student_affairs_objectives_description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .student_affairs_objectives_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_objectives_section {
+        padding: 4rem 0;
+    }
+
+    .student_affairs_objectives_container {
+        padding: 0 1.5rem;
+    }
+
+    .student_affairs_objectives_title {
+        font-size: 2.2rem;
+    }
+
+    .student_affairs_objectives_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .student_affairs_objectives_content {
+        padding: 0;
+    }
+
+    .student_affairs_objectives_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .student_affairs_objectives_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .student_affairs_objectives_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+/* Student Affairs Functions Section */
+.student_affairs_functions_section {
+    padding: 8rem 0;
+    background-color: #7C0A02;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.student_affairs_functions_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.student_affairs_functions_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.student_affairs_functions_title {
+
+    text-align: center;
+        margin-bottom: 40px;
+    position: relative;
+        color: #fff;
+        font-family: Inter;
+        font-size: 3.54994rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.1775rem;
+        z-index: 1;
+}
+
+.student_affairs_functions_divider {
+    width: 80px;
+    height: 4px;
+        background-color: #fff;
+        margin: -25px auto 3rem;
+    border-radius: 2px;
+    
+}
+
+.student_affairs_functions_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.student_affairs_functions_description {
+    font-size: 1.2rem;
+    color: white;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.student_affairs_functions_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.student_affairs_functions_list li {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.student_affairs_functions_list li::marker {
+    color: #7c0a02;
+}
+
+.student_affairs_functions_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+@media (min-width: 1200px) {
+    .student_affairs_functions_section {
+        padding: 8rem 0;
+    }
+
+    .student_affairs_functions_container {
+        max-width: 1400px;
+    }
+
+    .student_affairs_functions_title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .student_affairs_functions_section {
+        padding: 7rem 0;
+    }
+
+    .student_affairs_functions_container {
+        max-width: 960px;
+    }
+
+    .student_affairs_functions_title {
+        font-size: 2.7rem;
+    }
+
+    .student_affairs_functions_content {
+        max-width: 800px;
+    }
+
+    .student_affairs_functions_description {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .student_affairs_functions_section {
+        padding: 5rem 0;
+    }
+
+    .student_affairs_functions_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .student_affairs_functions_title {
+        font-size: 2.5rem;
+    }
+
+    .student_affairs_functions_divider {
+        margin-bottom: 2.5rem;
+    }
+
+    .student_affairs_functions_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .student_affairs_functions_description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .student_affairs_functions_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_functions_section {
+        padding: 4rem 0;
+    }
+
+    .student_affairs_functions_container {
+        padding: 0 1.5rem;
+    }
+
+    .student_affairs_functions_title {
+        font-size: 2.2rem;
+    }
+
+    .student_affairs_functions_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .student_affairs_functions_content {
+        padding: 0;
+    }
+
+    .student_affairs_functions_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .student_affairs_functions_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .student_affairs_functions_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+
+
+
+
+/* Mission and Vision Section */
+
+.student_affair_mv_wrapper {
+    width: 100%;
+    background: #fff;
+    padding: 4rem 0;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.student_affair_mv_main_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.student_affair_mv_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+
+.student_affair_mv_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    flex-wrap: wrap; /* Ensure it wraps on smaller screens */
+    box-sizing: border-box;
+}
+
+.student_affair_mv_box_mission,
+.student_affair_mv_box_vision {
+    flex: 1;
+    width: 48%; /* Allow some space between */
+    min-width: 300px; /* Ensure minimum width before wrapping */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Mission Box Styles */
+.student_affair_mv_box_mission {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    width: 100%;
+    height: 500px; /* Fixed height */
+    max-width: 600px; /* Fixed max-width */
+    margin-left: 30px;
+    box-sizing: border-box;
+}
+
+.student_affair_mv_box_mission.expanded {
+    flex: 2;
+    height: 600px; /* Slightly taller when expanded */
+}
+
+.student_affair_mv_box_mission img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.6s ease;
+}
+
+.student_affair_mv_overlay_mission {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(124, 10, 2, 0.2) 0%,
+        rgba(124, 10, 2, 0.8) 100%
+    );
+    transition: all 0.6s ease;
+}
+
+.student_affair_mv_box_mission:hover .student_affair_mv_overlay_mission {
+    background: linear-gradient(
+        180deg,
+        rgba(124, 10, 2, 0.3) 0%,
+        rgba(124, 10, 2, 0.9) 100%
+    );
+}
+
+/* Vision Box Styles */
+.student_affair_mv_box_vision {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    width: 100%;
+    height: 500px; /* Fixed height */
+    max-width: 600px; /* Fixed max-width */
+    box-sizing: border-box;
+}
+
+.student_affair_mv_box_vision.expanded {
+    flex: 2;
+    height: 600px; /* Slightly taller when expanded */
+}
+
+.student_affair_mv_box_vision img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.6s ease;
+}
+
+.student_affair_mv_overlay_vision {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(90, 7, 1, 0.2) 0%,
+        rgba(90, 7, 1, 0.8) 100%
+    );
+    transition: all 0.6s ease;
+}
+
+.student_affair_mv_box_vision:hover .student_affair_mv_overlay_vision {
+    background: linear-gradient(
+        180deg,
+        rgba(90, 7, 1, 0.3) 0%,
+        rgba(90, 7, 1, 0.9) 100%
+    );
+}
+
+/* Common Content Styles */
+.student_affair_mv_content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: white;
+    z-index: 2;
+    width: 80%;
+    transition: all 0.6s ease;
+}
+
+.student_affair_mv_title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -1px;
+}
+
+.student_affair_mv_show_more {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    opacity: 0.95;
+    transition: all 0.3s ease;
+}
+
+.show_more_icon {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.show_more_text {
+    font-family: 'Montserrat', Arial, sans-serif;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.student_affair_mv_full_content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.6s ease;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-top: 2rem;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.student_affair_mv_box_mission.expanded .student_affair_mv_full_content,
+.student_affair_mv_box_vision.expanded .student_affair_mv_full_content {
+    opacity: 1;
+    max-height: 1000px;
+}
+
+.student_affair_mv_full_content p {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.student_affair_mv_full_content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.student_affair_mv_full_content li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.student_affair_mv_full_content li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.student_affair_mv_box_mission.expanded .student_affair_mv_show_more,
+.student_affair_mv_box_vision.expanded .student_affair_mv_show_more {
+    display: none;
+}
+
+/* Hover Effects */
+.student_affair_mv_box_mission:hover .student_affair_mv_show_more,
+.student_affair_mv_box_vision:hover .student_affair_mv_show_more {
+    transform: translateX(10px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .student_affair_mv_title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .student_affair_mv_container {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+    
+    .student_affair_mv_box_mission,
+    .student_affair_mv_box_vision {
+        height: 60vh;
+    }
+    
+    .student_affair_mv_title {
+        font-size: 3rem;
+    }
+    
+    .student_affair_mv_content {
+        bottom: 30px;
+        left: 30px;
+    }
+
+    .student_affair_mv_full_content {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .student_affair_mv_title {
+        font-size: 2.5rem;
+    }
+    
+    .student_affair_mv_content {
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------- */  
+/* WMSU Campuses Section */
+.wmsu_campuses_section {
+    padding: 4rem 2rem;
+    background: #fff;
+}
+
+.wmsu_campuses_title {
+    text-align: center;
+    font-size: 3.5rem;
+    color: #7c0a02;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-family: 'Arial', sans-serif;
+}
+
+.wmsu_campuses_container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 600px;
+}
+
+.campus_box {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    cursor: pointer;
+    border: 1px solid #7c0a02;
+}
+
+.campus_box.expanded {
+    flex: 2;
+}
+
+.campus_image_wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.campus_image_wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.campus_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(124, 10, 2, 0.3);
+    transition: all 0.5s linear;
+}
+
+.campus_box.expanded .campus_overlay {
+    background: rgba(124, 10, 2, 0.5);
+}
+
+.campus_content {
+    position: absolute;
+    bottom: 50px;
+    left: 40px;
+    color: white;
+    z-index: 2;
+}
+
+.campus_title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+}
+
+.campus_show_more {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.show_more_icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.show_more_text {
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+}
+
+.campus_details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    margin-top: 1rem;
+}
+
+.campus_box.expanded .campus_details {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.campus_details p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.campus_details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.campus_details li {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wmsu_campuses_container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .campus_box {
+        height: 400px;
+    }
+    
+    .campus_title {
+        font-size: 2.5rem;
+    }
+    
+    .wmsu_campuses_title {
+        font-size: 2.5rem;
+    }
+}
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------- */  
+
+
+
+  /* -------------------------------------------------------------------------------------------------------- */  
+/* Activities Section Styles */
+
+.student_affairs_activities_section {
+    padding: 80px 0;
+    background-color: #f9fafb;
+    position: relative;
+    z-index: 1;
+    overflow: visible !important;
+    width: 100%;
+}
+
+.student_affairs_activities_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.student_affairs_activities_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.student_affairs_activities_divider {
+   
+        width: 80px;
+        height: 4px;
+        background-color: #7c0a02;
+        margin: -25px auto 3rem;
+        border-radius: 2px;
+    
+    }
+
+.student_affairs_activities_timeline {
+    position: relative;
+    margin: 50px 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 60px;
+}
+
+/* Event Item */
+.student_affairs_event {
+    display: flex;
+    position: relative;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    width: 100%;
+}
+
+.student_affairs_event.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.student_affairs_event:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+/* Date Square - Changed from Circle */
+.student_affairs_event_date {
+    min-width: 100px;
+    height: 100px;
+    background: #7c0a02;
+    border-radius: 8px; /* Changed from 50% to create square with slightly rounded corners */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+    margin: 0 2rem;
+    box-shadow: 0 5px 15px rgba(124, 10, 2, 0.3);
+    flex-shrink: 0;
+    animation: pulse-square 2s infinite; /* Changed animation name */
+}
+
+.student_affairs_event_month {
+    font-size: 1rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.student_affairs_event_day {
+    font-size: 2rem;
+    line-height: 1;
+    display: block;
+}
+
+/* Event Content */
+.student_affairs_event_content {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    width: calc(100% - 150px);
+    max-width: 850px;
+    flex-direction: row;
+}
+
+.student_affairs_event_image {
+    width: 35%;
+    overflow: hidden;
+    position: relative;
+    min-height: 220px;
+}
+
+.student_affairs_event_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.student_affairs_event:hover .student_affairs_event_image img {
+    transform: scale(1.05);
+}
+
+.student_affairs_event_details {
+    padding: 1.5rem;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.student_affairs_event_details h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.student_affairs_event_meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.student_affairs_event_meta i {
+    color: #7c0a02;
+    margin-right: 0.3rem;
+}
+
+.student_affairs_event_details p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+.event_status_badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+    align-self: flex-start;
+}
+
+.event_status_badge.recent {
+    background-color: #6c757d;
+}
+
+.event_status_badge.today {
+    background-color: #28a745;
+}
+
+.event_status_badge.upcoming {
+    background-color: #dc3545;
+}
+
+.student_affairs_activities_footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.view_all_activities {
+    display: inline-flex;
+    align-items: center;
+    color: #7C0A02;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.view_all_activities i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.view_all_activities:hover {
+    color: #900802;
+}
+
+.view_all_activities:hover i {
+    transform: translateX(5px);
+}
+
+/* Large Desktop (1440px and above) */
+@media (min-width: 1440px) {
+    .student_affairs_activities_container {
+        max-width: 1320px;
+    }
+    
+    .student_affairs_activities_title {
+        font-size: 3rem;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 120px;
+        height: 120px;
+    }
+    
+    .student_affairs_event_month {
+    font-size: 1.2rem;
+    }
+    
+    .student_affairs_event_day {
+        font-size: 2.4rem;
+    }
+    
+    .student_affairs_event_details h3 {
+        font-size: 1.8rem;
+    }
+    
+    .student_affairs_event_details p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .student_affairs_activities_container {
+        max-width: 1140px;
+    }
+    
+    .student_affairs_event_content {
+        max-width: 800px;
+    }
+}
+
+/* Small Desktop and Laptop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .student_affairs_activities_container {
+        max-width: 960px;
+    }
+    
+    .student_affairs_activities_title {
+        font-size: 2.2rem;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 90px;
+        height: 90px;
+    }
+    
+    .student_affairs_event_content {
+        max-width: 700px;
+    }
+    
+    .student_affairs_event_details h3 {
+    font-size: 1.4rem;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .student_affairs_activities_section {
+        padding: 60px 0;
+    }
+    
+    .student_affairs_activities_container {
+        max-width: 720px;
+    }
+    
+    .student_affairs_activities_title {
+        font-size: 2rem;
+    }
+    
+    .student_affairs_event,
+    .student_affairs_event:nth-child(even) {
+        flex-direction: row;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 80px;
+        height: 80px;
+        margin-left: 0;
+        margin-right: 1.5rem;
+    }
+    
+    .student_affairs_event_month {
+        font-size: 0.9rem;
+    }
+    
+    .student_affairs_event_day {
+        font-size: 1.8rem;
+    }
+    
+    .student_affairs_event_content {
+        width: calc(100% - 100px);
+    }
+    
+    .student_affairs_event_details h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Large Mobile (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .student_affairs_activities_section {
+        padding: 50px 0;
+    }
+    
+    .student_affairs_activities_container {
+        max-width: 540px;
+    }
+    
+    .student_affairs_activities_title {
+        font-size: 1.8rem;
+    }
+    
+    .student_affairs_event,
+    .student_affairs_event:nth-child(even) {
+        flex-direction: row;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 70px;
+        height: 70px;
+        margin-left: 0;
+        margin-right: 1rem;
+    }
+    
+    .student_affairs_event_month {
+        font-size: 0.8rem;
+    }
+    
+    .student_affairs_event_day {
+        font-size: 1.6rem;
+    }
+    
+    .student_affairs_event_content {
+        width: calc(100% - 80px);
+        flex-direction: column;
+    }
+    
+    .student_affairs_event_image {
+        width: 100%;
+        height: 180px;
+        min-height: auto;
+    }
+    
+    .student_affairs_event_image img {
+        position: relative;
+    }
+    
+    .student_affairs_event_details {
+        width: 100%;
+    }
+    
+    .student_affairs_event_meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Small Mobile (up to 575px) */
+@media (max-width: 575px) {
+    .student_affairs_activities_section {
+        padding: 40px 0;
+    }
+    
+    .student_affairs_activities_container {
+        padding: 0 15px;
+    }
+    
+    .student_affairs_activities_title {
+        font-size: 1.6rem;
+    }
+    
+    .student_affairs_activities_divider {
+        margin-bottom: 30px;
+    }
+    
+    .student_affairs_activities_timeline {
+        margin: 30px 0;
+        gap: 40px;
+    }
+    
+    .student_affairs_event,
+    .student_affairs_event:nth-child(even) {
+        flex-direction: column;
+        margin-bottom: 2.5rem;
+        align-items: center;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 70px;
+        height: 70px;
+        margin: 0 0 1rem 0;
+    }
+    
+    .student_affairs_event_content {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .student_affairs_event_image {
+        width: 100%;
+        height: 160px;
+        min-height: auto;
+    }
+    
+    .student_affairs_event_image img {
+        position: relative;
+    }
+    
+    .student_affairs_event_details {
+        width: 100%;
+        padding: 1rem;
+    }
+    
+    .student_affairs_event_details h3 {
+        font-size: 1.2rem;
+    }
+    
+    .student_affairs_event_meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .student_affairs_event_details p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .event_status_badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+    
+    .view_all_activities {
+        font-size: 1rem;
+    }
+}
+
+/* Minimalist Officer Section */
+.student_affairs_officer_section {
+    padding: 4rem 2rem;
+    background: #f4f4f4;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.student_affairs_officer_title {
+    flex-shrink: 0;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    position: relative;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Officer Grid */
+.student_affairs_officer_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Officer Card */
+.student_affairs_officer_card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.student_affairs_officer_card:hover {
+    transform: translateY(-10px);
+}
+
+/* Circular Image */
+.student_affairs_officer_image_wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+}
+
+.student_affairs_officer_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Officer Info */
+.student_affairs_officer_info {
+    color: #333;
+}
+
+.student_affairs_officer_name {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.student_affairs_officer_position {
+    font-size: 1rem;
+    color: #7c0a02;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student_affairs_officer_section {
+        padding: 3rem 1rem;
+    }
+
+    .student_affairs_officer_title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .student_affairs_officer_grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .student_affairs_officer_name {
+        font-size: 1.1rem;
+    }
+
+    .student_affairs_officer_position {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------- */  
+/* Health Services Logo Section */
+.student_affairs_logo_section {
+    padding: 4rem 0;
+    background: white;
+    text-align: center;
+}
+
+.student_affairs_logo_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.student_affairs_logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+.student_affairs_logo_container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7C0A02;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+}
+
+.student_affairs_logo_container p {
+    font-size: 1.1rem;
+    color: #718096;
+}
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------- */  
+/* Contact Section */
+.student_affairs_contact_section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.student_affairs_contact_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.student_affairs_contact_header {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-heading);
+    position: relative;
+}
+
+.student_affairs_contact_header::after {
+    content: "";
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #7C0A02;
+    border-radius: 2px;
+}
+
+.contact_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.contact_info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.contact_item:hover {
+    transform: translateY(-2px);
+}
+
+.contact_item svg {
+    color: #7C0A02;
+    flex-shrink: 0;
+}
+
+.contact_text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 0.5rem;
+}
+
+.contact_text p {
+    font-size: 1rem;
+    color: #718096;
+    line-height: 1.5;
+}
+
+.social_links {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+}
+
+.social_links h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 1.5rem;
+}
+
+.social_icon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2D3748;
+    transition: all 0.2s ease;
+}
+
+.social_icon:hover {
+    background: #7C0A02;
+    color: white;
+}
+.contact_item img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+    color: #7C0A02; /* If using icons with transparent SVG fill that can be colorized via filters */
+    filter: brightness(0) saturate(100%) invert(13%) sepia(94%) saturate(3463%) hue-rotate(348deg) brightness(89%) contrast(119%);
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student_affair_mv_container {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+    
+    .student_affair_mv_box_mission,
+    .student_affair_mv_box_vision {
+        height: 60vh;
+    }
+    
+    .student_affairs_services_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .student_affairs_activities_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .student_affairs_officer_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+.student_affairs_services_section {
+    padding: 5rem 0;
+    background-color: #fff;
+    position: relative;
+}
+
+.student_affairs_services_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.student_affairs_services_header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.student_affairs_services_header::before {
+    display: none;
+}
+
+.student_affairs_services_title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+}
+
+.student_affairs_services_divider {
+    display: none;
+}
+
+.student_affairs_services_description {
+    max-width: 700px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.student_affairs_services_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-top: 2rem;
+}
+
+/* Remove transition delays */
+.student_affairs_services_box,
+.student_affairs_activities_card,
+.student_affairs_officer_card {
+    transition-delay: 0s !important;
+}
+/* Services Section */
+.student_affairs_services_section {
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+}
+
+.student_affairs_services_cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.student_affairs_service_card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    border: 1px solid#e9e9e9;
+}
+
+.student_affairs_service_card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid #7c0a02;
+}
+
+.student_affairs_service_card.animated {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.student_affairs_service_icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(124, 10, 2, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: #7c0a02;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.student_affairs_service_icon i {
+    font-size: 1.5rem;
+}
+
+.student_affairs_service_card:hover .student_affairs_service_icon {
+    transform: scale(1.1);
+    background-color: rgba(124, 10, 2, 0.15);
+}
+
+.student_affairs_service_content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.student_affairs_service_title {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.student_affairs_service_description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.student_affairs_service_steps {
+    margin-top: auto;
+}
+
+.step_item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.step_bullet {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #7c0a02;
+    margin-top: 0.5rem;
+    margin-right: 0.8rem;
+    flex-shrink: 0;
+}
+
+.step_text {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .student_affairs_services_section {
+        padding: 3rem 1rem;
+    }
+
+    .student_affairs_services_title {
+        font-size: 2rem;
+    }
+
+    .student_affairs_services_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .student_affairs_service_card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .student_affairs_services_title {
+        font-size: 1.8rem;
+    }
+
+    .student_affairs_service_title {
+        font-size: 1.3rem;
+    }
+
+    .student_affairs_service_description {
+        font-size: 0.9rem;
+    }
+
+    .student_affairs_service_steps li {
+        font-size: 0.9rem;
+    }
+
+    .student_affairs_download_btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Masonry Grid Layout Styles */
+.student_affairs_masonry_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    grid-auto-flow: dense;
+    margin-bottom: 30px;
+}
+
+.student_affairs_masonry_item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student_affairs_masonry_item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.student_affairs_masonry_item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.student_affairs_masonry_item.medium {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+
+.student_affairs_masonry_item.small {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.masonry_item_inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.masonry_image_container {
+    position: relative;
+    overflow: hidden;
+}
+
+.masonry_image_container img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.student_affairs_masonry_item.large .masonry_image_container img {
+    height: 300px;
+}
+
+.student_affairs_masonry_item:hover .masonry_image_container img {
+    transform: scale(1.05);
+}
+
+.masonry_item_tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff5722;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.masonry_item_content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.masonry_item_date {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.masonry_item_title {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.student_affairs_masonry_item.large .masonry_item_title {
+    font-size: 22px;
+}
+
+.masonry_item_excerpt {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.masonry_item_stats {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.masonry_item_stats span {
+    font-size: 13px;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+
+.masonry_item_stats span i {
+    color: #ff5722;
+    margin-right: 5px;
+}
+
+.student_affairs_view_more {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.student_affairs_view_more_btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: #7c0a02;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(124, 10, 2, 0.3);
+}
+
+.student_affairs_view_more_btn:hover {
+    background: #5c0801;
+    box-shadow: 0 6px 15px rgba(124, 10, 2, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Responsive Adjustments for Masonry Grid */
+@media (max-width: 768px) {
+    .student_affairs_masonry_grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .student_affairs_masonry_item.large {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+    
+    .student_affairs_masonry_item.large .masonry_image_container img {
+        height: 200px;
+    }
+}
+
+/* -------------------------------------------------------------------------------------------------------- */
+/* ACTIVITIES AND PROGRAMS SECTION STYLES */
+
+.student_affairs_programs_section {
+    padding: 80px 0;
+    background-color: #f9fafb;
+    position: relative;
+}
+
+.student_affairs_programs_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.student_affairs_programs_header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.student_affairs_programs_title {
+    font-size: 2.5rem;
+    color: #343a40;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.student_affairs_programs_subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.student_affairs_programs_divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #7C0A02, #d82c17);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.student_affairs_programs_categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.program_category {
+    padding: 8px 20px;
+    background-color: #f1f3f5;
+    color: #495057;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.program_category:hover {
+    background-color: #e9ecef;
+}
+
+.program_category.active {
+    background-color: #7C0A02;
+    color: white;
+}
+
+.student_affairs_programs_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.student_affairs_program_card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.student_affairs_program_card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.program_icon_wrapper {
+    width: 100px;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+.program_icon_wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(248, 249, 250, 0), rgba(248, 249, 250, 1));
+}
+
+.program_icon {
+    width: 70px;
+    height: 70px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    color: #7C0A02;
+    font-size: 1.8rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student_affairs_program_card:hover .program_icon {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(124, 10, 2, 0.2);
+}
+
+.program_content {
+    padding: 25px 20px;
+    flex-grow: 1;
+}
+
+.program_title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 10px;
+}
+
+.program_description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.program_details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.program_detail {
+    display: flex;
+    align-items: center;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.program_detail i {
+    width: 20px;
+    color: #7C0A02;
+    margin-right: 10px;
+}
+
+.program_cta {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #7C0A02;
+    border: 2px solid #7C0A02;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.program_cta:hover {
+    background-color: #7C0A02;
+    color: white;
+}
+
+.student_affairs_programs_action {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.student_affairs_programs_all_btn {
+    display: inline-flex;
+    align-items: center;
+    color: #7C0A02;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.student_affairs_programs_all_btn i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.student_affairs_programs_all_btn:hover {
+    color: #d82c17;
+}
+
+.student_affairs_programs_all_btn:hover i {
+    transform: translateX(5px);
+}
+
+/* Responsive styles for programs section */
+@media (max-width: 1200px) {
+    .student_affairs_programs_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .student_affairs_program_card {
+        flex-direction: column;
+    }
+    
+    .program_icon_wrapper {
+        width: 100%;
+        height: 100px;
+        min-width: unset;
+    }
+    
+    .program_icon_wrapper::after {
+        display: none;
+    }
+    
+    .program_icon {
+        margin: 15px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .student_affairs_programs_grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .student_affairs_programs_title {
+        font-size: 2rem;
+    }
+    
+    .student_affairs_programs_subtitle {
+        font-size: 1rem;
+    }
+    
+    .program_category {
+        font-size: 0.85rem;
+        padding: 6px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .student_affairs_programs_section {
+        padding: 60px 0;
+    }
+    
+    .student_affairs_programs_categories {
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+    
+    .program_category {
+        font-size: 0.8rem;
+        padding: 5px 12px;
+    }
+    
+    .program_title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Activities Timeline Section */
+.student_affairs_timeline_section {
+    padding: 80px 0;
+    background-color: #f9fafb;
+    position: relative;
+}
+
+.student_affairs_timeline_container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.student_affairs_timeline_header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.student_affairs_timeline_title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.student_affairs_timeline_subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+.student_affairs_timeline_divider {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #7C0A02, #d82c17);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.student_affairs_timeline_wrapper {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline_items_container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.timeline_item {
+    display: flex;
+    position: relative;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.timeline_item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline_date {
+    width: 80px;
+    min-width: 80px;
+    height: 80px;
+    background-color: #fff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    margin-right: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.date_month {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #7C0A02;
+    text-transform: uppercase;
+}
+
+.date_day {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #343a40;
+    line-height: 1;
+}
+
+.date_year {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.timeline_card {
+    flex-grow: 1;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.timeline_badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 1;
+}
+
+.timeline_badge.recent {
+    background-color: #6c757d;
+    color: white;
+}
+
+.timeline_badge.today {
+    background-color: #28a745;
+    color: white;
+}
+
+.timeline_badge.upcoming {
+    background-color: #007bff;
+    color: white;
+}
+
+.timeline_content {
+    padding: 25px;
+}
+
+.timeline_title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 10px;
+    padding-right: 60px; /* Space for badge */
+}
+
+.timeline_description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.timeline_details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.timeline_detail {
+    display: flex;
+    align-items: center;
+    color: #495057;
+    font-size: 0.9rem;
+}
+
+.timeline_detail i {
+    width: 20px;
+    color: #7C0A02;
+    margin-right: 10px;
+}
+
+.timeline_buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.timeline_link {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: transparent;
+    color: #7C0A02;
+    border: 2px solid #7C0A02;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.timeline_link:hover {
+    background-color: rgba(124, 10, 2, 0.05);
+    color: #7C0A02;
+}
+
+.timeline_register {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #7C0A02;
+    color: white;
+    border: 2px solid #7C0A02;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.timeline_register:hover {
+    background-color: #900802;
+    border-color: #900802;
+}
+
+.student_affairs_timeline_footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.view_all_activities {
+    display: inline-flex;
+    align-items: center;
+    color: #7C0A02;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.view_all_activities i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.view_all_activities:hover {
+    color: #900802;
+}
+
+.view_all_activities:hover i {
+    transform: translateX(5px);
+}
+
+/* Responsive styles for timeline section */
+@media (max-width: 768px) {
+    .student_affairs_timeline_section {
+        padding: 60px 0;
+    }
+    
+    .student_affairs_timeline_title {
+        font-size: 2rem;
+    }
+    
+    .timeline_date {
+        width: 70px;
+        min-width: 70px;
+        height: 70px;
+        margin-right: 20px;
+    }
+    
+    .timeline_title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_timeline_section {
+        padding: 50px 0;
+    }
+    
+    .student_affairs_timeline_container {
+        padding: 0 15px;
+    }
+    
+    .timeline_item {
+        flex-direction: column;
+    }
+    
+    .timeline_date {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 8px;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+        margin-right: 0;
+    }
+    
+    .date_month, .date_day, .date_year {
+        font-size: 1rem;
+    }
+    
+    .timeline_title {
+        padding-right: 0;
+        margin-top: 20px;
+    }
+    
+    .timeline_badge {
+        top: -30px;
+        right: 15px;
+    }
+    
+    .timeline_buttons {
+        flex-direction: column;
+    }
+    
+    .timeline_link, .timeline_register {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Facilities Section */
+.student_affairs_facilities_section {
+    padding: 80px 0;
+    background-color: #fff;
+    position: relative;
+}
+
+.student_affairs_facilities_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.student_affairs_facilities_header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.student_affairs_facilities_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    
+}
+
+.student_affair_facilities_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+.student_affairs_facilities_subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 20px;
+}
+
+
+
+.student_affairs_facilities_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.facility_card {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.facility_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    z-index: -1;
+    transition: all 0.4s ease;
+}
+
+.facility_card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.facility_card:hover::before {
+    border-color: #7C0A02;
+}
+
+.facility_image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.facility_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.facility_card:hover .facility_image img {
+    transform: scale(1.1);
+    border-color: #7C0A02;
+}
+
+.facility_overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    padding: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.facility_hours {
+    color: #fff;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.facility_hours i {
+    margin-right: 8px;
+}
+
+.facility_content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.facility_title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 12px;
+}
+
+.facility_description {
+    font-size: 0.95rem;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.facility_features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.facility_feature {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #495057;
+    font-weight: 500;
+}
+
+.facility_feature i {
+    color: #7C0A02;
+    margin-right: 6px;
+}
+
+.facility_link {
+    display: inline-block;
+    padding: 8px 0;
+    color: #7C0A02;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.facility_link::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #7C0A02;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.facility_link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.student_affairs_facilities_footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.facilities_note {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.view_all_facilities {
+    display: inline-flex;
+    align-items: center;
+    color: #7C0A02;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.view_all_facilities i {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.view_all_facilities:hover {
+    color: #900802;
+}
+
+.view_all_facilities:hover i {
+    transform: translateX(5px);
+}
+
+/* Responsive styles for facilities section */
+@media (max-width: 992px) {
+    .student_affairs_facilities_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .student_affairs_facilities_section {
+        padding: 60px 0;
+    }
+    
+    .student_affairs_facilities_grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .student_affairs_facilities_title {
+        font-size: 2rem;
+    }
+    
+    .facility_image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_facilities_section {
+        padding: 40px 0;
+    }
+    
+    .student_affairs_facilities_header {
+        margin-bottom: 30px;
+    }
+    
+    .facility_content {
+        padding: 20px;
+    }
+    
+    .facility_features {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .facility_feature {
+        width: 100%;
+    }
+}
+
+/* Medical & Dental Clinic Section */
+.student_affairs_clinic_section {
+    padding: 60px 0;
+    background-color: #f9fafb;
+}
+
+.student_affairs_clinic_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.clinic_main_title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #7C0A02;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.clinic_content_wrapper {
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Sidebar Navigation */
+.clinic_sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: #fff;
+    border-right: 1px solid #e9ecef;
+}
+
+.clinic_nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.clinic_nav_item {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.clinic_nav_item a {
+    display: block;
+    padding: 16px 20px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.clinic_nav_item:hover a {
+    background-color: #f8f9fa;
+    color: #7C0A02;
+}
+
+.clinic_nav_item.active {
+    position: relative;
+}
+
+.clinic_nav_item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: #7C0A02;
+}
+
+.clinic_nav_item.active a {
+    background-color: #f9eaea;
+    color: #7C0A02;
+    font-weight: 600;
+}
+
+/* Content Area */
+.clinic_content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #fff;
+    min-height: 500px;
+}
+
+.clinic_tab_content {
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.clinic_tab_content.active {
+    display: block;
+}
+
+.clinic_tab_content h2 {
+    font-size: 1.8rem;
+    color: #343a40;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.clinic_tab_content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #495057;
+    margin-bottom: 20px;
+}
+
+.clinic_info_box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #7C0A02;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+}
+
+.clinic_info_box h3 {
+    font-size: 1.3rem;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.clinic_info_box p {
+    margin-bottom: 8px;
+}
+
+.clinic_info_box ul, .clinic_info_box ol {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.clinic_info_box li {
+    margin-bottom: 8px;
+    color: #495057;
+}
+
+.clinic_services_list {
+    margin-bottom: 30px;
+}
+
+.clinic_services_list h3 {
+    font-size: 1.3rem;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.clinic_services_list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.clinic_services_list li {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+    color: #495057;
+}
+
+.clinic_services_list i {
+    color: #7C0A02;
+    margin-right: 10px;
+}
+
+.clinic_contact {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.clinic_contact h3 {
+    font-size: 1.3rem;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+.clinic_contact p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.clinic_contact i {
+    width: 20px;
+    color: #7C0A02;
+    margin-right: 10px;
+}
+
+.clinic_staff, .clinic_appointment {
+    margin-bottom: 30px;
+}
+
+.clinic_staff h3, .clinic_appointment h3 {
+    font-size: 1.3rem;
+    color: #343a40;
+    margin-bottom: 15px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive styles for clinic section */
+@media (max-width: 992px) {
+    .clinic_content_wrapper {
+        flex-direction: column;
+    }
+    
+    .clinic_sidebar {
+        width: 100%;
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .clinic_nav {
+    display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .clinic_nav_item {
+        border-bottom: none;
+        flex: 1 1 auto;
+        text-align: center;
+    }
+    
+    .clinic_nav_item.active::before {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+    }
+}
+
+@media (max-width: 768px) {
+    .clinic_main_title {
+        font-size: 2.2rem;
+    }
+    
+    .clinic_nav_item a {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+    
+    .clinic_content {
+        padding: 20px;
+    }
+    
+    .clinic_tab_content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_clinic_section {
+        padding: 40px 0;
+    }
+    
+    .clinic_main_title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    
+    .clinic_nav {
+        flex-direction: column;
+    }
+    
+    .clinic_nav_item {
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .clinic_nav_item.active::before {
+        top: 0;
+        bottom: auto;
+        left: 0;
+        width: 4px;
+        height: 100%;
+    }
+    
+    .clinic_info_box, .clinic_contact {
+        padding: 15px;
+    }
+}
+
+/* Facility image header and gallery styles */
+.facility_image_header {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.facility_image_header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.facility_image_header:hover img {
+    transform: scale(1.05);
+}
+
+.facility_image_header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0));
+    pointer-events: none;
+}
+
+.facility_gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.gallery_item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    height: 200px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.gallery_item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.gallery_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.gallery_item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery_caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gallery_item:hover .gallery_caption {
+    background: rgba(124, 10, 2, 0.85);
+    padding-bottom: 15px;
+}
+
+/* Clinic section modern updates */
+.clinic_content_wrapper {
+    display: flex;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.clinic_sidebar {
+    width: 280px;
+    min-width: 280px;
+    background-color: #f8f9fa;
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.clinic_nav_item a {
+    display: block;
+    padding: 18px 25px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.clinic_nav_item:hover a {
+    background-color: rgba(124, 10, 2, 0.04);
+    color: #7C0A02;
+}
+
+.clinic_nav_item.active::before {
+    display: none;
+}
+
+.clinic_nav_item.active a {
+    background-color: rgba(124, 10, 2, 0.08);
+    color: #7C0A02;
+    font-weight: 600;
+    border-left: 4px solid #7C0A02;
+}
+
+.clinic_content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: #fff;
+    min-height: 600px;
+}
+
+.clinic_tab_content h2 {
+    font-size: 2rem;
+    color: #343a40;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.clinic_tab_content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #495057;
+    margin-bottom: 25px;
+}
+
+.clinic_info_box {
+    background-color: #f9f9f9;
+    border-left: 5px solid #7C0A02;
+    padding: 25px;
+    margin-bottom: 35px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+}
+
+.clinic_services_list ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.clinic_services_list li {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+    color: #495057;
+    background-color: #f8f9fa;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.clinic_services_list li:hover {
+    background-color: #f1f1f1;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.clinic_services_list i {
+    color: #7C0A02;
+    margin-right: 12px;
+}
+
+/* Responsive styles for facility gallery */
+@media (max-width: 992px) {
+    .facility_gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .clinic_services_list ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .facility_gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .facility_image_header {
+        height: 220px;
+    }
+    
+    .gallery_item {
+        height: 180px;
+    }
+    
+    .clinic_content {
+        padding: 25px;
+    }
+}
+
+/* Updated clinic tab icons */
+.clinic_nav_item i {
+    margin-right: 10px;
+    width: 18px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.clinic_nav_item:hover i {
+    transform: translateX(3px);
+}
+
+/* Sports facilities icons */
+.clinic_info_box .fas.fa-basketball-ball,
+.clinic_info_box .fas.fa-running,
+.clinic_info_box .fas.fa-swimming-pool,
+.clinic_info_box .fas.fa-table-tennis,
+.clinic_info_box .fas.fa-dumbbell {
+    color: #7C0A02;
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+/* Alert icons */
+.fas.fa-exclamation-triangle,
+.fas.fa-info-circle {
+    color: #f59f00;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+/* Calendar icon */
+.fas.fa-calendar-alt {
+    color: #0077cc;
+    margin-right: 10px;
+}
+
+/* Operating Hours Section */
+.operating_hours_container {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.07);
+    padding: 40px;
+    margin: 0 auto 40px;
+    max-width: 1100px;
+}
+
+.operating_hours_title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #343a40;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.operating_hours_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #7C0A02;
+    border-radius: 2px;
+}
+
+.operating_hours_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.operating_hours_card {
+    display: flex;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.operating_hours_card:hover {
+    transform: translateY(-5px);
+    background-color: #f5f5f5;
+    border-left: 4px solid #7C0A02;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.hours_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(124, 10, 2, 0.1);
+    border-radius: 50%;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.hours_icon i {
+    font-size: 1.2rem;
+    color: #7C0A02;
+}
+
+.operating_hours_card:hover .hours_icon {
+    background-color: #7C0A02;
+}
+
+.operating_hours_card:hover .hours_icon i {
+    color: #fff;
+}
+
+.hours_content {
+    flex: 1;
+}
+
+.hours_content h4 {
+    font-size: 1.2rem;
+    color: #343a40;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.hours_content p {
+    font-size: 0.95rem;
+    color: #495057;
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+.hours_content .day {
+    font-weight: 600;
+    color: #495057;
+    display: inline-block;
+    min-width: 140px;
+}
+
+/* Responsive styles for operating hours */
+@media (max-width: 992px) {
+    .operating_hours_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .operating_hours_container {
+        padding: 30px 20px;
+    }
+    
+    .operating_hours_grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .operating_hours_title {
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 576px) {
+    .operating_hours_container {
+        padding: 25px 15px;
+    }
+    
+    .hours_content .day {
+        min-width: 120px;
+    }
+    
+    .hours_icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .hours_icon i {
+    font-size: 1rem;
+    }
+}
+
+/* Facility Operating Hours */
+.facility_operating_hours {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-left: 3px solid #7c0a02;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.facility_card:hover .facility_operating_hours {
+    background-color: #f5e9e9;
+    border-left-width: 5px;
+    box-shadow: 0 3px 10px rgba(124, 10, 2, 0.1);
+}
+
+.facility_operating_hours:hover {
+    background-color: rgba(230, 240, 255, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.facility_operating_hours h4 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7c0a02;
+}
+
+.facility_operating_hours h4 i {
+    margin-right: 8px;
+    color: #7c0a02;
+}
+
+.facility_operating_hours ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.facility_operating_hours li {
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.facility_operating_hours li span {
+    font-weight: 600;
+    color: #444;
+    margin-right: 5px;
+}
+
+.facility_operating_hours li:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .facility_operating_hours {
+        padding: 12px;
+        margin: 15px 0;
+    }
+    
+    .facility_operating_hours h4 {
+        font-size: 1rem;
+    }
+    
+    .facility_operating_hours li {
+        font-size: 0.9rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .facility_operating_hours li span {
+        margin-bottom: 3px;
+        display: block;
+    }
+}
+
+@media (max-width: 576px) {
+    .facility_operating_hours {
+        padding: 10px;
+        margin: 12px 0;
+    }
+}
+
+/* Clinic Information Section */
+.student_affairs_clinic_info_section {
+    padding: 5rem 2rem;
+    background-color: #f9f9f9;
+}
+
+.student_affairs_clinic_info_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.student_affairs_clinic_info_header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.student_affairs_clinic_info_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    margin-bottom: 20px;
+}
+
+.student_affairs_clinic_info_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+.student_affairs_clinic_info_description {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.student_affairs_clinic_info_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+/* Application Process Side - Updated Design */
+.clinic_process_container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+.clinic_process_title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7c0a02;
+    margin-bottom: 2rem;
+}
+
+.clinic_process_steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.process_step_item {
+    display: flex;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.process_bullet {
+    width: 8px;
+    height: 8px;
+    background-color: #7c0a02;
+    border-radius: 50%;
+    margin-top: 10px;
+    flex-shrink: 0;
+}
+
+.process_content {
+    flex-grow: 1;
+}
+
+.process_content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.process_content p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 992px) {
+    .student_affairs_clinic_info_content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .clinic_process_title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .student_affairs_clinic_info_section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .clinic_process_container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .clinic_process_title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .student_affairs_clinic_info_section {
+        padding: 3rem 1rem;
+    }
+    
+    .clinic_process_title {
+    font-size: 1.5rem;
+    }
+    
+    .process_step_item {
+        padding: 1.2rem;
+    }
+    
+    .process_content h4 {
+        font-size: 1rem;
+    }
+    
+    .process_content p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Downloadable Resources Side - Updated Design */
+.clinic_downloads_container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+.clinic_downloads_title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7c0a02;
+    margin-bottom: 2rem;
+}
+
+.clinic_downloads_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.clinic_download_card {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #e5e5e5;
+}
+
+.clinic_download_card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.download_icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    flex-shrink: 0;
+    background-color: #7c0a02;
+}
+
+.download_content {
+    flex-grow: 1;
+}
+
+.download_content h4 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.download_content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+}
+
+@media (max-width: 992px) {
+    .clinic_downloads_title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .clinic_downloads_container {
+        padding: 2rem 1.5rem;
+    }
+    
+    .clinic_downloads_title {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .clinic_downloads_title {
+        font-size: 1.5rem;
+    }
+    
+    .clinic_download_card {
+        padding: 1rem;
+    }
+    
+    .download_icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .download_content h4 {
+        font-size: 1rem;
+    }
+    
+    .download_content p {
+        font-size: 0.85rem;
+    }
+}
+
+.timeline_image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 15px;
+}
+
+.timeline_image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.timeline_card:hover .timeline_image img {
+    transform: scale(1.05);
+}
+
+.event_status_badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.event_status_badge.recent {
+    background-color: #6c757d;
+}
+
+.event_status_badge.today {
+    background-color: #28a745;
+}
+
+.event_status_badge.upcoming {
+    background-color: #dc3545;
+}
+
+/* Complete global responsive design for all sections */
+
+/* Base responsive CSS for all containers */
+.student_affairs_about_container,
+.student_affair_mv_container,
+.student_affairs_objectives_container,
+.student_affairs_functions_container,
+.student_affairs_services_container,
+.student_affairs_activities_container,
+.student_affairs_facilities_container,
+.student_affairs_clinic_info_container,
+.student_affairs_officer_grid,
+.student_affairs_logo_container,
+.student_affairs_contact_container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Services Section Grid */
+.student_affairs_services_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Facilities Grid */
+.student_affairs_facilities_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Officer Grid */
+.student_affairs_officer_grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-top: 40px;
+}
+
+/* Mission/Vision Container */
+.student_affair_mv_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    flex-wrap: wrap; /* Ensure it wraps on smaller screens */
+    box-sizing: border-box;
+}
+
+.student_affair_mv_box_mission,
+.student_affair_mv_box_vision {
+    flex: 1;
+    width: 48%; /* Allow some space between */
+    min-width: 300px; /* Ensure minimum width before wrapping */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Application Section */
+.student_affairs_clinic_info_content {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.clinic_process_container,
+.clinic_downloads_container {
+    flex: 1;
+    width: 48%;
+}
+
+/* Contact Grid */
+.contact_grid {
+    display: flex;
+    gap: 50px;
+    margin-top: 40px;
+}
+
+.contact_info {
+    flex: 2;
+}
+
+.social_links {
+    flex: 1;
+}
+
+/* Extra grid settings for specific sections */
+.student_affairs_about_content {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.student_affairs_about_image {
+    flex: 1;
+    width: 48%;
+}
+
+.student_affairs_about_text {
+    flex: 1;
+    width: 48%;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Large Desktop (1440px and above) */
+@media (min-width: 1440px) {
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        max-width: 1320px;
+    }
+    
+    .student_affairs_services_grid,
+    .student_affairs_facilities_grid {
+        gap: 40px;
+    }
+    
+    .student_affairs_officer_grid {
+        gap: 35px;
+    }
+    
+    .student_affairs_about_content,
+    .student_affairs_clinic_info_content,
+    .contact_grid {
+        gap: 60px;
+    }
+    
+    /* Larger fonts for large screens */
+    .student_affairs_about_description,
+    .student_affairs_objectives_description,
+    .student_affairs_functions_description,
+    .student_affairs_services_description,
+    .student_affairs_facilities_description,
+    .student_affairs_clinic_info_description,
+    .facility_description,
+    .student_affairs_service_description,
+    .contact_text p,
+    .process_content p,
+    .download_content p {
+        font-size: 1.1rem;
+    }
+}
+
+/* Desktop (1200px - 1439px) */
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        max-width: 1140px;
+    }
+}
+
+/* Small Desktop and Laptop (992px - 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        max-width: 960px;
+    }
+    
+    .student_affairs_services_grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .student_affairs_facilities_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .student_affairs_officer_grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .student_affairs_about_section,
+    .student_affair_mv_wrapper,
+    .student_affairs_objectives_section,
+    .student_affairs_functions_section,
+    .student_affairs_services_section,
+    .student_affairs_activities_section,
+    .student_affairs_facilities_section,
+    .student_affairs_clinic_info_section,
+    .student_affairs_officer_section,
+    .student_affairs_logo_section,
+    .student_affairs_contact_section {
+        padding: 60px 0;
+    }
+    
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        max-width: 720px;
+    }
+    
+    .student_affairs_services_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .student_affairs_facilities_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .student_affairs_officer_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    
+    .student_affairs_about_content {
+        flex-direction: column;
+    }
+    
+    .student_affairs_about_image,
+    .student_affairs_about_text {
+        width: 100%;
+    }
+    
+    .student_affair_mv_container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .student_affair_mv_box_mission,
+    .student_affair_mv_box_vision {
+        width: 100%;
+    }
+    
+    .student_affairs_clinic_info_content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .clinic_process_container,
+    .clinic_downloads_container {
+        width: 100%;
+    }
+    
+    .contact_grid {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .contact_info,
+    .social_links {
+        width: 100%;
+    }
+    
+    /* Medium size fonts for tablets */
+    .student_affairs_about_title,
+    .student_affair_mv_main_title,
+    .student_affairs_objectives_title,
+    .student_affairs_functions_title,
+    .student_affairs_services_title,
+    .student_affairs_activities_title,
+    .student_affairs_facilities_title,
+    .student_affairs_clinic_info_title,
+    .student_affairs_officer_title {
+        font-size: 2rem;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 80px;
+        height: 80px;
+    }
+}
+
+/* Large Mobile (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .student_affairs_about_section,
+    .student_affair_mv_wrapper,
+    .student_affairs_objectives_section,
+    .student_affairs_functions_section,
+    .student_affairs_services_section,
+    .student_affairs_activities_section,
+    .student_affairs_facilities_section,
+    .student_affairs_clinic_info_section,
+    .student_affairs_officer_section,
+    .student_affairs_logo_section,
+    .student_affairs_contact_section {
+        padding: 50px 0;
+    }
+    
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        max-width: 540px;
+    }
+    
+    .student_affairs_services_grid,
+    .student_affairs_facilities_grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .student_affairs_officer_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .student_affairs_about_content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .student_affairs_about_image,
+    .student_affairs_about_text {
+        width: 100%;
+    }
+    
+    .student_affair_mv_container {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .student_affair_mv_box_mission,
+    .student_affair_mv_box_vision {
+        width: 100%;
+    }
+    
+    .student_affairs_clinic_info_content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .clinic_process_container,
+    .clinic_downloads_container {
+        width: 100%;
+    }
+    
+    .contact_grid {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .contact_info,
+    .social_links {
+        width: 100%;
+    }
+    
+    /* Smaller fonts on larger mobile */
+    .student_affairs_about_title,
+    .student_affair_mv_main_title,
+    .student_affairs_objectives_title,
+    .student_affairs_functions_title,
+    .student_affairs_services_title,
+    .student_affairs_activities_title,
+    .student_affairs_facilities_title,
+    .student_affairs_clinic_info_title,
+    .student_affairs_officer_title {
+        font-size: 1.8rem;
+    }
+    
+    .student_affairs_about_description,
+    .student_affairs_objectives_description,
+    .student_affairs_functions_description,
+    .student_affairs_services_description,
+    .student_affairs_facilities_description,
+    .student_affairs_clinic_info_description {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 70px;
+        height: 70px;
+}
+
+.student_affair_mv_title {
+        font-size: 1.7rem;
+    }
+    
+    .facility_title, 
+    .student_affairs_service_title {
+        font-size: 1.4rem;
+    }
+    
+    .facility_description,
+    .student_affairs_service_description {
+        font-size: 0.95rem;
+    }
+    
+    .student_affairs_objectives_list li,
+    .student_affairs_functions_list li {
+        margin-bottom: 12px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+}
+
+/* Small Mobile (up to 575px) */
+@media (max-width: 575px) {
+    .student_affairs_about_section,
+    .student_affair_mv_wrapper,
+    .student_affairs_objectives_section,
+    .student_affairs_functions_section,
+    .student_affairs_services_section,
+    .student_affairs_activities_section,
+    .student_affairs_facilities_section,
+    .student_affairs_clinic_info_section,
+    .student_affairs_officer_section,
+    .student_affairs_logo_section,
+    .student_affairs_contact_section {
+        padding: 40px 0;
+    }
+    
+    .student_affairs_about_container,
+    .student_affair_mv_container,
+    .student_affairs_objectives_container,
+    .student_affairs_functions_container,
+    .student_affairs_services_container,
+    .student_affairs_activities_container,
+    .student_affairs_facilities_container,
+    .student_affairs_clinic_info_container,
+    .student_affairs_logo_container,
+    .student_affairs_contact_container {
+        padding: 0 15px;
+    }
+    
+    .student_affairs_services_grid,
+    .student_affairs_facilities_grid,
+    .student_affairs_officer_grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .student_affairs_about_content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .student_affairs_about_image,
+    .student_affairs_about_text {
+        width: 100%;
+    }
+    
+    .student_affair_mv_container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .student_affair_mv_box_mission,
+    .student_affair_mv_box_vision {
+        width: 100%;
+    }
+    
+    .student_affairs_clinic_info_content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .clinic_process_container,
+    .clinic_downloads_container {
+        width: 100%;
+    }
+    
+    .contact_grid {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .contact_info,
+    .social_links {
+        width: 100%;
+    }
+    
+    /* Smallest fonts on small mobile */
+    .student_affairs_about_title,
+    .student_affair_mv_main_title,
+    .student_affairs_objectives_title,
+    .student_affairs_functions_title,
+    .student_affairs_services_title,
+    .student_affairs_activities_title,
+    .student_affairs_facilities_title,
+    .student_affairs_clinic_info_title,
+    .student_affairs_officer_title {
+        font-size: 1.6rem;
+    }
+    
+    .student_affairs_about_description,
+    .student_affairs_objectives_description,
+    .student_affairs_functions_description,
+    .student_affairs_services_description,
+    .student_affairs_facilities_description,
+    .student_affairs_clinic_info_description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .student_affairs_event_date {
+        min-width: 70px;
+        height: 70px;
+    }
+    
+    .student_affair_mv_title {
+        font-size: 1.5rem;
+    }
+    
+    .facility_title, 
+    .student_affairs_service_title {
+        font-size: 1.3rem;
+    }
+    
+    .facility_description,
+    .student_affairs_service_description {
+        font-size: 0.9rem;
+    }
+    
+    .student_affairs_objectives_list li,
+    .student_affairs_functions_list li {
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .student_affairs_about_ontop_title,
+    .clinic_process_title,
+    .clinic_downloads_title {
+        font-size: 1rem;
+    }
+    
+    .process_content h4,
+    .download_content h4 {
+        font-size: 1.1rem;
+    }
+    
+    .process_content p,
+    .download_content p {
+        font-size: 0.9rem;
+    }
+    
+    .student_affairs_officer_name {
+        font-size: 1.1rem;
+    }
+    
+    .student_affairs_officer_position {
+        font-size: 0.9rem;
+    }
+    
+    .step_text {
+        font-size: 0.9rem;
+    }
+    
+    .contact_text h3 {
+        font-size: 1.1rem;
+    }
+    
+    .contact_text p {
+        font-size: 0.9rem;
+    }
+    
+    /* Special mobile spacing */
+    .facility_operating_hours {
+        padding: 12px;
+    }
+    
+    .student_affairs_service_steps {
+        margin-top: 15px;
+    }
+    
+    .student_affairs_service_card {
+        padding: 15px;
+    }
+    
+    .facility_card {
+        padding: 15px;
+    }
+    
+    .process_step_item {
+        margin-bottom: 15px;
+    }
+    
+    .clinic_download_card {
+        padding: 12px;
+    }
+    
+    .student_affairs_officer_card {
+        margin-bottom: 15px;
+    }
+}
+
+/* Add red outlines to services and facilities cards in mobile/tablet view */
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Red outlines for services and facilities cards */
+    .student_affairs_service_card,
+    .facility_card {
+        border: 2px solid #7C0A02 !important;
+        box-shadow: 0 0 10px rgba(124, 10, 2, 0.3) !important;
+    }
+}
+
+/* Mobile (up to 767px) */
+@media (max-width: 767px) {
+    /* Red outlines for services and facilities cards */
+    .student_affairs_service_card,
+    .facility_card {
+        border: 2px solid #7C0A02 !important;
+        box-shadow: 0 0 10px rgba(124, 10, 2, 0.3) !important;
+    }
+}
+
+

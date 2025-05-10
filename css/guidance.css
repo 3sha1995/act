@@ -1,0 +1,765 @@
+.guidance_about_section {
+    padding: 5rem 0;
+    background: #fff;
+    position: relative;
+}
+
+.guidance_about_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.guidance_about_header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.guidance_about_header h2 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+.guidance_about_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+.guidance_about_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: #7c0a02;
+}
+
+.health_about_divider{
+    margin-bottom: 3rem;
+}
+.guidance_about_subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.guidance_about_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.guidance_about_image {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.guidance_about_image:hover {
+    transform: translateY(-10px);
+}
+
+.guidance_about_image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.guidance_about_image:hover img {
+    transform: scale(1.05);
+}
+
+.guidance_about_text {
+    padding: 1rem;
+}
+
+.guidance_about_description {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.guidance_about_button {
+    display: inline-block;
+    background: #7c0a02;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(124, 10, 2, 0.2);
+}
+
+.guidance_about_button:hover {
+    background: #5c0801;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(124, 10, 2, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .guidance_about_content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .guidance_about_image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .guidance_about_section {
+        padding: 3rem 0;
+    }
+
+    .guidance_about_title {
+        font-size: 2rem;
+    }
+
+    .guidance_about_subtitle {
+        font-size: 1.1rem;
+    }
+
+    .guidance_about_description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .guidance_about_container {
+        padding: 0 1.5rem;
+    }
+
+    .guidance_about_title {
+        font-size: 1.8rem;
+    }
+
+    .guidance_about_button {
+        padding: 0.7rem 1.8rem;
+    }
+}
+
+/* Process Section */
+.guidance_process_section {
+    width: 100%;
+    padding: 3rem 0;
+    background: #f8f9fa;
+    position: relative;
+}
+
+.guidance_process_container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.guidance_process_header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.guidance_process_title {
+    font-size: 2rem;
+    color: #7c0a02;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.guidance_process_divider {
+    width: 60px;
+    height: 2px;
+    background: #7c0a02;
+    margin: 0.75rem auto;
+}
+
+.guidance_process_subtitle {
+    font-size: 1rem;
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.4;
+}
+
+.guidance_process_steps {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.guidance_process_step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.guidance_process_step:last-child {
+    margin-bottom: 0;
+}
+
+.guidance_process_step_number {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #7c0a02;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    z-index: 2;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.guidance_process_step:hover .guidance_process_step_number {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(124, 10, 2, 0.15);
+}
+
+.guidance_process_step_content {
+    flex: 1;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.guidance_process_step_title {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.guidance_process_step:hover .guidance_process_step_title {
+    color: #7c0a02;
+}
+
+.guidance_process_step_description {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.guidance_process_cta {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.guidance_process_button {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: #7c0a02;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 2px solid #7c0a02;
+}
+
+.guidance_process_button:hover {
+    background: transparent;
+    color: #7c0a02;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 10, 2, 0.15);
+}
+
+/* Responsive Design for Process Section */
+@media (max-width: 768px) {
+    .guidance_process_section {
+        padding: 2.5rem 0;
+    }
+    
+    .guidance_process_title {
+        font-size: 1.75rem;
+    }
+    
+    .guidance_process_subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .guidance_process_step {
+        margin-bottom: 1rem;
+    }
+    
+    .guidance_process_step_number {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .guidance_process_step_title {
+        font-size: 1rem;
+    }
+    
+    .guidance_process_step_description {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .guidance_process_container {
+        padding: 0 1rem;
+    }
+    
+    .guidance_process_title {
+        font-size: 1.5rem;
+    }
+    
+    .guidance_process_button {
+        padding: 0.6rem 1.75rem;
+        font-size: 0.95rem;
+    }
+}
+
+.guidance_quotes_section {
+    width: 100%;
+    padding: 4rem 2rem;
+    background-color: #fff;
+    text-align: center;
+    position: relative;
+    border-top: 3px solid #7c0a02;
+    border-bottom: 3px solid #7c0a02;
+}
+
+.guidance_quotes_container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guidance_quotes_text {
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.guidance_quotes_text::before,
+.guidance_quotes_text::after {
+    content: '"';
+    color: #bd0f03;
+    font-size: 2.5rem;
+    vertical-align: top;
+}
+
+.guidance_quotes_author {
+    font-size: 1.1rem;
+    color: #7c0a02;
+    font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .guidance_quotes_text {
+        font-size: 1.4rem;
+    }
+
+    .guidance_quotes_author {
+        font-size: 1rem;
+    }
+}
+
+
+.guidance_logo_section {
+    padding: 4rem 0;
+    background: white;
+    text-align: center;
+}
+
+.guidance_logo_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.guidance_logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+.guidance_logo_container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7C0A02;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+}
+
+.guidance_logo_container p {
+    font-size: 1.1rem;
+    color: #718096;
+}
+
+
+.guidance_contact_section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Container */
+.guidance_contact_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+/* Header */
+.guidance_contact_header {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-heading);
+    position: relative;
+}
+
+.guidance_contact_header::after {
+    content: "";
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #7C0A02;
+    border-radius: 2px;
+}
+
+.guidance_contact_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.guidance_contact_info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.guidance_contact_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.guidance_contact_item:hover {
+    transform: translateY(-2px);
+}
+
+.guidance_contact_item svg {
+    color: #7C0A02;
+    flex-shrink: 0;
+}
+
+.guidance_contact_text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 0.5rem;
+}
+
+.guidance_contact_text p {
+    font-size: 1rem;
+    color: #718096;
+    line-height: 1.5;
+}
+
+.guidance_social_links {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+}
+
+.guidance_social_links h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 1.5rem;
+}
+
+.guidance_social_icon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2D3748;
+    transition: all 0.2s ease;
+}
+
+.guidance_social_icon:hover {
+    background: #7C0A02;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .guidance_contact_container {
+        padding: 0 1rem;
+    }
+
+    .guidance_contact_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.guidance_services_section {
+    background: #f9f9f9;
+    padding: 5rem 2rem;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.guidance_services_title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #7C0A02;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.guidance_services_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.guidance_service_card {
+    background-color: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    border: 1px solid #e5e5e5;
+    padding: 2rem;
+}
+
+.guidance_service_card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.guidance_service_title {
+    font-size: 1.5rem;
+    color: #7C0A02;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.guidance_service_description {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.guidance_services_process_title {
+    font-size: 1.2rem;
+    color: #7C0A02;
+    margin: 1.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.guidance_services_process_steps {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.guidance_services_process_steps li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.guidance_services_process_steps li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #7C0A02;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .guidance_services_section {
+        padding: 3rem 1rem;
+    }
+
+    .guidance_services_title {
+        font-size: 2rem;
+    }
+
+    .guidance_service_card {
+        text-align: center;
+    }
+
+    .guidance_services_process_steps li {
+        padding-left: 0;
+    }
+
+    .guidance_services_process_steps li::before {
+        position: static;
+        margin-right: 0.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .guidance_services_title {
+        font-size: 1.8rem;
+    }
+
+    .guidance_service_title {
+        font-size: 1.3rem;
+    }
+
+    .guidance_service_description {
+        font-size: 0.9rem;
+    }
+
+    .guidance_services_process_steps li {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation for Service Cards */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guidance_service_card {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.guidance_service_card:nth-child(1) { animation-delay: 0.1s; }
+.guidance_service_card:nth-child(2) { animation-delay: 0.2s; }
+.guidance_service_card:nth-child(3) { animation-delay: 0.3s; }
+.guidance_service_card:nth-child(4) { animation-delay: 0.4s; }
+.guidance_service_card:nth-child(5) { animation-delay: 0.5s; }
+
+.guidance_process_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guidance_process_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.guidance_process_item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bullet {
+    color: #7C0A02;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-top: -0.25rem;
+}
+
+.guidance_process_text {
+    flex: 1;
+}
+
+.guidance_process_text h3 {
+    font-size: 1.1rem;
+    color: #2D3748;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.guidance_process_text p {
+    font-size: 0.9rem;
+    color: #4A5568;
+    line-height: 1.4;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .guidance_process_item {
+        padding: 1.25rem;
+    }
+
+    .guidance_process_text h3 {
+        font-size: 1rem;
+    }
+
+    .guidance_process_text p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .guidance_process_item {
+        padding: 1rem;
+    }
+}

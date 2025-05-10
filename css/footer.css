@@ -1,0 +1,258 @@
+/* footer.css */
+
+.footer-cont{
+    width: 100vw;
+    height: 550px;
+    background: linear-gradient(rgba(138, 9, 0, 0.8), rgba(137, 9, 0, 0.8)), url(../imgs/CTE.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-links{
+    color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+    height: 70%;
+    text-align: center;
+    padding: 0 120px;
+}
+
+.footer-textLinks{
+    font-size: 16px;
+    margin-top: -10px;
+}
+
+.footer-Title{
+    font-size: 30px;
+    margin-bottom: 25px;
+    margin-top: 100px;
+}
+
+.footer-divider{
+    width: .1px;
+    height: 50%;
+    border: .1px solid rgb(201, 201, 201);
+    margin-top: 130px;
+}
+
+.footer-schoolName{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: -25px;
+}
+
+.schoolName-Title{
+    color: white;
+    font-size: 22px;
+    letter-spacing: 5px;
+}
+
+.schoolName-subTitle{
+    color: white;
+    font-size: 16px;
+    margin-top: -20px;
+}
+
+.lower-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-top: 30px;
+    position: relative;
+}
+
+.footer-logo{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-inline: auto; 
+    width: fit-content;
+}
+
+.footer-rights{
+    font-size: 13px;
+    margin-bottom: -4px;
+    color: white;
+}
+
+.footer-contacts{
+    display: flex;
+}
+
+.footer-number, .footer-email, .footer-iso{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-email, .footer-iso{
+    margin-left: 35px;
+}
+
+.footer-contacts-text{
+    color: white;
+    font-size: 14px;
+    margin: 0;
+    margin-left: 15px;
+}
+@media screen and (max-width: 768px) {
+    .footer-cont {
+        width: 100%;
+        height: auto;
+        padding: 40px 20px;
+        background: linear-gradient(rgba(124, 10, 2, 0.95), rgba(124, 10, 2, 0.95)), url(../imgs/CTE.jpg);
+        background-position: center;
+        background-size: cover;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Links Section */
+    .footer-links {
+        flex-direction: column;
+        padding: 0;
+        height: auto;
+        gap: 40px;
+        order: 1;
+        text-align: center;
+        align-items: center;
+    }
+
+
+    /* School Name Section */
+    .footer-schoolName {
+        margin: 60px 0 20px 0;
+        width: 100%;
+        order: 2; /* Place WMSU text second */
+    }
+
+    /* Logo */
+    .footer-logo {
+        position: static;
+        width: 50px;
+        height: 50px;
+        margin: 20px auto;
+        display: block;
+        order: 3; /* Place logo third */
+    }
+
+    /* Contact Information */
+    .footer-contacts {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        margin: 30px 0;
+        order: 4; /* Place contacts fourth */
+    }
+
+    /* Copyright */
+    .footer-rights {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2); /* Keep only this divider */
+        width: 100%;
+        order: 5;
+        text-align: center;
+    }
+
+
+    /* Lower Footer */
+    .lower-footer {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        order: 4; /* Align with contacts */
+    }
+
+    /* Rest of the styling remains the same */
+    .footer-Title {
+        font-size: 24px;
+        margin: 0 0 15px 0;
+        font-weight: bold;
+        letter-spacing: 1px;
+        color: white;
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer-textLinks {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 0;
+        font-size: 14px;
+        opacity: 0.9;
+        color: white;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    .schoolName-Title {
+        font-size: 20px;
+        letter-spacing: 1px;
+        margin-bottom: 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+    }
+
+    .schoolName-subTitle {
+        font-size: 14px;
+        margin-top: 5px;
+        text-transform: uppercase;
+        opacity: 0.9;
+        color: white;
+    }
+
+    .footer-contacts img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .footer-contacts-text {
+        font-size: 14px;
+        margin: 0;
+        opacity: 0.9;
+        color: white;
+    }
+
+    .footer-divider,
+    .nav-divider {
+        display: none;
+    }
+
+    .footer-email, 
+    .footer-iso {
+        margin-left: 0;
+    }
+
+    .footer-number,
+    .footer-email,
+    .footer-iso {
+        margin: 0;
+        gap: 10px;
+    }
+
+    .footer-textLinks a {
+        text-decoration: none;
+        color: white;
+        width: 100%;
+        text-align: center;
+    }
+}

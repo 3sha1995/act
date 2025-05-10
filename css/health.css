@@ -1,0 +1,1120 @@
+/* Section */
+.health_about_section {
+    padding: 5rem 0;
+    background: #fff;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Add animation keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+
+@keyframes pulse-circle {
+    0% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(124, 10, 2, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0);
+    }
+}
+
+@keyframes pulse-square {
+    0% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(124, 10, 2, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(124, 10, 2, 0);
+    }
+}
+
+.health_about_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+/* HEADER Section */
+.health_about_header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.health_about_ontop_title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #7C0A02; /* Dark Burgundy */
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+
+.health_about_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    
+}
+
+.health_about_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+.health_about_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.health_about_image {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.health_about_image:hover {
+    transform: translateY(-10px);
+}
+
+.health_about_image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.health_about_image:hover img {
+    transform: scale(1.05);
+}
+
+.health_about_text {
+    padding: 1rem;
+}
+
+.health_about_description {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.health_about_button {
+    display: inline-block;
+    background: #7c0a02;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(124, 10, 2, 0.2);
+}
+
+.health_about_button:hover {
+    background: #5c0801;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(124, 10, 2, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .health_about_content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .health_about_image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .health_about_section {
+        padding: 3rem 0;
+    }
+    
+    .health_about_title {
+        font-size: 2rem;
+    }
+    
+    .health_about_subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .health_about_description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .health_about_container {
+        padding: 0 1.5rem;
+    }
+    
+    .health_about_title {
+        font-size: 1.8rem;
+    }
+    
+    .health_about_button {
+        padding: 0.7rem 1.8rem;
+    }
+}
+
+/* Image Background */
+.health_about_image_wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.health_about_image_wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    transition: opacity 1.5s ease-in-out;
+    filter: contrast(110%) saturate(105%);
+}
+
+/* Image Transition */
+.health_about_fade_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.health_about_fade_image:first-child {
+    opacity: 1;
+}
+
+.health_about_content_wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+.health_about_header h2 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.health_about_text_content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 900px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Initial state (before scroll) */
+.scroll-fade {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* When in view */
+.scroll-fade.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* -------------------------------------------------------------------------------------------------------- */      
+/* Student Affairs Objectives Section */
+.health_objectives_section {
+    padding: 8rem 0;
+    background-color: #7C0A02;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.health_objectives_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+ 
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.health_objectives_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.health_objectives_title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    color: #fff;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+}
+
+.health_objectives_divider {
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+.health_objectives_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.health_objectives_description {
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.health_objectives_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.health_objectives_list li {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.health_objectives_list li::marker {
+    color: #7c0a02;
+}
+
+.health_objectives_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+@media (min-width: 1200px) {
+    .health_objectives_section {
+        padding: 8rem 0;
+    }
+
+    .health_objectives_container {
+        max-width: 1400px;
+    }
+
+    .health_objectives_title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .health_objectives_section {
+        padding: 7rem 0;
+    }
+
+    .health_objectives_container {
+        max-width: 960px;
+    }
+
+    .health_objectives_title {
+        font-size: 2.7rem;
+    }
+
+    .health_objectives_content {
+        max-width: 800px;
+    }
+
+    .health_objectives_description {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .health_objectives_section {
+        padding: 5rem 0;
+    }
+
+    .health_objectives_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .health_objectives_title {
+        font-size: 2.5rem;
+    }
+
+    .health_objectives_divider {
+        margin-bottom: 2.5rem;
+    }
+
+    .health_objectives_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .health_objectives_description {
+        font-size: 1.1rem;
+        text-align: left;
+        margin-bottom: 2rem;
+    }
+
+    .health_objectives_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .health_objectives_section {
+        padding: 4rem 0;
+    }
+
+    .health_objectives_container {
+        padding: 0 1.5rem;
+    }
+
+    .health_objectives_title {
+        font-size: 2.2rem;
+    }
+
+    .health_objectives_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .health_objectives_content {
+        padding: 0;
+    }
+
+    .health_objectives_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .health_objectives_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .health_objectives_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+/* Student Affairs Functions Section */
+.health_functions_section {
+    padding: 8rem 0;
+    background-color: #7C0A02;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.health_functions_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.health_functions_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.health_functions_title {
+
+    text-align: center;
+        margin-bottom: 40px;
+    position: relative;
+        color: #fff;
+        font-family: Inter;
+        font-size: 3.54994rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: -0.1775rem;
+        z-index: 1;
+}
+
+.health_functions_divider {
+    width: 80px;
+    height: 4px;
+        background-color: #fff;
+        margin: -25px auto 3rem;
+    border-radius: 2px;
+    
+}
+
+.health_functions_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.health_functions_description {
+    font-size: 1.2rem;
+    color: white;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.health_functions_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.health_functions_list li {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.health_functions_list li::marker {
+    color: #7c0a02;
+}
+
+.health_functions_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+@media (min-width: 1200px) {
+    .health_functions_section {
+        padding: 8rem 0;
+    }
+
+    .health_functions_container {
+        max-width: 1400px;
+    }
+
+    .health_functions_title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .health_functions_section {
+        padding: 7rem 0;
+    }
+
+    .health_functions_container {
+        max-width: 960px;
+    }
+
+    .health_functions_title {
+        font-size: 2.7rem;
+    }
+
+    .health_functions_content {
+        max-width: 800px;
+    }
+
+    .health_functions_description {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .health_functions_section {
+        padding: 5rem 0;
+    }
+
+    .health_functions_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .health_functions_title {
+        font-size: 2.5rem;
+    }
+
+    .health_functions_divider {
+        margin-bottom: 2.5rem;
+    }
+
+    .health_functions_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .health_functions_description {
+        font-size: 1.1rem;
+        text-align: left;
+        margin-bottom: 2rem;
+    }
+
+    .health_functions_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .health_functions_section {
+        padding: 4rem 0;
+    }
+
+    .health_functions_container {
+        padding: 0 1.5rem;
+    }
+
+    .health_functions_title {
+        font-size: 2.2rem;
+    }
+
+    .health_functions_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .health_functions_content {
+        padding: 0;
+    }
+
+    .health_functions_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .health_functions_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .health_functions_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+
+
+
+
+/* Mission and Vision Section */
+
+.health_mv_wrapper {
+    width: 100%;
+    background: #fff;
+    padding: 4rem 0;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.health_mv_main_title {
+    position: relative;
+    color: #7C0A02;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.health_mv_divider{
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+
+}
+
+
+.health_mv_container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    width: 100%;
+    flex-wrap: wrap; /* Ensure it wraps on smaller screens */
+    box-sizing: border-box;
+}
+
+.health_mv_box_mission,
+.health_mv_box_vision {
+    flex: 1;
+    width: 48%; /* Allow some space between */
+    min-width: 300px; /* Ensure minimum width before wrapping */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Mission Box Styles */
+.health_mv_box_mission {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    width: 100%;
+    height: 500px; /* Fixed height */
+    max-width: 600px; /* Fixed max-width */
+    margin-left: 30px;
+    box-sizing: border-box;
+}
+
+.health_mv_box_mission.expanded {
+    flex: 2;
+    height: 600px; /* Slightly taller when expanded */
+}
+
+.health_mv_box_mission img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.6s ease;
+}
+
+.health_mv_overlay_mission {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(124, 10, 2, 0.2) 0%,
+        rgba(124, 10, 2, 0.8) 100%
+    );
+    transition: all 0.6s ease;
+}
+
+.health_mv_box_mission:hover .health_mv_overlay_mission {
+    background: linear-gradient(
+        180deg,
+        rgba(124, 10, 2, 0.3) 0%,
+        rgba(124, 10, 2, 0.9) 100%
+    );
+}
+
+/* Vision Box Styles */
+.health_mv_box_vision {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    width: 100%;
+    height: 500px; /* Fixed height */
+    max-width: 600px; /* Fixed max-width */
+    box-sizing: border-box;
+}
+
+.health_mv_box_vision.expanded {
+    flex: 2;
+    height: 600px; /* Slightly taller when expanded */
+}
+
+.health_mv_box_vision img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.02);
+    transition: transform 0.6s ease;
+}
+
+.health_mv_overlay_vision {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(90, 7, 1, 0.2) 0%,
+        rgba(90, 7, 1, 0.8) 100%
+    );
+    transition: all 0.6s ease;
+}
+
+.health_mv_box_vision:hover .health_mv_overlay_vision {
+    background: linear-gradient(
+        180deg,
+        rgba(90, 7, 1, 0.3) 0%,
+        rgba(90, 7, 1, 0.9) 100%
+    );
+}
+
+/* Common Content Styles */
+.health_mv_content {
+    position: absolute;
+    bottom: 50px;
+    left: 50px;
+    color: white;
+    z-index: 2;
+    width: 80%;
+    transition: all 0.6s ease;
+}
+
+.health_mv_title {
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: -1px;
+}
+
+.health_mv_show_more {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.1rem;
+    opacity: 0.95;
+    transition: all 0.3s ease;
+}
+
+.show_more_icon {
+    font-size: 1.8rem;
+    font-weight: 300;
+}
+
+.show_more_text {
+    font-family: 'Montserrat', Arial, sans-serif;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.health_mv_full_content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.6s ease;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-top: 2rem;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.health_mv_box_mission.expanded .health_mv_full_content,
+.health_mv_box_vision.expanded .health_mv_full_content {
+    opacity: 1;
+    max-height: 1000px;
+}
+
+.health_mv_full_content p {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.health_mv_full_content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.health_mv_full_content li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.health_mv_full_content li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.health_mv_box_mission.expanded .health_mv_show_more,
+.health_mv_box_vision.expanded .health_mv_show_more {
+    display: none;
+}
+
+/* Hover Effects */
+.health_mv_box_mission:hover .health_mv_show_more,
+.health_mv_box_vision:hover .health_mv_show_more {
+    transform: translateX(10px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .health_mv_title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .health_mv_container {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+    
+    .health_mv_box_mission,
+    .health_mv_box_vision {
+        height: 60vh;
+    }
+    
+    .health_mv_title {
+        font-size: 3rem;
+    }
+    
+    .health_mv_content {
+        bottom: 30px;
+        left: 30px;
+    }
+
+    .health_mv_full_content {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .health_mv_title {
+        font-size: 2.5rem;
+    }
+    
+    .health_mv_content {
+        bottom: 20px;
+        left: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------------------------------------------------------------------------------- */  
+/* WMSU Campuses Section */
+.wmsu_campuses_section {
+    padding: 4rem 2rem;
+    background: #fff;
+}
+
+.wmsu_campuses_title {
+    text-align: center;
+    font-size: 3.5rem;
+    color: #7c0a02;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-family: 'Arial', sans-serif;
+}
+
+.wmsu_campuses_container {
+    display: flex;
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 600px;
+}
+
+.campus_box {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    cursor: pointer;
+    border: 1px solid #7c0a02;
+}
+
+.campus_box.expanded {
+    flex: 2;
+}
+
+.campus_image_wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.campus_image_wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.campus_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(124, 10, 2, 0.3);
+    transition: all 0.5s linear;
+}
+
+.campus_box.expanded .campus_overlay {
+    background: rgba(124, 10, 2, 0.5);
+}
+
+.campus_content {
+    position: absolute;
+    bottom: 50px;
+    left: 40px;
+    color: white;
+    z-index: 2;
+}
+
+.campus_title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+}
+
+.campus_show_more {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.show_more_icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.show_more_text {
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+}
+
+.campus_details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    margin-top: 1rem;
+}

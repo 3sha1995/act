@@ -1,0 +1,485 @@
+/* navbar.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure consistent box-sizing */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Stops side scrolling */
+}
+
+nav{
+    width: 100vw;
+    height: 100px;
+}
+
+.nav-cont {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.WMSU-Logo-cont {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    margin-left: 35px;
+}
+
+.WMSU-Logo {
+    height: 60px;
+    width: 60px;
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.nav-logo-line {
+    height: 50px;
+    width: 1px;
+    border: 1px solid #BD0F03;
+}
+
+.nav-title-cont {
+    display: flex;
+    flex-direction: column;
+    color: #BD0F03;
+    margin-left: 10px;
+}
+
+.nav-logo-title {
+    font-size: 14px;
+    margin-top: -5px;
+}
+
+.nav-logo-subtitle {
+    font-size: 10px;
+    margin-top: -5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    margin-left: 125px;
+    margin-right: 35px;
+}
+
+.nav-links > a {
+    text-decoration: none;
+    color: #BD0F03;
+    font-size: 12px;
+    margin-right: 25px;
+    text-transform: uppercase;
+}
+
+.nav-links > a img {
+    margin-top: -3px;
+}
+
+.nav-links > a:hover {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    text-decoration: underline;
+    transition: ease-in-out .2s;
+}
+
+.nav-links > a:not(:hover) {
+    transition: ease-out .2s;
+}
+
+.nav-links > a:hover img {
+    transform: scaleY(-1);
+    transition: ease-in-out .2s;
+}
+
+.nav-links > a:not(:hover) img {
+    transition: ease-out .2s;
+}
+
+.MyWmsu-link {
+    text-decoration: none;
+    color: white;
+    border: 1px solid #BD0F03;
+    border-radius: 30px 0 30px 0;
+    background-color: #BD0F03;
+    font-size: 13px;
+    padding: 8px 25px;
+}
+
+.MyWmsu-link:hover {
+    background-color: white;
+    color: #BD0F03;
+    transition: ease-in-out .2s;
+}
+
+.MyWmsu-link:not(:hover) {
+    transition: ease-out .2s;
+}
+
+.nav-dropdown {
+    visibility: hidden;
+    position: absolute;
+    top: 100px; /* Aligns below navbar */
+    left: 0;
+    background-color: white;
+    width: 100%;
+    height: 400px;
+    opacity: .70;
+    transition: opacity 0.3s ease-in-out, transform 0.4s ease-in-out, visibility .1s linear .1s;
+    transform: translateY(-15px);
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+}
+
+.nav-dropdown::before {
+    content: "";
+    position: absolute;
+    top: -10px; /* Extends hover area just above the dropdown */
+    left: 0;
+    width: 100%; /* Matches the dropdown width instead of full screen */
+    height: 10px; /* Invisible hover buffer */
+    background: transparent;
+    pointer-events: auto; /* Ensures it remains interactive */
+    z-index: 1;
+}
+
+.nav-links > #About:hover ~ #About-dropdown,
+#About-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.nav-links > #Admissions:hover ~ #Admissions-dropdown,
+#Admissions-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.nav-links > #Academic:hover ~ #Academic-dropdown,
+#Academic-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.nav-links>#Administration:hover ~ #Administration-dropdown,
+#Administration-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.nav-links > #Research:hover ~ #Research-dropdown,
+#Research-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.nav-links > #Other-Links:hover ~ #Other-dropdown,
+#Other-dropdown:hover {
+    visibility: visible;
+    opacity: .75;
+    transform: translateY(0);
+}
+
+.dropdown-cont {
+    margin-top: 15px;
+}
+
+.dropdown-title {
+    color: #BD0F03;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.dropdown-content {
+    margin: 0 100px;
+}
+
+.dropdown-content h6 {
+    color: #7C0A02;
+    font-size: 17px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.dropdown-content p {
+    color: #BD0F03;
+    font-size: 12px;
+    margin-top: -10px;
+}
+
+.dropdown-content h2 {
+    color: #BD0F03;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dropdown-content h5 {
+    color: #BD0F03;
+    font-size: 12px;
+    margin-top: -5px;
+}
+
+.nav-divider {
+    width: .5px;
+    height: 300px;
+    background-color: black;
+    margin: -80px -20px;
+}
+
+.two-columns{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* ... existing code ... */
+
+/* Add hamburger menu styles */
+.hamburger-menu {
+    display: none; /* Hidden by default for desktop */
+    cursor: pointer;
+}
+
+/* Mobile styles */
+/* Small Mobile Devices (320px - 375px) */
+@media screen and (max-width: 375px) {
+    nav {
+        height: 50px;
+    }
+
+    .nav-cont {
+        padding: 0 8px;
+    }
+
+    .WMSU-Logo-cont {
+        height: 50px;
+        max-width: calc(100% - 40px);
+    }
+
+    .WMSU-Logo {
+        height: 28px;
+        width: 28px;
+        min-width: 28px;
+    }
+
+    .nav-logo-line {
+        height: 24px;
+        margin: 0 4px;
+    }
+
+    .nav-logo-title {
+        font-size: 9px;
+    }
+
+    .nav-logo-subtitle {
+        font-size: 7px;
+    }
+
+    .hamburger-menu {
+        width: 18px;
+        height: 12px;
+        margin-right: 15px; /* Added margin from right side */
+    }
+
+    .hamburger-menu span {
+        height: 1.5px;
+    }
+}
+
+/* Medium Mobile Devices (376px - 480px) */
+@media screen and (min-width: 376px) and (max-width: 480px) {
+    nav {
+        height: 55px;
+    }
+
+    .nav-cont {
+        padding: 0 10px;
+    }
+
+    .WMSU-Logo-cont {
+        height: 55px;
+        max-width: calc(100% - 42px);
+    }
+
+    .WMSU-Logo {
+        height: 32px;
+        width: 32px;
+        min-width: 32px;
+    }
+
+    .nav-logo-line {
+        height: 28px;
+        margin: 0 5px;
+    }
+
+    .nav-logo-title {
+        font-size: 10px;
+    }
+
+    .nav-logo-subtitle {
+        font-size: 8px;
+    }
+
+    .hamburger-menu {
+        width: 20px;
+        height: 14px;
+    }
+
+    .hamburger-menu span {
+        height: 1.8px;
+    }
+}
+
+/* Large Mobile Devices (481px - 768px) */
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    nav {
+        height: 60px;
+    }
+
+    .nav-cont {
+        padding: 0 15px;
+    }
+
+    .WMSU-Logo-cont {
+        height: 60px;
+        max-width: calc(100% - 45px);
+    }
+
+    .WMSU-Logo {
+        height: 35px;
+        width: 35px;
+        min-width: 35px;
+    }
+
+    .nav-logo-line {
+        height: 30px;
+        margin: 0 6px;
+    }
+
+    .nav-logo-title {
+        font-size: 12px;
+    }
+
+    .nav-logo-subtitle {
+        font-size: 9px;
+    }
+
+    .hamburger-menu {
+        width: 22px;
+        height: 15px;
+    }
+
+    .hamburger-menu span {
+        height: 2px;
+    }
+}
+
+/* Common styles for all mobile sizes */
+@media screen and (max-width: 768px) {
+    nav {
+        width: 100%;
+        border-bottom: 1px solid rgba(189, 15, 3, 0.1);
+    }
+
+    .nav-cont {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .WMSU-Logo-cont {
+        margin-left: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-text {
+        margin-left: 6px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-title-cont {
+        margin-left: 0;
+        flex-shrink: 1;
+    }
+
+    .nav-logo-title {
+        font-weight: 600;
+        line-height: 1.1;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+    .nav-logo-subtitle {
+        line-height: 1.1;
+        margin: 1px 0 0 0;
+        white-space: nowrap;
+    }
+
+    /* Hamburger menu */
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 12px;
+        padding: 0;
+    }
+
+    .hamburger-menu span {
+        display: block;
+        width: 100%;
+        background-color: #BD0F03;
+        border-radius: 1px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-dropdown {
+        display: none;
+    }
+
+
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-links.active > a {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #BD0F03;
+        text-align: center;
+    }
+}

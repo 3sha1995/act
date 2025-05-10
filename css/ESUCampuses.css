@@ -1,0 +1,317 @@
+.ESUCIntroCont{
+    width: 100%;
+    height: 200px;
+    margin: 150px 0;
+}
+
+.ESUCIntro{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ESUCIntroTitle{
+    color: #B32134;
+    font-size: 40px;
+    margin: 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.ESUCIntroSubTitle{
+    text-align: center;
+    width: 70%;
+    margin-top: 20px;
+}
+
+.ESUCMisVisCont{
+    width: 100vw;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.ESUCMisVis{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ESUCMisVisBox{
+    width: 400px;
+    height: 600px;
+    position: relative;
+}
+
+.ESUCMisVisBoxMain{
+    background-color: #EEEEEE;
+    width: 80%;
+    height: 100%;
+    border-radius: 120px;
+    border: 1px solid #7C0A02;
+}
+
+.ESUCMisVisBoxCircle{
+    width: 350px;
+    height: 350px;
+    border: 3px solid black;
+    border-radius: 100%;
+    position: absolute;
+    top: -80px;
+    left: -15px;
+    background-color: #B32134;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ESUCMisVisBoxCircleLogo{
+    width: 90%;
+    height: 90%;
+    border-radius: 100%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ESUCMisVisBoxCircleImg{
+    width: 200px;
+    height: 200px;
+}
+
+.ESUCMisVisBoxMainContent{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ESUCMisVisBoxMainTitle{
+    color: #B32134;
+    font-size: 38px;
+    margin: 0;
+    padding-top: 250px;
+}
+
+.ESUCMisVisBoxMainText{
+    font-size: 14px;
+    text-align: center;
+    width: 300px;
+}
+
+.ESUCMisVisBackgroundBoxTop{
+    width: 650px;
+    height: 200px;
+    background-color: #7C0A02;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0 80px 80px 0;
+}
+
+.ESUCMisVisBackgroundBoxBot{
+    width: 650px;
+    height: 200px;
+    background-color: #7C0A02;
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    border-radius: 80px 0 0 80px;
+}
+
+.ESUCMisVisBackgroundTexTop{
+    font-size: 200px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    top: -8%;
+    left: 19%;
+}
+
+.ESUCMisVisBackgroundTexBot{
+    font-size: 200px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    bottom: 0;
+    right: 30%;
+    z-index: -1;
+}
+
+.ESUCTitleCont{
+    width: 100vw;
+    height: 250px;
+    background-color: #7C0A02;
+    margin: 150px 0;
+}
+
+.ESUCTitle{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.ESUCTitleText{
+    color: white;
+    font-size: 96px;
+    margin: 0;
+}
+
+.ESUCTitleOutlineTextTop{
+    font-size: 110px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    top: -30%;
+    left: -41%;
+    width: 100%;
+}
+
+.ESUCTitleOutlineTextBot{
+    font-size: 110px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    bottom: -30%;
+    right: -55%;
+    width: 100%;
+}
+
+.ESUCSchoolsCont{
+    width: 100vw;
+    height: 1000px;
+    margin: 300px 0;
+}
+
+.ESUCSchools{
+    width: 100%;
+    height: 100%;
+}
+
+.ESUCSchoolsLeftBox{
+    width: 100%;
+    height: 200px;
+    background-color: #B32134;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.ESUCSchoolsTitle{
+    color: white;
+    font-size: 96px;
+    text-transform: uppercase;
+    margin: 0;
+    z-index: 1;
+}
+
+.ESUCSchoolsSubTitle{
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    margin-top: -40px;
+    margin-left: 150px;
+}
+
+.ESUCSchoolsImgLeft{
+    width: 700px;
+    height: 700px;
+    border-radius: 100%;
+    background: linear-gradient(rgba(209, 14, 0, 0.3), rgba(209, 14, 0, 0.3)), url(../imgs/CTE-Field.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    left: -10%;
+    top: -60%;
+    box-shadow: 10px 10px 4px 10px rgba(75, 75, 75, 0.6);
+}
+
+.ESUCSchoolsTitleOutlineLeft{
+    font-size: 150px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    top: -50%;
+    left: 41%;
+}
+
+.ESUCSchoolsTextLeft{
+    font-size: 24px;
+    width: 60%;
+    position: absolute;
+    bottom: -65%;
+    left: 40%;
+}
+
+.ESUCSchoolsRightBox{
+    width: 100%;
+    height: 200px;
+    background-color: #B32134;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 500px 0;
+}
+
+.ESUCSchoolsImgRight{
+    width: 700px;
+    height: 700px;
+    border-radius: 100%;
+    background: linear-gradient(rgba(209, 14, 0, 0.3), rgba(209, 14, 0, 0.3)), url(../imgs/CTE-Field.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    right: -10%;
+    bottom: -180%;
+    box-shadow: -10px 10px 4px 10px rgba(75, 75, 75, 0.6);
+}
+
+.ESUCSchoolsSubTitleRight{
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    margin-top: -40px;
+    margin-right: 150px;
+}
+
+.ESUCSchoolsTitleOutlineRight{
+    font-size: 150px;
+    font-weight: bold;
+    color: transparent; /* Set text color to white */
+    -webkit-text-stroke: 1.5px red; /* Outline effect */
+    position: absolute;
+    top: -50%;
+    right: 35%;
+}
+
+.ESUCSchoolsTextRight{
+    font-size: 24px;
+    width: 60%;
+    position: absolute;
+    bottom: -65%;
+    right: 40%;
+    text-align: right;
+}

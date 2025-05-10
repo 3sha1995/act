@@ -1,0 +1,2258 @@
+.sportsdev_about_section {
+    padding: 5rem 0;
+    background: #fff;
+    position: relative;
+}
+
+.sportsdev_about_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sportsdev_about_header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.sportsdev_about_header h2 {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.sportsdev_about_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    position: relative;
+    display: inline-block;
+}
+
+.sportsdev_about_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: #7c0a02;
+}
+
+.student_affair_about_divider{
+    margin-bottom: 3rem;
+}
+.sportsdev_about_subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.sportsdev_about_content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.sportsdev_about_image {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.sportsdev_about_image:hover {
+    transform: translateY(-10px);
+}
+
+.sportsdev_about_image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.sportsdev_about_image:hover img {
+    transform: scale(1.05);
+}
+
+.sportsdev_about_text {
+    padding: 1rem;
+}
+
+.sportsdev_about_description {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.sportsdev_about_button {
+    display: inline-block;
+    background: #7c0a02;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(124, 10, 2, 0.2);
+}
+
+.sportsdev_about_button:hover {
+    background: #5c0801;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(124, 10, 2, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .sportsdev_about_content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sportsdev_about_image {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .sportsdev_about_section {
+        padding: 3rem 0;
+    }
+
+    .sportsdev_about_title {
+        font-size: 2rem;
+    }
+
+    .sportsdev_about_subtitle {
+        font-size: 1.1rem;
+    }
+
+    .sportsdev_about_description {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_about_container {
+        padding: 0 1.5rem;
+    }
+
+    .sportsdev_about_title {
+        font-size: 1.8rem;
+    }
+
+    .sportsdev_about_button {
+        padding: 0.7rem 1.8rem;
+    }
+}
+
+/* Objectives Section */
+.sportsdev_objectives_section {
+    background: #f9f9f9;
+    padding: 5rem 0;
+}
+
+.sportsdev_objectives_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sportsdev_objectives_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.sportsdev_objectives_divider {
+    width: 80px;
+    height: 3px;
+    background: #7c0a02;
+    margin: 0 auto 3rem;
+}
+
+.sportsdev_objectives_content {
+    background: #fff;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sportsdev_objectives_description {
+    text-align: center;
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.sportsdev_objectives_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sportsdev_objectives_list li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.2rem;
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.sportsdev_objectives_list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    background: #7c0a02;
+    border-radius: 50%;
+}
+
+/* Responsive styles for objectives section */
+@media (max-width: 992px) {
+    .sportsdev_objectives_content {
+        padding: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sportsdev_objectives_section {
+        padding: 4rem 0;
+    }
+    
+    .sportsdev_objectives_title {
+        font-size: 2rem;
+    }
+    
+    .sportsdev_objectives_description {
+        font-size: 1rem;
+    }
+    
+    .sportsdev_objectives_content {
+        padding: 2rem;
+    }
+    
+    .sportsdev_objectives_list li {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_objectives_title {
+        font-size: 1.8rem;
+    }
+    
+    .sportsdev_objectives_content {
+        padding: 1.5rem;
+    }
+    
+    .sportsdev_objectives_description {
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .sportsdev_objectives_list li {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+}
+
+/* Sports Facilities Section */
+.sportsdev_facilities_section {
+    padding: 4rem 2rem;
+    background: #f9f9f9;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Title Styling */
+.sportsdev_facilities_title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #7c0a02;
+    margin-bottom: 3rem;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.sportsdev_facilities_title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: #7c0a02;
+}
+
+/* Grid for Activities */
+.sportsdev_facilities_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Activity Card */
+.sportsdev_facilities_card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sportsdev_facilities_card:hover {
+    transform: translateY(-5px);
+}
+
+/* Activity Image */
+.sportsdev_facilities_image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* Card Title (Always Visible) */
+.sportsdev_facilities_card_title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Overlay */
+.sportsdev_facilities_overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.9) 0%,
+        rgba(124, 10, 2, 0.7) 30%,
+        rgba(124, 10, 2, 0.4) 100%
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.sportsdev_facilities_card:hover .sportsdev_facilities_overlay {
+    opacity: 1;
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.95) 0%,
+        rgba(124, 10, 2, 0.85) 50%,
+        rgba(124, 10, 2, 0.7) 100%
+    );
+}
+
+/* Info Container */
+.sportsdev_facilities_info {
+    width: 100%;
+    color: #fff;
+    text-align: left;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.sportsdev_facilities_card:hover .sportsdev_facilities_info {
+    transform: translateY(0);
+}
+
+/* Description Text */
+.sportsdev_facilities_description_text {
+    font-size: 0.95rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.1s;
+}
+
+.sportsdev_facilities_card:hover .sportsdev_facilities_description_text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Location */
+.sportsdev_facilities_date {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.2s;
+}
+
+.sportsdev_facilities_date::before {
+    content: '📍';
+    font-size: 1rem;
+}
+
+.sportsdev_facilities_card:hover .sportsdev_facilities_date {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sportsdev_facilities_card_title {
+        font-size: 1.3rem;
+        padding: 0.8rem;
+    }
+
+    .sportsdev_facilities_description_text {
+        font-size: 0.9rem;
+    }
+
+    .sportsdev_facilities_image {
+        height: 250px;
+    }
+}
+
+
+
+/* Sports Development Apply Section */
+.sportsdev_apply_container {
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.sportsdev_apply_content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 3rem;
+    padding: 0 2rem;
+}
+
+/* Left Section */
+.sportsdev_apply_process {
+    flex: 1;
+}
+
+.sportsdev_apply_title {
+    font-size: 2rem;
+    color: #7c0a02;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.sportsdev_apply_wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.sportsdev_apply_step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_apply_step:last-child {
+    margin-bottom: 0;
+}
+
+.sportsdev_apply_icon {
+    width: 3rem;
+    height: 3rem;
+    background: #7c0a02;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    z-index: 2;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_apply_step:hover .sportsdev_apply_icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 5px rgba(124, 10, 2, 0.2);
+}
+
+.sportsdev_apply_text {
+    flex: 1;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.sportsdev_apply_text h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_apply_step:hover .sportsdev_apply_text h3 {
+    color: #7c0a02;
+}
+
+.sportsdev_apply_text p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Process Flow Connectors */
+.sportsdev_apply_step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 1.5rem;
+    width: 2px;
+    height: calc(100% + 1.5rem);
+    background: #7c0a02;
+    z-index: 1;
+}
+
+.sportsdev_apply_step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 3rem;
+    left: 1.5rem;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #7c0a02;
+    z-index: 2;
+    transform: translateX(-50%);
+}
+
+/* Right Section */
+.sportsdev_apply_forms {
+    flex: 1;
+    background: white;
+    border-radius: 10px;
+    height: fit-content;
+}
+
+.sportsdev_apply_forms_title {
+    font-size: 2rem;
+    color: #7c0a02;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.sportsdev_apply_forms_list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sportsdev_apply_form_item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #f8f9fa;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(124, 10, 2, 0.1);
+}
+
+.sportsdev_apply_form_item:hover {
+    background: rgba(124, 10, 2, 0.05);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-color: rgba(124, 10, 2, 0.3);
+}
+
+.sportsdev_apply_form_icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #7c0a02;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_apply_form_item:hover .sportsdev_apply_form_icon {
+    transform: scale(1.1);
+}
+
+.sportsdev_apply_form_text {
+    flex: 1;
+}
+
+.sportsdev_apply_form_text h4 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.sportsdev_apply_form_text p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .sportsdev_apply_content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .sportsdev_apply_title,
+    .sportsdev_apply_forms_title {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .sportsdev_apply_forms {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sportsdev_apply_container {
+        padding: 4rem 0;
+    }
+
+    .sportsdev_apply_title,
+    .sportsdev_apply_forms_title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .sportsdev_apply_content {
+        padding: 0 1.5rem;
+    }
+
+    .sportsdev_apply_step {
+        margin-bottom: 2rem;
+    }
+
+    .sportsdev_apply_icon {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    .sportsdev_apply_forms {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_apply_step {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .sportsdev_apply_text {
+        padding-left: 0;
+        padding-top: 1rem;
+    }
+
+    .sportsdev_apply_form_item {
+        padding: 0.75rem;
+    }
+
+    .sportsdev_apply_form_icon {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .sportsdev_apply_form_text h4 {
+        font-size: 1rem;
+    }
+
+    .sportsdev_apply_form_text p {
+        font-size: 0.85rem;
+    }
+}
+
+
+
+/* Section */
+.sportsdev_officer_section {
+    padding: 4rem 2rem;
+    background: #f4f4f4;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Title */
+.sportsdev_officer_title {
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Officer Grid */
+.sportsdev_officer_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Officer Card */
+.sportsdev_officer_card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sportsdev_officer_card:hover {
+    transform: translateY(-10px);
+}
+
+/* Circular Image */
+.sportsdev_officer_image_wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+}
+
+.sportsdev_officer_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Officer Info */
+.sportsdev_officer_info {
+    color: #333;
+}
+
+.sportsdev_officer_name {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.sportsdev_officer_position {
+    font-size: 1rem;
+    color: #7c0a02;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sportsdev_officer_section {
+        padding: 3rem 1rem;
+    }
+
+    .sportsdev_officer_title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .sportsdev_officer_grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sportsdev_officer_name {
+        font-size: 1.1rem;
+    }
+
+    .sportsdev_officer_position {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Section */
+.sportsdev_logo_section {
+    padding: 4rem 0;
+    background: white;
+    text-align: center;
+}
+
+/* Container */
+.sportsdev_logo_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Logo */
+.sportsdev_logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+/* Title */
+.sportsdev_logo_container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #7C0A02;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-heading);
+}
+
+/* Description */
+.sportsdev_logo_container p {
+    font-size: 1.1rem;
+    color: #718096;
+}
+
+
+/* Section */
+.sportsdev_services-section {
+  background: #f9f9f9;
+  padding: 5rem 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sportsdev_services-heading {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #7C0A02;
+  margin-bottom: 3rem;
+  font-weight: 800;
+}
+
+.sportsdev_services-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.sportsdev_services-card {
+  background-color: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  border: 1px solid #e5e5e5;
+}
+
+.sportsdev_services-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.sportsdev_services-card-header {
+  background-color: #BD0F03;
+  padding: 1rem 1.5rem;
+}
+
+.sportsdev_services-card-title {
+  font-size: 1.5rem;
+  color: #fff;
+  margin: 0;
+  font-weight: 700;
+}
+
+.sportsdev_services-card-body {
+  padding: 1.5rem;
+}
+
+.sportsdev_services-card-description {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.sportsdev_services-card-steps {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sportsdev_services-card-steps li {
+  position: relative;
+  padding-left: 1.2rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.sportsdev_services-card-steps li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #BD0F03;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .sportsdev_services-card {
+    text-align: center;
+  }
+
+  .sportsdev_services-card-steps li {
+    padding-left: 0;
+  }
+
+  .sportsdev_services-card-steps li::before {
+    position: static;
+    margin-right: 0.4rem;
+  }
+}
+
+/* Services Section */
+.sportsdev_services_section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.sportsdev_services_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sportsdev_services_header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sportsdev_services_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.sportsdev_services_divider {
+    width: 80px;
+    height: 3px;
+    background: #7c0a02;
+    margin: 1rem auto 2rem;
+}
+
+.sportsdev_services_description {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.sportsdev_services_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.sportsdev_service_card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.sportsdev_service_card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.sportsdev_service_icon {
+    background: #7c0a02;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.sportsdev_service_icon i {
+    font-size: 2rem;
+}
+
+.sportsdev_service_content {
+    padding: 2rem;
+}
+
+.sportsdev_service_title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.sportsdev_service_description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.sportsdev_service_steps {
+    margin-top: 1.5rem;
+}
+
+.step_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.step_bullet {
+    width: 8px;
+    height: 8px;
+    background: #7c0a02;
+    border-radius: 50%;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.step_text {
+    color: #555;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_service_card:hover .step_bullet {
+    transform: scale(1.2);
+    background: #7c0a02;
+}
+
+.sportsdev_service_card:hover .step_text {
+    color: #7c0a02;
+    transform: translateX(5px);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .sportsdev_services_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sportsdev_services_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sportsdev_objectives_content,
+    .sportsdev_functions_content,
+    .sportsdev_service_content {
+        padding: 2rem;
+    }
+
+    .sportsdev_objectives_title,
+    .sportsdev_functions_title,
+    .sportsdev_services_title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_objectives_content,
+    .sportsdev_functions_content,
+    .sportsdev_service_content {
+        padding: 1.5rem;
+    }
+
+    .sportsdev_objectives_description,
+    .sportsdev_functions_description,
+    .sportsdev_service_description {
+        font-size: 1rem;
+    }
+
+    .step_text {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+.sportsdev_contact_section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sportsdev_contact_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+}
+
+.sportsdev_contact_header {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #7C0A02;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-heading);
+    position: relative;
+}
+
+.sportsdev_contact_header::after {
+    content: "";
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: #7C0A02;
+    border-radius: 2px;
+}
+
+.contact_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.contact_info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.contact_item:hover {
+    transform: translateY(-2px);
+}
+
+.contact_item svg {
+    color: #7C0A02;
+    flex-shrink: 0;
+}
+
+.contact_text h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 0.5rem;
+}
+
+.contact_text p {
+    font-size: 1rem;
+    color: #718096;
+    line-height: 1.5;
+}
+
+.social_links {
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+}
+
+.social_links h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 1.5rem;
+}
+
+.social_icon {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #2D3748;
+    transition: all 0.2s ease;
+}
+
+.social_icon:hover {
+    background: #7C0A02;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .health_mv_container {
+        flex-direction: column;
+        padding: 0 1rem;
+    }
+    
+    .health_mv_box_mission,
+    .health_mv_box_vision {
+        height: 60vh;
+    }
+    
+    .health_services_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .health_activities_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .health_officer_grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sportsdev_apply_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sportsdev_apply_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sportsdev_apply_item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bullet {
+    color: #7C0A02;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-top: -0.25rem;
+}
+
+.sportsdev_apply_text {
+    flex: 1;
+}
+
+.sportsdev_apply_text h3 {
+    font-size: 1.1rem;
+    color: #2D3748;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.sportsdev_apply_text p {
+    font-size: 0.9rem;
+    color: #4A5568;
+    line-height: 1.4;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .sportsdev_apply_item {
+        padding: 1.25rem;
+    }
+
+    .sportsdev_apply_text h3 {
+        font-size: 1rem;
+    }
+
+    .sportsdev_apply_text p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sportsdev_apply_item {
+        padding: 1rem;
+    }
+}
+
+/* Mission and Vision Section */
+.sportsdev_mv_wrapper {
+    padding: 6rem 0;
+    background-color: #f8f9fa;
+    position: relative;
+}
+
+.sportsdev_mv_main_title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: var(--font-heading);
+    position: relative;
+}
+
+.sportsdev_mv_main_title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: #7c0a02;
+    border-radius: 2px;
+}
+
+.sportsdev_mv_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem;
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+}
+
+.sportsdev_mv_box_mission,
+.sportsdev_mv_box_vision {
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.sportsdev_mv_box_mission.expanded,
+.sportsdev_mv_box_vision.expanded {
+    height: 500px;
+    max-height: none;
+}
+
+.sportsdev_mv_box_mission img,
+.sportsdev_mv_box_vision img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.sportsdev_mv_overlay_mission,
+.sportsdev_mv_overlay_vision {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.9) 0%,
+        rgba(124, 10, 2, 0.7) 50%,
+        rgba(124, 10, 2, 0.4) 100%
+    );
+    transition: all 0.3s ease;
+}
+
+.sportsdev_mv_box_mission:hover .sportsdev_mv_overlay_mission,
+.sportsdev_mv_box_vision:hover .sportsdev_mv_overlay_vision {
+    background: linear-gradient(
+        0deg,
+        rgba(124, 10, 2, 0.95) 0%,
+        rgba(124, 10, 2, 0.85) 50%,
+        rgba(124, 10, 2, 0.7) 100%
+    );
+}
+
+.sportsdev_mv_content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    z-index: 2;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.sportsdev_mv_title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.sportsdev_mv_show_more {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.sportsdev_mv_full_content {
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+    margin-top: 1rem;
+}
+
+.sportsdev_mv_box_mission.expanded .sportsdev_mv_full_content,
+.sportsdev_mv_box_vision.expanded .sportsdev_mv_full_content {
+    height: auto;
+    opacity: 1;
+}
+
+.sportsdev_mv_full_content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.sportsdev_mv_box_mission.expanded .sportsdev_mv_show_more,
+.sportsdev_mv_box_vision.expanded .sportsdev_mv_show_more {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .sportsdev_mv_wrapper {
+        padding: 5rem 0;
+    }
+    
+    .sportsdev_mv_container {
+        max-width: 960px;
+        padding: 2.5rem;
+    }
+    
+    .sportsdev_mv_title {
+        font-size: 2rem;
+    }
+    
+    .sportsdev_mv_box_mission, 
+    .sportsdev_mv_box_vision {
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .sportsdev_mv_wrapper {
+        padding: 4rem 0;
+    }
+    
+    .sportsdev_mv_container {
+        max-width: 720px;
+        padding: 2rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .sportsdev_mv_box_mission, 
+    .sportsdev_mv_box_vision {
+        max-width: 600px;
+        margin-bottom: 2rem;
+    }
+    
+    .sportsdev_mv_title {
+        font-size: 1.8rem;
+    }
+    
+    .sportsdev_mv_content {
+        padding: 1.5rem;
+    }
+    
+    .sportsdev_mv_full_content p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_mv_wrapper {
+        padding: 3rem 0;
+    }
+    
+    .sportsdev_mv_container {
+        padding: 1.5rem;
+        flex-direction: column;
+    }
+    
+    .sportsdev_mv_main_title {
+        font-size: 2rem;
+    }
+    
+    .sportsdev_mv_box_mission, 
+    .sportsdev_mv_box_vision {
+        height: 250px;
+        margin-bottom: 1.5rem;
+    }
+    
+    .sportsdev_mv_box_mission.expanded, 
+    .sportsdev_mv_box_vision.expanded {
+        height: 400px;
+    }
+    
+    .sportsdev_mv_title {
+        font-size: 1.5rem;
+    }
+    
+    .sportsdev_mv_content {
+        padding: 1.2rem;
+    }
+    
+    .sportsdev_mv_full_content p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+}
+
+/* Functions Section */
+.sportsdev_functions_section {
+    background: #fff;
+    padding: 5rem 0;
+}
+
+.sportsdev_functions_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sportsdev_functions_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.sportsdev_functions_divider {
+    width: 80px;
+    height: 3px;
+    background: #7c0a02;
+    margin: 0 auto 3rem;
+}
+
+.sportsdev_functions_content {
+    background: #f9f9f9;
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.sportsdev_functions_description {
+    text-align: center;
+    color: #444;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.sportsdev_functions_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sportsdev_functions_list li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.2rem;
+    color: #555;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.sportsdev_functions_list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 8px;
+    height: 8px;
+    background: #7c0a02;
+    border-radius: 50%;
+}
+
+/* Services Section Updated */
+.sportsdev_services_section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.sportsdev_services_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sportsdev_services_header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.sportsdev_services_title {
+    font-size: 2.5rem;
+    color: #7c0a02;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.sportsdev_services_divider {
+    width: 80px;
+    height: 3px;
+    background: #7c0a02;
+    margin: 1rem auto 2rem;
+}
+
+.sportsdev_services_description {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.sportsdev_service_card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.sportsdev_service_icon {
+    width: 60px;
+    height: 60px;
+    background: #7c0a02;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.sportsdev_service_icon i {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.sportsdev_service_content {
+    text-align: left;
+}
+
+.sportsdev_service_steps {
+    margin-top: 1.5rem;
+}
+
+.step_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.step_bullet {
+    width: 8px;
+    height: 8px;
+    background: #7c0a02;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.step_text {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.sportsdev_service_card:hover .step_bullet {
+    transform: scale(1.2);
+    background: #7c0a02;
+}
+
+.sportsdev_service_card:hover .step_text {
+    color: #7c0a02;
+    transform: translateX(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .sportsdev_services_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sportsdev_services_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sportsdev_objectives_content,
+    .sportsdev_functions_content,
+    .sportsdev_service_content {
+        padding: 2rem;
+    }
+
+    .sportsdev_objectives_title,
+    .sportsdev_functions_title,
+    .sportsdev_services_title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sportsdev_objectives_content,
+    .sportsdev_functions_content,
+    .sportsdev_service_content {
+        padding: 1.5rem;
+    }
+
+    .sportsdev_objectives_description,
+    .sportsdev_functions_description,
+    .sportsdev_service_description {
+        font-size: 1rem;
+    }
+
+    .step_text {
+        font-size: 0.9rem;
+    }
+}
+
+
+
+
+.health_objectives_section {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.health_objectives_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imgs/subtle-pattern.png');
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.health_objectives_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.health_objectives_title {
+    font-size: 3rem;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.health_objectives_divider {
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: 0 auto 3rem;
+    border-radius: 2px;
+}
+
+.health_objectives_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.health_objectives_description {
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.health_objectives_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.health_objectives_list li {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.health_objectives_list li::marker {
+    color: #7c0a02;
+}
+
+.health_objectives_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+/* Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .health_objectives_section {
+        padding: 8rem 0;
+    }
+    
+    .health_objectives_container {
+        max-width: 1400px;
+    }
+    
+    .health_objectives_title {
+        font-size: 3rem;
+    }
+}
+
+/* Laptop (992px - 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .health_objectives_section {
+        padding: 7rem 0;
+    }
+    
+    .health_objectives_container {
+        max-width: 960px;
+    }
+    
+    .health_objectives_title {
+        font-size: 2.7rem;
+    }
+    
+    .health_objectives_content {
+        max-width: 800px;
+    }
+    
+    .health_objectives_description {
+        font-size: 1.15rem;
+    }
+}
+
+/* Tablet (577px - 991px) */
+@media (max-width: 991px) and (min-width: 577px) {
+    .health_objectives_section {
+        padding: 5rem 0;
+    }
+    
+    .health_objectives_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+    
+    .health_objectives_title {
+        font-size: 2.5rem;
+    }
+    
+    .health_objectives_divider {
+        margin-bottom: 2.5rem;
+    }
+    
+    .health_objectives_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .health_objectives_description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .health_objectives_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+/* Mobile (576px and below) */
+@media (max-width: 576px) {
+    .health_objectives_section {
+        padding: 4rem 0;
+    }
+    
+    .health_objectives_container {
+        padding: 0 1.5rem;
+    }
+    
+    .health_objectives_title {
+        font-size: 2.2rem;
+    }
+    
+    .health_objectives_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+    
+    .health_objectives_content {
+        padding: 0;
+    }
+    
+    .health_objectives_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+    
+    .health_objectives_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+    
+    .health_objectives_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+/* Health Functions Section */
+.health_functions_section {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, #fff 0%, rgba(248, 249, 250, 0.9) 100%);
+    position: relative;
+    overflow: hidden;
+    }
+    
+.health_functions_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../imgs/subtle-pattern.png');
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.health_functions_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.health_functions_title {
+    font-size: 3rem;
+    color: #7c0a02;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.health_functions_divider {
+    width: 80px;
+    height: 4px;
+    background-color: #7c0a02;
+    margin: 0 auto 3rem;
+    border-radius: 2px;
+}
+
+.health_functions_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.health_functions_description {
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.health_functions_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.health_functions_list li {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.health_functions_list li::marker {
+    color: #7c0a02;
+}
+
+.health_functions_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+/* Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .health_functions_section {
+        padding: 8rem 0;
+    }
+    
+    .health_functions_container {
+        max-width: 1400px;
+    }
+    
+    .health_functions_title {
+        font-size: 3rem;
+    }
+}
+
+/* Laptop (992px - 1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .health_functions_section {
+        padding: 7rem 0;
+    }
+    
+    .health_functions_container {
+        max-width: 960px;
+    }
+    
+    .health_functions_title {
+        font-size: 2.7rem;
+    }
+    
+    .health_functions_content {
+        max-width: 800px;
+    }
+    
+    .health_functions_description {
+        font-size: 1.15rem;
+    }
+}
+
+/* Tablet (577px - 991px) */
+@media (max-width: 991px) and (min-width: 577px) {
+    .health_functions_section {
+        padding: 5rem 0;
+    }
+    
+    .health_functions_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+    
+    .health_functions_title {
+        font-size: 2.5rem;
+    }
+    
+    .health_functions_divider {
+        margin-bottom: 2.5rem;
+    }
+    
+    .health_functions_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .health_functions_description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .health_functions_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+/* Mobile (576px and below) */
+@media (max-width: 576px) {
+    .health_functions_section {
+        padding: 4rem 0;
+    }
+    
+    .health_functions_container {
+        padding: 0 1.5rem;
+    }
+    
+    .health_functions_title {
+        font-size: 2.2rem;
+    }
+    
+    .health_functions_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+    
+    .health_functions_content {
+        padding: 0;
+    }
+    
+    .health_functions_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+    
+    .health_functions_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+    
+    .health_functions_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
+
+
+
+
+.student_affairs_mv_section {
+    padding: 6rem 0;
+    background-color: #f8f9fa;
+  }
+  
+  .student_affairs_mv_container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 2rem;
+  }
+  
+  .student_affairs_mv_title {
+    text-align: center;
+    color: #7c0a02;
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+  }
+  
+  .student_affairs_mv_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .student_affairs_mv_tabs {
+    list-style: none;
+    padding: 0;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .student_affairs_mv_tabs li {
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .student_affairs_mv_tabs li.active {
+    background-color: #f5eaea;
+    border-left: 5px solid #7c0a02;
+    color: #7c0a02;
+    font-weight: bold;
+  }
+  
+  .student_affairs_mv_content {
+    flex: 2;
+    min-width: 300px;
+  }
+  
+  .student_affairs_mv_description {
+    display: none;
+    animation: fadeIn 0.3s ease;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-left: 3px solid #7c0a02;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .student_affairs_mv_description.active {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
