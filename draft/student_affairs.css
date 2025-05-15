@@ -1815,6 +1815,12 @@
     font-size: 1.5rem;
 }
 
+.student_affairs_service_icon img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
 .student_affairs_service_card:hover .student_affairs_service_icon {
     transform: scale(1.1);
     background-color: rgba(124, 10, 2, 0.15);

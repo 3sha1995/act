@@ -494,6 +494,207 @@
         top: -1px;
     }
 }
+.process_section {
+    padding: 8rem 0;
+    background-color: #7C0A02;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.process_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.process_container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.process_title {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    color: #fff;
+    font-family: Inter;
+    font-size: 3.54994rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: -0.1775rem;
+    z-index: 1;
+}
+
+.process_divider {
+    width: 80px;
+    height: 4px;
+    background-color: #fff;
+    margin: -25px auto 3rem;
+    border-radius: 2px;
+}
+
+.process_content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.process_description {
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.process_list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.process_list li {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.process_list li::marker {
+    color: #7c0a02;
+}
+
+.process_list li::before {
+    content: "•";
+    color: #7c0a02;
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0;
+    top: -2px;
+}
+
+@media (min-width: 1200px) {
+    .process_section {
+        padding: 8rem 0;
+    }
+
+    .process_container {
+        max-width: 1400px;
+    }
+
+    .process_title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .process_section {
+        padding: 7rem 0;
+    }
+
+    .process_container {
+        max-width: 960px;
+    }
+
+    .process_title {
+        font-size: 2.7rem;
+    }
+
+    .process_content {
+        max-width: 800px;
+    }
+
+    .process_description {
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 577px) {
+    .process_section {
+        padding: 5rem 0;
+    }
+
+    .process_container {
+        max-width: 720px;
+        padding: 0 2rem;
+    }
+
+    .process_title {
+        font-size: 2.5rem;
+    }
+
+    .process_divider {
+        margin-bottom: 2.5rem;
+    }
+
+    .process_content {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .process_description {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .process_list li {
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .process_section {
+        padding: 4rem 0;
+    }
+
+    .process_container {
+        padding: 0 1.5rem;
+    }
+
+    .process_title {
+        font-size: 2.2rem;
+    }
+
+    .process_divider {
+        width: 60px;
+        margin-bottom: 2rem;
+    }
+
+    .process_content {
+        padding: 0;
+    }
+
+    .process_description {
+        font-size: 1rem;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+
+    .process_list li {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .process_list li::before {
+        font-size: 1.3rem;
+        top: -1px;
+    }
+}
 
 /* Student Affairs Functions Section */
 .student_affairs_functions_section {

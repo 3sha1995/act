@@ -1,37 +1,102 @@
+<?php
+// Database connection
+require_once __DIR__ . '/../cms/db_connection.php';
+
+try {
+    $pdo = getPDOConnection();
+    
+    // Fetch about content
+    $stmt = $pdo->prepare("SELECT * FROM af_page WHERE id = 1");
+    $stmt->execute();
+    $aboutContent = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Format image path if needed
+    if ($aboutContent && strpos($aboutContent['image_path'], 'uploads/') === 0) {
+        $aboutContent['image_path'] = '../' . $aboutContent['image_path'];
+    }
+
+    // Fetch Mission & Vision content
+    $stmt = $pdo->prepare("SELECT * FROM af_page_mv WHERE id = 1");
+    $stmt->execute();
+    $mvContent = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Fetch Process Info content
+    $stmt = $pdo->prepare("SELECT * FROM af_page_process_info WHERE id = 1");
+    $stmt->execute();
+    $processInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Fetch Functions section
+    $stmt = $pdo->prepare("SELECT * FROM af_page_funct WHERE id = 1");
+    $stmt->execute();
+    $functionsContent = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+} catch (PDOException $e) {
+    error_log("Database error: " . $e->getMessage());
+    $aboutContent = null;
+    $sectionTitle = 'Meet Our Officers';
+    $mvContent = null;
+    $processInfo = null;
+    $functionsContent = null;
+}
+
+// Helper function to handle image paths
+function getImagePath($path) {
+    if (empty($path)) {
+        return '../imgs/cte.jpg';
+    }
+    return strpos($path, 'uploads/') === 0 ? '../' . $path : $path;
+}
+
+// Only display if content exists and is visible
+if ($aboutContent && $aboutContent['is_visible']):
+  
+?>
 <!-- New About Section -->
 <section class="student_affairs_about_section">
     <div class="student_affairs_about_container">
    
     <div class="student_affairs_about_header scroll-fade">
-    <div class="student_affairs_about_ontop_title">ABOUT US</div>
-    <h2 class="student_affairs_about_title">STUDENT AFFAIRS</h2>
+    <div class="student_affairs_about_ontop_title"><?php echo htmlspecialchars($aboutContent['ontop_title']); ?></div>
+    <h2 class="student_affairs_about_title"><?php echo htmlspecialchars($aboutContent['main_title']); ?></h2>
     <div class="student_affair_about_divider"></div>
     </div>
    
      
         <div class="student_affairs_about_content scroll-fade">
             <div class="student_affairs_about_image">
-                <img src="../imgs/cte.jpg" alt="WMSU Health Center">
+                <img src="<?php echo htmlspecialchars($aboutContent['image_path']); ?>" alt="WMSU Health Center">
             </div>
             
             <div class="student_affairs_about_text">
-                <p class="student_affairs_about_description">
-                    The Western Mindanao State University Health Center is a comprehensive healthcare facility 
-                    designed to meet the medical needs of students, faculty, staff, and the university community. 
-                    Our team of qualified healthcare professionals provides a wide range of services including 
-                    general check-ups, first aid, health consultations, and preventive care.  
-                    
-                    We are committed to creating a healthy campus environment through regular health awareness 
-                    programs, wellness initiatives, and emergency response services. Our modern facilities are 
-                    equipped with essential medical equipment to ensure prompt and effective healthcare delivery.
-                </p>
-                
-               
+                <div class="student_affairs_about_description">
+                    <?php echo $aboutContent['description']; ?>
+                </div>
             </div>
         </div>
     </div>
     </div>
 </section>
+<?php endif;
+
+// Fetch officers from database
+try {
+    // First check section visibility
+    $stmt = $pdo->query("SELECT section_visible FROM af_page_officer LIMIT 1");
+    $sectionVisibility = $stmt->fetch(PDO::FETCH_ASSOC);
+    $isSectionVisible = $sectionVisibility ? $sectionVisibility['section_visible'] : 1;
+
+    // Only fetch officers if section is visible
+    $officers = [];
+    if ($isSectionVisible) {
+        $stmt = $pdo->query("SELECT * FROM af_page_officer WHERE is_visible = 1 ORDER BY id DESC");
+        $officers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+} catch (PDOException $e) {
+    error_log("Error fetching officers: " . $e->getMessage());
+    $officers = [];
+    $isSectionVisible = 0;
+}
+?>
 
 <script>
     const observer = new IntersectionObserver(entries => {
@@ -50,583 +115,295 @@
 </script>
 
 
-
-    <section class="student_affair_mv_wrapper">
-        <h2 class="student_affair_mv_main_title">MISSION AND VISION</h2>
+<section class="student_affair_mv_wrapper">
+    <?php if ($mvContent && $mvContent['is_visible']): ?>
+        <h2 class="student_affair_mv_main_title"><?= htmlspecialchars($mvContent['section_title']) ?></h2>
         <div class="student_affair_mv_divider"></div>
-    <section class="student_affair_mv_container">
-        <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
-            <img src="../imgs/cte.jpg" alt="WMSU Mission">
-            <div class="student_affair_mv_overlay_mission"></div>
-            <div class="student_affair_mv_content">
-                <h2 class="student_affair_mv_title">MISSION</h2>
-                <div class="student_affair_mv_show_more">
-
-                    <span class="show_more_text">SHOW MORE</span>
-                </div>
-                <div class="student_affair_mv_full_content">
-                    <p> We are committed to creating a healthy campus environment through regular health awareness 
-                    programs, wellness initiatives, and emergency response services. Our modern facilities are 
-                    equipped with essential medical equipment to ensure prompt and effective healthcare delivery.</p>
-                    
+        <section class="student_affair_mv_container">
+            <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
+                <img src="<?= !empty($mvContent['mission_image_url']) ? htmlspecialchars($mvContent['mission_image_url']) : '../imgs/cte.jpg' ?>" alt="WMSU Mission">
+                <div class="student_affair_mv_overlay_mission"></div>
+                <div class="student_affair_mv_content">
+                    <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['mission_title']) ?></h2>
+                    <div class="student_affair_mv_show_more">
+                        <span class="show_more_text"><?= htmlspecialchars($mvContent['mission_show_more_text']) ?></span>
+                    </div>
+                    <div class="student_affair_mv_full_content">
+                        <?= $mvContent['mission_description'] ?>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
-            <img src="../imgs/cte-field.png" alt="WMSU Vision">
-            <div class="student_affair_mv_overlay_vision"></div>
-            <div class="student_affair_mv_content">
-                <h2 class="student_affair_mv_title">VISION</h2>
-                <div class="student_affair_mv_show_more">
-                    <span class="show_more_icon">+</span>
-                    <span class="show_more_text">SHOW MORE</span>
-                </div>
-                <div class="student_affair_mv_full_content">
-                    <p> We are committed to creating a healthy campus environment through regular health awareness 
-                    programs, wellness initiatives, and emergency response services. Our modern facilities are 
-                    equipped with essential medical equipment to ensure prompt and effective healthcare delivery..</p>
-                    <p>We envision Western Mindanao State University to be:</p>
-                    
+            
+            <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
+                <img src="<?= !empty($mvContent['vision_image_url']) ? htmlspecialchars($mvContent['vision_image_url']) : '../imgs/cte-field.png' ?>" alt="WMSU Vision">
+                <div class="student_affair_mv_overlay_vision"></div>
+                <div class="student_affair_mv_content">
+                    <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['vision_title']) ?></h2>
+                    <div class="student_affair_mv_show_more">
+                        <span class="show_more_text"><?= htmlspecialchars($mvContent['vision_show_more_text']) ?></span>
+                    </div>
+                    <div class="student_affair_mv_full_content">
+                        <?= $mvContent['vision_description'] ?>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    </section>
+        </section>
+    <?php endif; ?>
+</section>
 
+<!-- Objectives Section -->
     <section class="student_affairs_objectives_section">
+    <?php if ($processInfo && $processInfo['is_visible']): ?>
     <div class="student_affairs_objectives_container">
-        <h2 class="student_affairs_objectives_title">OUR OBJECTIVES</h2>
+        <h2 class="student_affairs_objectives_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
         <div class="student_affairs_objectives_divider"></div>
         
         <div class="student_affairs_objectives_content">
-            <p class="student_affairs_objectives_description">
-                The University Health Services of Western Mindanao State University is committed to promoting health and wellness 
-                within the university community through the following objectives:
-            </p>
-            
-            <ul class="student_affairs_objectives_list">
-                <li>To provide accessible, high-quality healthcare services to all students, faculty, and staff</li>
-                <li>To promote health awareness and preventive healthcare through educational programs and campaigns</li>
-                <li>To offer timely medical consultation, treatment, and referral services for various health concerns</li>
-                <li>To maintain a safe and healthy campus environment through health surveillance and infection control measures</li>
-                <li>To collaborate with academic departments and other university units in promoting holistic wellness</li>
-                <li>To continuously improve healthcare delivery through staff development and facility enhancement</li>
-            </ul>
+        <p class="student_affairs_objectives_description">  <?= $processInfo['section_description'] ?> 
         </div>
     </div>
+    <?php endif; ?>
 </section>
 
-<!-- Health Functions Section -->
+<!-- Functions Section -->
 <section class="student_affairs_functions_section">
+    <?php if ($functionsContent && $functionsContent['is_visible']): ?>
     <div class="student_affairs_functions_container">
-        <h2 class="student_affairs_functions_title">KEY FUNCTIONS</h2>
+        <h2 class="student_affairs_functions_title"><?= htmlspecialchars($functionsContent['section_title']) ?></h2>
         <div class="student_affairs_functions_divider"></div>
         
         <div class="student_affairs_functions_content">
-            <p class="student_affairs_functions_description">
-                The University Health Services performs the following key functions to ensure the health and well-being 
-                of the entire WMSU community:
-            </p>
-            
-          
+            <?= $functionsContent['description'] ?>
         </div>
     </div>
+    <?php endif; ?>
 </section>
 
+<?php
+// Fetch services content
+try {
+    // Fetch main section content
+    $stmt = $pdo->query("SELECT * FROM af_page_services_main WHERE id = 1");
+    $servicesMain = $stmt->fetch(PDO::FETCH_ASSOC);
 
-<section class="student_affairs_services_section">
+    // Fetch all visible services
+    $stmt = $pdo->query("SELECT * FROM af_page_services WHERE is_visible = 1 ORDER BY created_at DESC");
+    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching services: " . $e->getMessage());
+    $servicesMain = null;
+    $services = [];
+}
+?>
+
+<section class="student_affairs_services_section" style="display: <?= ($servicesMain && $servicesMain['is_visible']) ? 'block' : 'none' ?>">
     <div class="student_affairs_services_container">
         <div class="student_affairs_services_header">
-            <h2 class="student_affairs_services_title">Our Services</h2>
+            <h2 class="student_affairs_services_title"><?= htmlspecialchars($servicesMain['section_title'] ?? 'Our Services') ?></h2>
             <div class="student_affairs_services_divider"></div>
-            <p class="student_affairs_services_description">We provide a range of healthcare services to support the well-being of our university community.</p>
+            <p class="student_affairs_services_description"><?= $servicesMain['section_description'] ?? 'We provide a range of services to support our university community.' ?></p>
         </div>
     <div class="student_affairs_services_grid">
-        <!-- Service Card 1 -->
+            <?php if (!empty($services)): ?>
+                <?php foreach ($services as $service): ?>
         <div class="student_affairs_service_card">
                 <div class="student_affairs_service_icon">
-                    <i class="fas fa-stethoscope"></i>
+                            <?php if (strpos($service['icon_class'], 'http') === 0 || strpos($service['icon_class'], '../') === 0 || strpos($service['icon_class'], 'uploads/') === 0): ?>
+                                <img src="<?= htmlspecialchars($service['icon_class']) ?>" alt="<?= htmlspecialchars($service['service_title']) ?>">
+                            <?php else: ?>
+                                <i class="<?= htmlspecialchars($service['icon_class']) ?>"></i>
+                            <?php endif; ?>
                 </div>
                 <div class="student_affairs_service_content">
-                    <h3 class="student_affairs_service_title">Medical Consultation</h3>
-            <p class="student_affairs_service_description">
-                Professional medical care and health assessment for students and staff.
-            </p>
-                   
+                            <h3 class="student_affairs_service_title"><?= htmlspecialchars($service['service_title']) ?></h3>
+                            <p class="student_affairs_service_description"><?= $service['service_description'] ?></p>
                 </div>
         </div>
-
-        <!-- Service Card 2 -->
-        <div class="student_affairs_service_card">
-                <div class="student_affairs_service_icon">
-                    <i class="fas fa-tooth"></i>
-                </div>
-                <div class="student_affairs_service_content">
-            <h3 class="student_affairs_service_title">Dental Services</h3>
-            <p class="student_affairs_service_description">
-                Comprehensive dental care and oral health services.
-            </p>
-                   
-                </div>
-        </div>
-
-        <!-- Service Card 3 -->
-        <div class="student_affairs_service_card">
-                <div class="student_affairs_service_icon">
-                    <i class="fas fa-flask"></i>
-                </div>
-                <div class="student_affairs_service_content">
-            <h3 class="student_affairs_service_title">Laboratory Services</h3>
-            <p class="student_affairs_service_description">
-                Medical tests and diagnostic procedures for health monitoring.
-            </p>
-                    
-                </div>
-            </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="no-services-message">No services available at the moment.</p>
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
+<?php
+// Fetch activities content
+try {
+    // Get section settings
+    $stmt = $pdo->query("SELECT * FROM af_page_activities_settings WHERE id = 1");
+    $activitiesSettings = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get visible activities ordered by date
+    $stmt = $pdo->query("SELECT * FROM af_page_activities WHERE is_visible = 1 ORDER BY event_date DESC");
+    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching activities: " . $e->getMessage());
+    $activitiesSettings = null;
+    $activities = [];
+}
+?>
 
-
-
+<!-- Activities Section -->
 <section class="student_affairs_activities_section">
+    <?php if ($activitiesSettings && $activitiesSettings['is_visible']): ?>
     <div class="student_affairs_activities_container">
-        <h2 class="student_affairs_activities_title">ACTIVITIES CALENDAR</h2>
+        <h2 class="student_affairs_activities_title"><?= htmlspecialchars($activitiesSettings['section_title'] ?? 'ACTIVITIES CALENDAR') ?></h2>
         <div class="student_affairs_activities_divider"></div>
         
         <div class="student_affairs_activities_timeline">
-            <!-- Event 1: Recent -->
-            <div class="student_affairs_event" data-date="2023-08-10">
+            <?php if (!empty($activities)): ?>
+                <?php foreach ($activities as $event): ?>
+                    <?php
+                    $eventDate = new DateTime($event['event_date']);
+                    $today = new DateTime();
+                    $today->setTime(0, 0, 0);
+                    
+                    $status = '';
+                    $statusClass = '';
+                    
+                    if ($eventDate->format('Y-m-d') === $today->format('Y-m-d')) {
+                        $status = 'Today';
+                        $statusClass = 'today';
+                    } elseif ($eventDate < $today) {
+                        $status = 'Recent';
+                        $statusClass = 'recent';
+                    } else {
+                        $status = 'Upcoming';
+                        $statusClass = 'upcoming';
+                    }
+                    ?>
+                    <div class="student_affairs_event" data-date="<?= $event['event_date'] ?>">
                 <div class="student_affairs_event_date">
-                    <span class="student_affairs_event_month">AUG</span>
-                    <span class="student_affairs_event_day">10</span>
+                            <span class="student_affairs_event_month"><?= $eventDate->format('M') ?></span>
+                            <span class="student_affairs_event_day"><?= $eventDate->format('d') ?></span>
                 </div>
                 <div class="student_affairs_event_content">
+                            <?php if ($event['event_image']): ?>
                     <div class="student_affairs_event_image">
-                        <img src="../imgs/cte.jpg" alt="Freshman Orientation Seminar">
+                                <img src="<?= str_starts_with($event['event_image'], 'http') ? $event['event_image'] : '../' . $event['event_image'] ?>" 
+                                     alt="<?= htmlspecialchars($event['event_title']) ?>"
+                                     onerror="this.src='../imgs/cte.jpg';">
                     </div>
+                            <?php endif; ?>
                     <div class="student_affairs_event_details">
-                        <h3>Freshman Orientation Seminar</h3>
+                                <div class="event_status_badge <?= $statusClass ?>"><?= $status ?></div>
+                                <h3><?= htmlspecialchars($event['event_title']) ?></h3>
                         <div class="student_affairs_event_meta">
-                            <span><i class="fas fa-map-marker-alt"></i> University Auditorium</span>
-                            <span><i class="fas fa-clock"></i> 8:00 AM - 5:00 PM</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($event['event_location']) ?></span>
+                                    <span><i class="fas fa-clock"></i> <?= htmlspecialchars($event['event_time']) ?></span>
                         </div>
-                        <p>Comprehensive orientation program for new students covering academic policies, campus resources, and student life.</p>
+                                <div class="student_affairs_event_description">
+                                    <?= $event['event_description'] ?>
                     </div>
                 </div>
             </div>
-            
-            <!-- Event 2: Today -->
-            <div class="student_affairs_event" data-date="2023-08-15">
-                <div class="student_affairs_event_date">
-                    <span class="student_affairs_event_month">AUG</span>
-                    <span class="student_affairs_event_day">15</span>
                 </div>
-                <div class="student_affairs_event_content">
-                    <div class="student_affairs_event_image">
-                        <img src="../imgs/cte-field.png" alt="Student Leadership Conference">
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-events-message">
+                    <p>No activities scheduled at the moment.</p>
                     </div>
-                    <div class="student_affairs_event_details">
-                        <h3>Student Leadership Conference</h3>
-                        <div class="student_affairs_event_meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Conference Center</span>
-                            <span><i class="fas fa-clock"></i> 9:00 AM - 4:00 PM</span>
+            <?php endif; ?>
                         </div>
-                        <p>Annual conference focusing on developing leadership skills among student organization officers and aspiring leaders.</p>
-                       
                     </div>
-                </div>
-            </div>
-            
-            <!-- Event 3: Upcoming -->
-            <div class="student_affairs_event" data-date="2023-08-20">
-                <div class="student_affairs_event_date">
-                    <span class="student_affairs_event_month">AUG</span>
-                    <span class="student_affairs_event_day">20</span>
-                </div>
-                <div class="student_affairs_event_content">
-                    <div class="student_affairs_event_image">
-                        <img src="../imgs/cte.jpg" alt="Career Development Workshop">
-                    </div>
-                    <div class="student_affairs_event_details">
-                        <h3>Career Development Workshop</h3>
-                        <div class="student_affairs_event_meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Career Services Center</span>
-                            <span><i class="fas fa-clock"></i> 1:00 PM - 5:00 PM</span>
-                        </div>
-                        <p>Workshop focused on resume building, interview skills, and job search strategies for graduating students.</p>
-                     
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Event 4: Upcoming -->
-            <div class="student_affairs_event" data-date="2023-09-05">
-                <div class="student_affairs_event_date">
-                    <span class="student_affairs_event_month">SEP</span>
-                    <span class="student_affairs_event_day">05</span>
-                </div>
-                <div class="student_affairs_event_content">
-                    <div class="student_affairs_event_image">
-                        <img src="../imgs/cte-field.png" alt="Wellness Week">
-                    </div>
-                    <div class="student_affairs_event_details">
-                        <h3>Wellness Week</h3>
-                        <div class="student_affairs_event_meta">
-                            <span><i class="fas fa-map-marker-alt"></i> Various Campus Locations</span>
-                            <span><i class="fas fa-calendar-week"></i> September 5-9, 2023</span>
-                        </div>
-                        <p>Week-long event featuring health screenings, fitness activities, mental health workshops, and nutritional counseling.</p>
-                       
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Event 5: Recent -->
-            <div class="student_affairs_event" data-date="2023-08-05">
-                <div class="student_affairs_event_date">
-                    <span class="student_affairs_event_month">AUG</span>
-                    <span class="student_affairs_event_day">05</span>
-                </div>
-                <div class="student_affairs_event_content">
-                    <div class="student_affairs_event_image">
-                        <img src="../imgs/ocho.png" alt="Cultural Diversity Celebration">
-                    </div>
-                    <div class="student_affairs_event_details">
-                        <h3>Cultural Diversity Celebration</h3>
-                        <div class="student_affairs_event_meta">
-                            <span><i class="fas fa-map-marker-alt"></i> University Plaza</span>
-                            <span><i class="fas fa-clock"></i> 11:00 AM - 7:00 PM</span>
-                        </div>
-                        <p>Annual event showcasing cultural performances, international cuisine, and interactive displays representing diverse cultures.</p>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="student_affairs_activities_footer">
-            <a href="#" class="view_all_activities">View Complete Calendar <i class="fas fa-arrow-right"></i></a>
-        </div>
-    </div>
+    <?php endif; ?>
 </section>
+            
+<?php
+// Fetch facilities content
+try {
+    // Get section settings
+    $stmt = $pdo->query("SELECT * FROM af_page_facilities_settings WHERE id = 1");
+    $facilitiesSettings = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get visible facilities
+    $stmt = $pdo->query("SELECT * FROM af_page_facilities WHERE is_visible = 1 ORDER BY id DESC");
+    $facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching facilities: " . $e->getMessage());
+    $facilitiesSettings = null;
+    $facilities = [];
+}
+?>
 
 <section class="student_affairs_facilities_section">
+    <?php if ($facilitiesSettings && $facilitiesSettings['section_visible']): ?>
     <div class="student_affairs_facilities_container">
         <div class="student_affairs_facilities_header">
-            <h2 class="student_affairs_facilities_title">OUR FACILITIES</h2>
+            <h2 class="student_affairs_facilities_title"><?= htmlspecialchars($facilitiesSettings['main_title']) ?></h2>
             <div class="student_affairs_facilities_divider"></div>
-            <p class="student_affairs_facilities_description">Explore our comprehensive range of campus facilities designed to support your academic journey and personal growth.</p>
         </div>
-    
         
         <div class="student_affairs_facilities_grid">
-            <!-- Facility 1 -->
-            <div class="facility_card" data-category="social">
+            <?php if (!empty($facilities)): ?>
+                <?php foreach ($facilities as $facility): ?>
+                    <div class="facility_card">
                 <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Student Lounge">
-                    <div class="facility_overlay">
-                
-                      
-                    </div>
+                            <img src="<?= str_starts_with($facility['image'], 'http') ? $facility['image'] : '../' . $facility['image'] ?>" 
+                                 alt="<?= htmlspecialchars($facility['title']) ?>"
+                                 onerror="this.src='../imgs/cte.jpg';">
+                            <div class="facility_overlay"></div>
                 </div>
                 <div class="facility_content">
-                    <h3 class="facility_title">Student Lounge</h3>
-                    <p class="facility_description">A comfortable space for students to relax, socialize, and collaborate between classes. Features comfortable seating, charging stations, and refreshment area.</p>
+                            <h3 class="facility_title"><?= htmlspecialchars($facility['title']) ?></h3>
+                            <p class="facility_description"><?= $facility['description'] ?></p>
+                            <?php if ($facility['operating_hours']): ?>
                     <div class="facility_operating_hours">
                         <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Friday:</span> 7:00 AM - 9:00 PM</li>
-                            <li><span>Saturday:</span> 9:00 AM - 6:00 PM</li>
-                            <li><span>Sunday:</span> Closed</li>
-                        </ul>
+                                <?= $facility['operating_hours'] ?>
                     </div>
-                    
+                            <?php endif; ?>
                 </div>
             </div>
-            
-            <!-- Facility 2 -->
-            <div class="facility_card" data-category="study">
-                <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Study Center">
-                    <div class="facility_overlay">
-                      
-                        
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="no-facilities-message">
+                    <p>No facilities available at the moment.</p>
                     </div>
+            <?php endif; ?>
                 </div>
-                <div class="facility_content">
-                   
-                    <h3 class="facility_title">Study Center</h3>
-                    <p class="facility_description">Dedicated space for quiet study and academic focus. Includes individual study carrels, group study rooms, and reference materials.</p>
-                    <div class="facility_operating_hours">
-                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Sunday:</span> 24 Hours</li>
-                            <li><span>Holiday Hours:</span> 8:00 AM - 10:00 PM</li>
-                        </ul>
                     </div>
-                   
-                </div>
-            </div>
-            
-            <!-- Facility 3 -->
-            <div class="facility_card" data-category="wellness">
-                <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Counseling Center">
-                    <div class="facility_overlay">
-                    
-                       
-                    </div>
-                </div>
-                <div class="facility_content">
-                  
-                    <h3 class="facility_title">Counseling Center</h3>
-                    <p class="facility_description">Professional counseling services in a confidential, supportive environment. Offers individual counseling, group therapy, and wellness resources.</p>
-                    <div class="facility_operating_hours">
-                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Friday:</span> 8:00 AM - 5:00 PM</li>
-                            <li><span>By Appointment:</span> Schedule Online</li>
-                            <li><span>Crisis Line:</span> 24/7 Support</li>
-                        </ul>
-                    </div>
-                  
-                    
-                </div>
-            </div>
-            
-            <!-- Facility 4 -->
-            <div class="facility_card" data-category="social">
-                <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Student Organizations Hub">
-                    <div class="facility_overlay">
-                
-                      
-                    </div>
-                </div>
-                <div class="facility_content">
-                    <h3 class="facility_title">Student Organizations Hub</h3>
-                    <p class="facility_description">Central space for student organizations to meet, plan events, and collaborate. Includes meeting rooms, storage space, and event planning resources.</p>
-                    <div class="facility_operating_hours">
-                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Friday:</span> 8:00 AM - 7:00 PM</li>
-                            <li><span>Saturday:</span> 9:00 AM - 5:00 PM</li>
-                            <li><span>Sunday:</span> Closed</li>
-                        </ul>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <!-- Facility 5 -->
-            <div class="facility_card" data-category="social">
-                <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Career Development Center">
-                    <div class="facility_overlay">
-                
-                      
-                    </div>
-                </div>
-                <div class="facility_content">
-                    <h3 class="facility_title">Career Development Center</h3>
-                    <p class="facility_description">Resources for career exploration, job searching, and professional development. Includes interview rooms, resume help desk, and career counseling offices.</p>
-                    <div class="facility_operating_hours">
-                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Friday:</span> 8:00 AM - 5:00 PM</li>
-                            <li><span>Saturday:</span> By Appointment</li>
-                            <li><span>Extended Hours:</span> During Career Fair Week</li>
-                        </ul>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <!-- Facility 6 -->
-            <div class="facility_card" data-category="wellness">
-                <div class="facility_image">
-                    <img src="../imgs/cte.jpg" alt="Health Services Clinic">
-                    <div class="facility_overlay">
-                
-                      
-                    </div>
-                </div>
-                <div class="facility_content">
-                    <h3 class="facility_title">Health Services Clinic</h3>
-                    <p class="facility_description">Provides basic healthcare services, medical consultations, and health education. Equipped with examination rooms, pharmacy, and treatment areas.</p>
-                    <div class="facility_operating_hours">
-                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                        <ul>
-                            <li><span>Monday - Friday:</span> 7:00 AM - 6:00 PM</li>
-                            <li><span>Saturday:</span> 8:00 AM - 12:00 PM</li>
-                            <li><span>Emergency Services:</span> 24/7</li>
-                        </ul>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-        
-    </div>
+    <?php endif; ?>
 </section>
-
-<section class="student_affairs_clinic_info_section">
-    <div class="student_affairs_clinic_info_container">
-        <div class="student_affairs_clinic_info_header">
-            <h2 class="student_affairs_clinic_info_title">Health Services Information</h2>
-            <div class="student_affairs_clinic_info_divider"></div>
-            <p class="student_affairs_clinic_info_description">Learn about our health services application process and access important forms and resources.</p>
-        </div>
-        
-        <div class="student_affairs_clinic_info_content">
-            <!-- Left Side: Application Process -->
-            <div class="clinic_process_container">
-                <h3 class="clinic_process_title">How to Apply for Our Services</h3>
-                <div class="clinic_process_steps">
-                    <div class="process_step_item">
-                        <div class="process_bullet"></div>
-                        <div class="process_content">
-                            <h4>Check Eligibility</h4>
-                            <p>Ensure you meet the necessary requirements before applying for the service.</p>
-                        </div>
-                    </div>
-                    <div class="process_step_item">
-                        <div class="process_bullet"></div>
-                        <div class="process_content">
-                            <h4>Complete the Application Form</h4>
-                            <p>Fill out the required application form with accurate details.</p>
-                        </div>
-                    </div>
-                    <div class="process_step_item">
-                        <div class="process_bullet"></div>
-                        <div class="process_content">
-                            <h4>Submit Required Documents</h4>
-                            <p>Provide the necessary documents to verify your application.</p>
-                        </div>
-                    </div>
-                    <div class="process_step_item">
-                        <div class="process_bullet"></div>
-                        <div class="process_content">
-                            <h4>Wait for Confirmation</h4>
-                            <p>Our team will review your application and notify you of the result.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
-            <!-- Right Side: Downloadable Resources -->
-            <div class="clinic_downloads_container">
-                <h3 class="clinic_downloads_title">Downloadable Forms</h3>
-                
-                <div class="clinic_downloads_list">
-                    <div class="clinic_download_card">
-                        <div class="download_icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="download_content">
-                            <h4>Application Form</h4>
-                            <p>Download the main application form</p>
-                        </div>
-                    </div>
-                    
-                    <div class="clinic_download_card">
-                        <div class="download_icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="download_content">
-                            <h4>Requirements Checklist</h4>
-                            <p>List of required documents</p>
-                        </div>
-                    </div>
-                    
-                    <div class="clinic_download_card">
-                        <div class="download_icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="download_content">
-                            <h4>Medical Certificate</h4>
-                            <p>Medical clearance form</p>
-                        </div>
-                    </div>
-                    
-                    <div class="clinic_download_card">
-                        <div class="download_icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="download_content">
-                            <h4>Waiver Form</h4>
-                            <p>Liability waiver document</p>
-                        </div>
-                    </div>
-                    
-                    <div class="clinic_download_card">
-                        <div class="download_icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="download_content">
-                            <h4>Insurance Form</h4>
-                            <p>Health insurance information form</p>
-                        </div>
-                    </div>
-                </div>
+<section class="process_section">
+    <?php if ($processInfo && $processInfo['is_visible']): ?>
+    <div class="process_container">
+        <h2 class="process_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
+        <div class="process_divider"></div>
+        
+        <div class="process_content">
+            <div class="process_description">
+                <?= $processInfo['section_description'] ?>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </section>
 
 
+
+    <?php if ($isSectionVisible): ?>
     <section class="student_affairs_officer_section">
-    <h2 class="student_affairs_officer_title">Meet Our Officers</h2>
+    <h2 class="student_affairs_officer_title"><?= htmlspecialchars($sectionTitle) ?></h2>
     <div class="student_affairs_officer_grid">
-        <!-- Officer 1 -->
+        <?php foreach ($officers as $officer): ?>
         <div class="student_affairs_officer_card">
             <div class="student_affairs_officer_image_wrapper">
-                <img src="../imgs/officers/officer1.jpg" alt="Officer 1" class="student_affairs_officer_image">
-            </div>
+                <img src="<?= htmlspecialchars($officer['image_url']) ?>" 
+                     alt="<?= htmlspecialchars($officer['name']) ?>" 
+                     class="student_affairs_officer_image">
+                </div>
             <div class="student_affairs_officer_info">
-                <h3 class="student_affairs_officer_name">John Doe</h3>
-                <p class="student_affairs_officer_position">Student Affairs Manager</p>
+                <h3 class="student_affairs_officer_name"><?= htmlspecialchars($officer['name']) ?></h3>
+                <p class="student_affairs_officer_position"><?= htmlspecialchars($officer['position']) ?></p>
             </div>
-        </div>
-
-        <!-- Officer 2 -->
-        <div class="student_affairs_officer_card">
-            <div class="student_affairs_officer_image_wrapper">
-                <img src="../imgs/officers/officer2.jpg" alt="Officer 2" class="student_affairs_officer_image">
-            </div>
-            <div class="student_affairs_officer_info">
-                <h3 class="student_affairs_officer_name">Jane Smith</h3>
-                <p class="student_affairs_officer_position">Events Coordinator</p>
-            </div>
-        </div>
-
-        <!-- Officer 3 -->
-        <div class="student_affairs_officer_card">
-            <div class="student_affairs_officer_image_wrapper">
-                <img src="../imgs/officers/officer3.jpg" alt="Officer 3" class="student_affairs_officer_image">
-            </div>
-            <div class="student_affairs_officer_info">
-                <h3 class="student_affairs_officer_name">Michael Lee</h3>
-                <p class="student_affairs_officer_position">Community Engagement Officer</p>
-            </div>
-        </div>
-
-        <!-- Officer 4 -->
-        <div class="student_affairs_officer_card">
-            <div class="student_affairs_officer_image_wrapper">
-                <img src="../imgs/cte.jpg" alt="Officer 4" class="student_affairs_officer_image">
-            </div>
-            <div class="student_affairs_officer_info">
-                <h3 class="student_affairs_officer_name">Sarah Johnson</h3>
-                <p class="student_affairs_officer_position">Wellness Program Lead</p>
-            </div>
-        </div>
-    </div>
+                    </div>
+        <?php endforeach; ?>
+                </div>
 </section>
+<?php endif; ?>
 
     
 <section class="student_affairs_logo_section">
@@ -634,49 +411,50 @@
         <img src="../imgs/salogo1.png" alt="Health Services Logo" class="student_affairs_logo">
         <h2>Health Services</h2>
         <p>Western Mindanao State University</p>
-    </div>
+                    </div>
 </section>
 
 <section class="student_affairs_contact_section">
+<?php
+try {
+    // Get section settings from the settings table
+    $stmt = $pdo->query("SELECT section_title, section_visible FROM af_page_contact_settings WHERE id = 1");
+    $sectionSettings = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($sectionSettings && $sectionSettings['section_visible']):
+?>
     <div class="student_affairs_contact_container">
-        <h2 class="student_affairs_contact_header">Get in Touch</h2>
+        <h2 class="student_affairs_contact_header"><?= htmlspecialchars($sectionSettings['section_title']) ?></h2>
         <div class="contact_grid">
+            <?php
+            $stmt = $pdo->query("SELECT * FROM af_page_contact WHERE is_visible = 1 ORDER BY contact_type");
+            while ($contact = $stmt->fetch(PDO::FETCH_ASSOC)):
+            ?>
             <div class="contact_info">
-                <div class="contact_item contact_phone">
-                    <img src="../imgs/org.png" alt="Phone Icon" width="24" height="24">
+                <div class="contact_item contact_<?= $contact['contact_type'] ?>">
+                    <img src="<?= htmlspecialchars($contact['icon_path']) ?>" alt="<?= ucfirst($contact['contact_type']) ?> Icon" width="24" height="24">
                     <div class="contact_text">
-                        <h3>Phone</h3>
-                        <p>(062) 991-6446</p>
+                        <h3><?= htmlspecialchars($contact['label']) ?></h3>
+                        <?php if ($contact['contact_type'] === 'facebook'): ?>
+                            <a href="<?= htmlspecialchars($contact['value']) ?>" target="_blank" class="contact_link">
+                                <?= htmlspecialchars($contact['display_text']) ?>
+                            </a>
+                        <?php else: ?>
+                            <p class="contact_value"><?= htmlspecialchars($contact['value']) ?></p>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <div class="contact_item contact_email">
-                    <img src="email-icon.png" alt="Email Icon" width="24" height="24">
-                    <div class="contact_text">
-                        <h3>Email</h3>
-                        <p>health@wmsu.edu.ph</p>
                     </div>
-                </div>
-                <div class="contact_item contact_location">
-                    <img src="location-icon.png" alt="Location Icon" width="24" height="24">
-                    <div class="contact_text">
-                        <h3>Location</h3>
-                        <p>Normal Road, Baliwasan, Zamboanga City</p>
-                    </div>
+            <?php endwhile; ?>
                 </div>
             </div>
-            <div class="social_links">
-                <h3>Follow Us</h3>
-                <div class="social_icons">
-                    <a href="#" target="_blank" class="social_icon">
-                        <img src="facebook-icon.png" alt="Facebook Icon" width="24" height="24">
-                        <span>WMSU Health Services</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+<?php 
+    endif;
+} catch (PDOException $e) {
+    error_log("Error in contact section: " . $e->getMessage());
+}
+?>
 </section>
-
 
 
     <script  src="../js/student_affairs.js"></script>
