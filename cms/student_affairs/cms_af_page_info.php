@@ -408,31 +408,172 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Info Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
     <style>
-        .editor-container {
-            border: 1px solid #e0e0e0;
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
+        }
+
+        .form-group, .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        label, .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], select, .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bee3f8;
             border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus, select:focus, .form-control:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        .button, .btn, button[type="submit"], input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .button-primary, .btn-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #dd6b20;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .button:hover, .btn:hover, button[type="submit"]:hover, input[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
+        }
+
+        .btn-primary:hover, .button-primary:hover {
+            background: #2b6cb0;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-warning:hover {
+            background: #c05621;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #fff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            border-color: #93c5fd;
+        }
+
+        .section, .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .editor-container {
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
             overflow: hidden;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.07);
+            background: #ffffff;
         }
 
         .editor-toolbar {
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 10px;
+            background: linear-gradient(to right, #ebf8ff, #f0f7ff);
+            border-bottom: 1px solid #bee3f8;
+            padding: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
 
         .toolbar-group {
             display: flex;
-            gap: 5px;
-            padding: 0 10px;
-            border-right: 1px solid #e0e0e0;
+            gap: 8px;
+            padding: 0 12px;
+            border-right: 1px solid #bee3f8;
         }
 
         .toolbar-group:last-child {
@@ -440,27 +581,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .editor-toolbar button {
-            background: white;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            padding: 6px 12px;
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            padding: 8px 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: #444;
+            gap: 8px;
+            color: #3b82f6;
             transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .editor-toolbar button:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.1);
         }
 
         .editor-toolbar button.active {
-            background: #e9ecef;
-            border-color: #0056b3;
-            color: #0056b3;
+            background: #f0f5ff;
+            border-color: #3182ce;
+            color: #1d4ed8;
         }
 
         .editor-toolbar button i {
@@ -470,15 +614,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .editor {
             min-height: 300px;
             padding: 20px;
-            background: white;
+            background: #ffffff;
             border: none;
             outline: none;
             font-size: 16px;
             line-height: 1.6;
+            color: #1e3a8a;
         }
 
         .editor:focus {
             outline: none;
+            background: #fafbff;
         }
 
         /* Tooltip styles */
@@ -492,57 +638,282 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 4px 8px;
-            background: #333;
+            padding: 6px 12px;
+            background: #1e3a8a;
             color: white;
-            font-size: 12px;
-            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
             white-space: nowrap;
             z-index: 1000;
+            box-shadow: 0 2px 4px rgba(49,130,206,0.13);
+            opacity: 0;
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                bottom: 105%;
+            }
         }
 
         /* Font size select styles */
         .font-size-select {
-            padding: 6px 12px;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            background: white;
+            padding: 8px 16px;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            background: #ffffff;
             cursor: pointer;
-            color: #444;
+            color: #3b82f6;
             font-size: 14px;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .font-size-select:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
         }
 
         .font-size-select:focus {
             outline: none;
-            border-color: #0056b3;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
 
-        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 54, 93, 0.5);
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: 2% auto;
+            padding: 30px;
+            border: none;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.13);
+            border: 1px solid #bee3f8;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
         .modal-header {
-            background: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
+            padding: 20px 30px;
+            background: #ebf8ff;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid #bee3f8;
         }
 
         .modal-footer {
-            background: #f8f9fa;
-            border-top: 1px solid #dee2e6;
+            padding: 20px 30px;
+            background: #ebf8ff;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #bee3f8;
         }
 
-        .table td, .table th {
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: normal;
+            cursor: pointer;
+            color: #4a5568;
+            transition: color 0.2s ease, background 0.2s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #2c5282;
+            background-color: #ebf8ff;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 25px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .table th, .table td {
+            padding: 16px;
+            border: 1px solid #bee3f8;
+            text-align: left;
             vertical-align: middle;
+        }
+
+        .table th {
+            background: #ebf8ff;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:hover {
+            background-color: #f0f5ff;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .alert-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: inherit;
+            border: none;
+            background: transparent;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c5282;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .input-group-text {
+            padding: 12px;
+            background: #ebf8ff;
+            border: 1px solid #bee3f8;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            color: #2c5282;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-check-input {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-check-label {
+            font-weight: 500;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .mb-4 {
+            margin-bottom: 16px;
+        }
+
+        .mb-5 {
+            margin-bottom: 20px;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .btn-outline-primary {
+            background: #f0f7ff;
+            border: 1px solid #bee3f8;
+            color: #3182ce;
+        }
+
+        .btn-outline-primary:hover, .btn-outline-primary.active {
+            background: #ebf8ff;
+            border-color: #3182ce;
+            color: #2b6cb0;
+        }
+
+        .mt-3 {
+            margin-top: 12px;
+        }
+
+        .me-2 {
+            margin-right: 8px;
+        }
+
+        .text-muted {
+            color: #718096;
+            font-size: 0.85rem;
         }
     </style>
 </head>
-<body class="container py-5">
+<body>
+<?php include 'student_affairs_sidebar.php'; ?>
+
+<div class="content-wrapper">
     <h1 class="mb-4">Page Info Management</h1>
 
     <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-success">
             <?php
             switch ($_GET['success']) {
                 case 1:
@@ -576,17 +947,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <!-- Page Info Section -->
-    <section class="mb-5">
+    <section class="section mb-5">
         <h2>Page Info</h2>
-        <form method="post" class="needs-validation" novalidate>
+        <form method="post" class="form-container" novalidate>
             <input type="hidden" name="update_info" value="1">
             
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($info['title'] ?? '') ?>" required>
             </div>
 
-            <div class="mb-3">
+            <div class="form-group">
                 <label for="description" class="form-label">Description</label>
                 <div class="editor-container">
                     <div class="editor-toolbar">
@@ -661,38 +1032,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="visible" name="visible" value="1" <?= ($info['visibility'] ?? 1) ? 'checked' : '' ?>>
-                <label class="form-check-label" for="visible">Visible</label>
+            <div class="form-group">
+                <label class="switch-label">
+                    Visibility
+                    <label class="switch">
+                        <input type="checkbox" id="visible" name="visible" value="1" <?= ($info['visibility'] ?? 1) ? 'checked' : '' ?>>
+                        <span class="slider"></span>
+                    </label>
+                </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Info</button>
+            <button type="submit" class="button button-primary">Update Info</button>
         </form>
     </section>
 
     <!-- Process Steps Section -->
-    <section class="mb-5">
+    <section class="section mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Process Steps</h2>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStepModal">
+            <button type="button" class="button button-primary" data-bs-toggle="modal" data-bs-target="#addStepModal">
                 <i class="fas fa-plus"></i> Add Step
             </button>
         </div>
 
         <!-- Section Title Form -->
-        <form method="post" class="mb-4">
-            <input type="hidden" name="update_process_section" value="1">
-            <div class="input-group">
-                <span class="input-group-text">Section Title</span>
-                <input type="text" class="form-control" name="process_section_title" 
-                       value="<?= htmlspecialchars($process_settings['section_title']) ?>" required>
-                <button type="submit" class="btn btn-primary">Update Section Title</button>
-            </div>
-        </form>
+        <div class="form-container">
+            <form method="post" class="mb-4">
+                <input type="hidden" name="update_process_section" value="1">
+                <div class="input-group">
+                    <span class="input-group-text">Section Title</span>
+                    <input type="text" class="form-control" name="process_section_title" 
+                           value="<?= htmlspecialchars($process_settings['section_title']) ?>" required>
+                    <button type="submit" class="button button-primary">Update Section Title</button>
+                </div>
+            </form>
+        </div>
 
         <!-- Steps List -->
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -706,12 +1084,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <tr>
                         <td><?= htmlspecialchars($step['title']) ?></td>
                         <td><?= htmlspecialchars($step['description']) ?></td>
-                        <td><?= $step['visibility'] ? 'Yes' : 'No' ?></td>
                         <td>
-                            <button class="btn btn-sm btn-warning" onclick="editStep(<?= htmlspecialchars(json_encode($step)) ?>)">
+                            <span class="status-badge <?= $step['visibility'] ? 'status-active' : 'status-inactive' ?>">
+                                <?= $step['visibility'] ? 'Yes' : 'No' ?>
+                            </span>
+                        </td>
+                        <td>
+                            <button class="button btn-sm btn-warning" onclick="editStep(<?= htmlspecialchars(json_encode($step)) ?>)">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteStep(<?= $step['id'] ?>)">
+                            <button class="button btn-sm btn-danger" onclick="deleteStep(<?= $step['id'] ?>)">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -723,28 +1105,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <!-- Downloads Section -->
-    <section class="mb-5">
+    <section class="section mb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Downloads</h2>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDownloadModal">
+            <button type="button" class="button button-primary" data-bs-toggle="modal" data-bs-target="#addDownloadModal">
                 <i class="fas fa-plus"></i> Add Download
             </button>
         </div>
 
         <!-- Section Title Form -->
-        <form method="post" class="mb-4">
-            <input type="hidden" name="update_download_section" value="1">
-            <div class="input-group">
-                <span class="input-group-text">Section Title</span>
-                <input type="text" class="form-control" name="download_section_title" 
-                       value="<?= htmlspecialchars($download_settings['section_title']) ?>" required>
-                <button type="submit" class="btn btn-primary">Update Section Title</button>
-            </div>
-        </form>
+        <div class="form-container">
+            <form method="post" class="mb-4">
+                <input type="hidden" name="update_download_section" value="1">
+                <div class="input-group">
+                    <span class="input-group-text">Section Title</span>
+                    <input type="text" class="form-control" name="download_section_title" 
+                           value="<?= htmlspecialchars($download_settings['section_title']) ?>" required>
+                    <button type="submit" class="button button-primary">Update Section Title</button>
+                </div>
+            </form>
+        </div>
 
         <!-- Downloads List -->
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -760,12 +1144,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($download['title']) ?></td>
                         <td><?= htmlspecialchars($download['description']) ?></td>
                         <td><?= htmlspecialchars($download['file_path']) ?></td>
-                        <td><?= $download['visibility'] ? 'Yes' : 'No' ?></td>
                         <td>
-                            <button class="btn btn-sm btn-warning" onclick="editDownload(<?= htmlspecialchars(json_encode($download)) ?>)">
+                            <span class="status-badge <?= $download['visibility'] ? 'status-active' : 'status-inactive' ?>">
+                                <?= $download['visibility'] ? 'Yes' : 'No' ?>
+                            </span>
+                        </td>
+                        <td>
+                            <button class="button btn-sm btn-warning" onclick="editDownload(<?= htmlspecialchars(json_encode($download)) ?>)">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteDownload(<?= $download['id'] ?>)">
+                            <button class="button btn-sm btn-danger" onclick="deleteDownload(<?= $download['id'] ?>)">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
@@ -788,24 +1176,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="modal-body">
                         <input type="hidden" name="step_action" value="add">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="step_title" class="form-label">Step Title</label>
                             <input type="text" class="form-control" id="step_title" name="step_title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="step_description" class="form-label">Step Description</label>
                             <textarea class="form-control" id="step_description" name="step_description" rows="3" required></textarea>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="step_visible" name="step_visible" value="1" checked>
-                            <label class="form-check-label" for="step_visible">Visible</label>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="step_visible" name="step_visible" value="1" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add Step</button>
+                        <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="button button-primary">Add Step</button>
                     </div>
                 </form>
             </div>
@@ -825,24 +1218,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="step_action" value="edit">
                         <input type="hidden" name="step_id" id="edit_step_id">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_step_title" class="form-label">Step Title</label>
                             <input type="text" class="form-control" id="edit_step_title" name="step_title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_step_description" class="form-label">Step Description</label>
                             <textarea class="form-control" id="edit_step_description" name="step_description" rows="3" required></textarea>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="edit_step_visible" name="step_visible" value="1">
-                            <label class="form-check-label" for="edit_step_visible">Visible</label>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="edit_step_visible" name="step_visible" value="1">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Step</button>
+                        <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="button button-primary">Update Step</button>
                     </div>
                 </form>
             </div>
@@ -861,21 +1259,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="modal-body">
                         <input type="hidden" name="add_download" value="1">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="download_title" class="form-label">Download Title</label>
                             <input type="text" class="form-control" id="download_title" name="download_title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="download_description" class="form-label">Description</label>
                             <textarea class="form-control" id="download_description" name="download_description" rows="2"></textarea>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label class="form-label">File Source</label>
                             <div class="tab-container">
-                                <button type="button" class="btn btn-outline-primary me-2 active" onclick="switchDownloadTab('file', 'add')">Upload File</button>
-                                <button type="button" class="btn btn-outline-primary" onclick="switchDownloadTab('url', 'add')">File URL</button>
+                                <button type="button" class="button btn-outline-primary me-2 active" onclick="switchDownloadTab('file', 'add')">Upload File</button>
+                                <button type="button" class="button btn-outline-primary" onclick="switchDownloadTab('url', 'add')">File URL</button>
                             </div>
 
                             <div id="add-file-tab" class="mt-3">
@@ -887,14 +1285,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="download_visible" name="download_visible" value="1" checked>
-                            <label class="form-check-label" for="download_visible">Visible</label>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="download_visible" name="download_visible" value="1" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add Download</button>
+                        <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="button button-primary">Add Download</button>
                     </div>
                 </form>
             </div>
@@ -914,21 +1317,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="download_action" value="edit">
                         <input type="hidden" name="download_id" id="edit_download_id">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_download_title" class="form-label">Download Title</label>
                             <input type="text" class="form-control" id="edit_download_title" name="download_title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_download_description" class="form-label">Description</label>
                             <textarea class="form-control" id="edit_download_description" name="download_description" rows="2"></textarea>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label class="form-label">File Source</label>
                             <div class="tab-container">
-                                <button type="button" class="btn btn-outline-primary me-2 active" onclick="switchDownloadTab('file', 'edit')">Upload File</button>
-                                <button type="button" class="btn btn-outline-primary" onclick="switchDownloadTab('url', 'edit')">File URL</button>
+                                <button type="button" class="button btn-outline-primary me-2 active" onclick="switchDownloadTab('file', 'edit')">Upload File</button>
+                                <button type="button" class="button btn-outline-primary" onclick="switchDownloadTab('url', 'edit')">File URL</button>
                             </div>
 
                             <div id="edit-file-tab" class="mt-3">
@@ -943,14 +1346,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="hidden" name="existing_file_path" id="edit_existing_file_path">
                         </div>
 
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="edit_download_visible" name="download_visible" value="1">
-                            <label class="form-check-label" for="edit_download_visible">Visible</label>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="edit_download_visible" name="download_visible" value="1">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Download</button>
+                        <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="button button-primary">Update Download</button>
                     </div>
                 </form>
             </div>
@@ -1099,5 +1507,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
     </script>
+
+</div>
+
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_persistent.js"></script>
 </body>
 </html>

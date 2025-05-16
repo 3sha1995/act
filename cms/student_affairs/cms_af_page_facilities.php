@@ -281,39 +281,444 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facilities Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
     <style>
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
+        }
+
+        .form-group, .mb-3 {
+            margin-bottom: 20px;
+        }
+
+        label, .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], select, .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus, select:focus, .form-control:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        .button, .btn, button[type="submit"], input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .button-primary, .btn-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #dd6b20;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .button:hover, .btn:hover, button[type="submit"]:hover, input[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
+        }
+
+        .btn-primary:hover, .button-primary:hover {
+            background: #2b6cb0;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-warning:hover {
+            background: #c05621;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #fff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            border-color: #93c5fd;
+        }
+
+        .section, .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .card-header {
+            background: #ebf8ff;
+            border-bottom: 1px solid #bee3f8;
+            border-radius: 12px 12px 0 0;
+            padding: 15px 25px;
+            font-weight: 600;
+            color: #2c5282;
+        }
+
+        .card-body {
+            padding: 20px 25px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 25px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .table th, .table td {
+            padding: 16px;
+            border: 1px solid #bee3f8;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        .table th {
+            background: #ebf8ff;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:hover {
+            background-color: #f0f5ff;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .alert-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .alert-danger {
+            background-color: #fed7d7;
+            color: #822727;
+            border: 1px solid #feb2b2;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: inherit;
+            border: none;
+            background: transparent;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c5282;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .status-active {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-inactive {
+            background-color: #fed7d7;
+            color: #822727;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 54, 93, 0.5);
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: 2% auto;
+            padding: 30px;
+            border: none;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.13);
+            border: 1px solid #bee3f8;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            background: #ebf8ff;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid #bee3f8;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            background: #ebf8ff;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #bee3f8;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: normal;
+            cursor: pointer;
+            color: #4a5568;
+            transition: color 0.2s ease, background 0.2s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #2c5282;
+            background-color: #ebf8ff;
+        }
+
+        /* Switch styles */
+        .switch-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+        }
+
+        input:checked + .slider {
+            background-color: #3182ce;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #3182ce;
+        }
+
         .preview-image {
             max-width: 150px;
             max-height: 100px;
             object-fit: cover;
-            border-radius: 4px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(49,130,206,0.1);
+            transition: transform 0.2s ease;
+            border: 1px solid #bee3f8;
         }
 
-        /* Editor styles */
-        .editor-container {
-            border: 1px solid #e0e0e0;
+        .preview-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .page-item {
+            list-style: none;
+        }
+        
+        .page-link {
+            padding: 8px 16px;
+            background: #ffffff;
+            border: 1px solid #bee3f8;
             border-radius: 8px;
+            color: #3182ce;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .page-link:hover {
+            background: #ebf8ff;
+            border-color: #93c5fd;
+        }
+        
+        .page-item.active .page-link {
+            background: #3182ce;
+            color: white;
+            border-color: #3182ce;
+        }
+
+        /* Editor styles - keep existing but make sure to match services.php */
+        .editor-container {
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
             overflow: hidden;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.07);
+            background: #ffffff;
         }
 
         .editor-toolbar {
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 10px;
+            background: linear-gradient(to right, #ebf8ff, #f0f7ff);
+            border-bottom: 1px solid #bee3f8;
+            padding: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
 
         .toolbar-group {
             display: flex;
-            gap: 5px;
-            padding: 0 10px;
-            border-right: 1px solid #e0e0e0;
+            gap: 8px;
+            padding: 0 12px;
+            border-right: 1px solid #bee3f8;
         }
 
         .toolbar-group:last-child {
@@ -321,27 +726,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .editor-toolbar button {
-            background: white;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            padding: 6px 12px;
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            padding: 8px 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: #444;
+            gap: 8px;
+            color: #3b82f6;
             transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .editor-toolbar button:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.1);
         }
 
         .editor-toolbar button.active {
-            background: #e9ecef;
-            border-color: #0056b3;
-            color: #0056b3;
+            background: #f0f5ff;
+            border-color: #3182ce;
+            color: #1d4ed8;
         }
 
         .editor-toolbar button i {
@@ -349,17 +757,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .editor {
-            min-height: 200px;
+            min-height: 300px;
             padding: 20px;
-            background: white;
+            background: #ffffff;
             border: none;
             outline: none;
             font-size: 16px;
             line-height: 1.6;
+            color: #1e3a8a;
         }
 
         .editor:focus {
             outline: none;
+            background: #fafbff;
         }
 
         /* Tooltip styles */
@@ -373,91 +783,108 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 4px 8px;
-            background: #333;
+            padding: 6px 12px;
+            background: #1e3a8a;
             color: white;
-            font-size: 12px;
-            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
             white-space: nowrap;
             z-index: 1000;
+            box-shadow: 0 2px 4px rgba(49,130,206,0.13);
+            opacity: 0;
+            animation: fadeIn 0.2s ease forwards;
         }
 
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                bottom: 105%;
+            }
+        }
+
+        /* Font size select styles */
         .font-size-select {
-            padding: 6px 12px;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            background: white;
+            padding: 8px 16px;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            background: #ffffff;
             cursor: pointer;
-            color: #444;
+            color: #3b82f6;
             font-size: 14px;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .font-size-select:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
         }
 
         .font-size-select:focus {
             outline: none;
-            border-color: #0056b3;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container py-4">
-        <h1>Facilities Management</h1>
 
-        <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?= htmlspecialchars($_GET['error']) ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        <?php endif; ?>
+<?php include 'student_affairs_sidebar.php'; ?>
 
-        <?php if (isset($_GET['success'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Changes have been successfully saved!
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-        <?php endif; ?>
+<div class="content-wrapper">
+    <h1>Facilities Management</h1>
 
-        <!-- Section Settings -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">Section Settings</h5>
+    <?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        <?= htmlspecialchars($_GET['error']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success">
+        Changes have been successfully saved!
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <?php endif; ?>
+
+    <!-- Section Settings -->
+    <div class="section">
+        <h2>Section Settings</h2>
+        <form action="" method="POST" class="form-container">
+            <input type="hidden" name="action" value="update_settings">
+            <div class="form-group">
+                <label for="main_title" class="form-label">Main Title</label>
+                <input type="text" class="form-control" id="main_title" name="main_title" 
+                       value="<?= htmlspecialchars($settings['main_title']) ?>" required>
             </div>
-            <div class="card-body">
-                <form action="" method="POST">
-                    <input type="hidden" name="action" value="update_settings">
-                    <div class="row align-items-end">
-                        <div class="col-md-6">
-                            <label for="main_title" class="form-label">Main Title</label>
-                            <input type="text" class="form-control" id="main_title" name="main_title" 
-                                   value="<?= htmlspecialchars($settings['main_title']) ?>" required>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="section_visible" 
-                                       name="section_visible" <?= $settings['section_visible'] ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="section_visible">Section Visible</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary w-100">Update Settings</button>
-                        </div>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label class="switch-label">
+                    Section Visibility
+                    <label class="switch">
+                        <input type="checkbox" id="section_visible" name="section_visible" <?= $settings['section_visible'] ? 'checked' : '' ?>>
+                        <span class="slider"></span>
+                    </label>
+                </label>
             </div>
-        </div>
+            <button type="submit" class="button button-primary">Update Settings</button>
+        </form>
+    </div>
 
-        <!-- Add Facility Button -->
-        <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addFacilityModal">
-            Add New Facility
-        </button>
+    <!-- Facilities Management -->
+    <div class="section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Facilities Management</h2>
+            <button type="button" class="button button-primary" data-bs-toggle="modal" data-bs-target="#addFacilityModal">
+                <i class="fas fa-plus"></i> Add New Facility
+            </button>
+        </div>
 
         <!-- Facilities Table -->
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -477,18 +904,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php endif; ?>
                         </td>
                         <td>
-                            <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" 
-                                       <?= $facility['is_visible'] ? 'checked' : '' ?>
-                                       onchange="updateVisibility(<?= $facility['id'] ?>, this.checked)">
-                            </div>
+                            <span class="status-badge <?= $facility['is_visible'] ? 'status-active' : 'status-inactive' ?>" 
+                                  style="cursor: pointer;" 
+                                  onclick="updateVisibility(<?= $facility['id'] ?>, <?= $facility['is_visible'] ? 'false' : 'true' ?>)">
+                                <?= $facility['is_visible'] ? 'Active' : 'Inactive' ?>
+                            </span>
                         </td>
                         <td>
-                            <button class="btn btn-primary btn-sm" onclick="editFacility(<?= htmlspecialchars(json_encode($facility)) ?>)">
-                                Edit
+                            <button class="button btn-sm btn-warning" onclick="editFacility(<?= htmlspecialchars(json_encode($facility)) ?>)">
+                                <i class="fas fa-edit"></i> Edit
                             </button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteFacility(<?= $facility['id'] ?>)">
-                                Delete
+                            <button class="button btn-sm btn-danger" onclick="deleteFacility(<?= $facility['id'] ?>)">
+                                <i class="fas fa-trash"></i> Delete
                             </button>
                         </td>
                     </tr>
@@ -500,7 +927,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Pagination -->
         <?php if ($totalPages > 1): ?>
         <nav aria-label="Facilities pagination" class="mt-4">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination">
                 <?php if ($page > 1): ?>
                     <li class="page-item">
                         <a class="page-link" href="?page=<?= $page - 1 ?>" aria-label="Previous">
@@ -539,12 +966,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form action="" method="POST" enctype="multipart/form-data" id="addFacilityForm">
                         <input type="hidden" name="action" value="add">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="title" class="form-label">Title</label>
                             <input type="text" class="form-control" id="title" name="title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="description" class="form-label">Description</label>
                             <div class="editor-container">
                                 <div class="editor-toolbar">
@@ -619,7 +1046,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="operating_hours" class="form-label">Operating Hours</label>
                             <div class="editor-container">
                                 <div class="editor-toolbar">
@@ -655,22 +1082,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="image" class="form-label">Image</label>
                             <input type="file" class="form-control" id="image" name="image" accept="image/*">
                         </div>
 
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" checked>
-                                <label class="form-check-label" for="is_visible">Visible</label>
-                            </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="is_visible" name="is_visible" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="submitForm('addFacilityForm')">Add Facility</button>
+                    <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="button button-primary" onclick="submitForm('addFacilityForm')">Add Facility</button>
                 </div>
             </div>
         </div>
@@ -689,12 +1119,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="id" id="edit_id">
                         
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_title" class="form-label">Title</label>
                             <input type="text" class="form-control" id="edit_title" name="title" required>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_description" class="form-label">Description</label>
                             <div class="editor-container">
                                 <div class="editor-toolbar">
@@ -769,7 +1199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_operating_hours" class="form-label">Operating Hours</label>
                             <div class="editor-container">
                                 <div class="editor-toolbar">
@@ -805,23 +1235,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="edit_image" class="form-label">Image</label>
                             <input type="file" class="form-control" id="edit_image" name="image" accept="image/*">
                             <div id="current_image" class="mt-2"></div>
                         </div>
 
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="edit_is_visible" name="is_visible">
-                                <label class="form-check-label" for="edit_is_visible">Visible</label>
-                            </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                Visibility
+                                <label class="switch">
+                                    <input type="checkbox" id="edit_is_visible" name="is_visible">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="submitForm('editFacilityForm')">Update Facility</button>
+                    <button type="button" class="button btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="button button-primary" onclick="submitForm('editFacilityForm')">Update Facility</button>
                 </div>
             </div>
         </div>
@@ -830,6 +1263,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Store facility data for use in the updateVisibility function
+        window.cg_facilities = <?= json_encode($facilities) ?>;
+        
         function execCommand(command, editorId) {
             document.getElementById(editorId).focus();
             document.execCommand(command, false, null);
@@ -936,6 +1372,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             idInput.name = 'id';
             idInput.value = id;
 
+            // Get current facility data
+            const facilityDataURL = typeof window.cg_facilities !== 'undefined' ? window.cg_facilities : {};
+            const currentData = facilityDataURL[id] || {};
+            
+            // We need to include all required form fields, not just visibility
+            const titleInput = document.createElement('input');
+            titleInput.type = 'hidden';
+            titleInput.name = 'title';
+            titleInput.value = currentData.title || '';
+
+            const descInput = document.createElement('input');
+            descInput.type = 'hidden';
+            descInput.name = 'description';
+            descInput.value = currentData.description || '';
+
+            const hoursInput = document.createElement('input');
+            hoursInput.type = 'hidden';
+            hoursInput.name = 'operating_hours';
+            hoursInput.value = currentData.operating_hours || '';
+
+            const imageInput = document.createElement('input');
+            imageInput.type = 'hidden';
+            imageInput.name = 'image';
+            imageInput.value = currentData.image || '';
+
             const visibilityInput = document.createElement('input');
             visibilityInput.type = 'hidden';
             visibilityInput.name = 'is_visible';
@@ -943,7 +1404,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             form.appendChild(actionInput);
             form.appendChild(idInput);
+            form.appendChild(titleInput);
+            form.appendChild(descInput);
+            form.appendChild(hoursInput);
+            form.appendChild(imageInput);
             form.appendChild(visibilityInput);
+            
             document.body.appendChild(form);
             form.submit();
         }
@@ -960,5 +1426,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         });
     </script>
+
+</div>
+
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_persistent.js"></script>
 </body>
 </html>

@@ -20,19 +20,37 @@ class ServicesCMS {
             // Create services table
             $sql = "CREATE TABLE IF NOT EXISTS guidance_services (
                 id int(11) NOT NULL AUTO_INCREMENT,
-                section_title varchar(255) NOT NULL DEFAULT 'Our Services',
-                section_description text NOT NULL DEFAULT 'We provide a range of guidance services to support our university community.',
-                icon_path varchar(255) NOT NULL,
                 service_title varchar(255) NOT NULL,
                 service_description text NOT NULL,
+                icon_path varchar(255) DEFAULT NULL,
                 is_visible tinyint(1) NOT NULL DEFAULT 1,
                 created_at timestamp NULL DEFAULT current_timestamp(),
                 updated_at timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                 PRIMARY KEY (id)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
             $this->pdo->exec($sql);
+
+            // Create main section table
+            $sql = "CREATE TABLE IF NOT EXISTS guidance_services_main (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                section_title varchar(255) DEFAULT 'Our Services',
+                section_description text DEFAULT NULL,
+                is_visible tinyint(1) DEFAULT 1,
+                updated_at timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+                PRIMARY KEY (id)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
+            $this->pdo->exec($sql);
+
+            // Insert default main section if not exists
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM guidance_services_main");
+            if ($stmt->fetchColumn() == 0) {
+                $sql = "INSERT INTO guidance_services_main (section_title, section_description, is_visible) 
+                        VALUES ('Our Services', 'We provide a range of services to support our university community.', 1)";
+                $this->pdo->exec($sql);
+            }
         } catch (PDOException $e) {
-            error_log("Error creating guidance_services table: " . $e->getMessage());
+            error_log("Error creating tables: " . $e->getMessage());
+            throw $e;
         }
     }
 
@@ -114,7 +132,7 @@ class ServicesCMS {
     }
 
     // Fetch all services
-    public function getAllServices($page = 1, $perPage = 6) {
+    public function getAllServices($page = 1, $perPage = 10) {
         try {
             // Get total count
             $countStmt = $this->pdo->query("SELECT COUNT(*) FROM guidance_services");
@@ -128,10 +146,9 @@ class ServicesCMS {
             $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
             $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
-            $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             return [
-                'services' => $services,
+                'services' => $stmt->fetchAll(PDO::FETCH_ASSOC),
                 'total' => $totalServices,
                 'pages' => ceil($totalServices / $perPage),
                 'current_page' => $page
@@ -205,102 +222,168 @@ class ServicesCMS {
     public function addService($data) {
         try {
             // Handle icon upload
-            $iconPath = $this->handleIconUpload($_FILES);
+            $iconPath = '';
             
-            $stmt = $this->pdo->prepare("INSERT INTO guidance_services (service_title, service_description, icon_path, is_visible)
-                                       VALUES (:service_title, :service_description, :icon_path, :is_visible)");
+            // Check if file is uploaded
+            if (isset($_FILES['icon_file']) && $_FILES['icon_file']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['icon_file'];
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                
+                if (!in_array($file['type'], $allowedTypes)) {
+                    throw new Exception('Invalid file type. Only JPG, PNG and GIF are allowed.');
+                }
+                
+                // Generate unique filename
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filename = 'service_icon_' . uniqid() . '.' . $ext;
+                
+                // Move uploaded file
+                if (move_uploaded_file($file['tmp_name'], $this->upload_dir . $filename)) {
+                    $iconPath = 'uploads/services/' . $filename;
+                } else {
+                    throw new Exception('Failed to upload file');
+                }
+            } 
+            // If URL is provided instead of file
+            elseif (isset($_POST['icon_url']) && !empty($_POST['icon_url'])) {
+                $iconPath = $_POST['icon_url'];
+            }
+            // If Font Awesome icon class is provided
+            elseif (isset($_POST['icon_class']) && !empty($_POST['icon_class'])) {
+                $iconPath = $_POST['icon_class'];
+            }
             
-            return $stmt->execute([
+            $stmt = $this->pdo->prepare("INSERT INTO guidance_services 
+                (service_title, service_description, icon_path, is_visible)
+                VALUES (:service_title, :service_description, :icon_path, :is_visible)");
+            
+            $result = $stmt->execute([
                 'service_title' => $data['service_title'],
                 'service_description' => $data['service_description'],
                 'icon_path' => $iconPath,
-                'is_visible' => $data['is_visible']
+                'is_visible' => isset($data['is_visible']) ? 1 : 0
             ]);
+
+            if (!$result) {
+                throw new Exception("Failed to add service: " . implode(", ", $stmt->errorInfo()));
+            }
+
+            return true;
         } catch (Exception $e) {
             error_log("Error adding service: " . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 
     public function updateService($id, $data) {
         try {
-            // Get current icon
-            $stmt = $this->pdo->prepare("SELECT icon_path FROM guidance_services WHERE id = ?");
-            $stmt->execute([$id]);
-            $currentIcon = $stmt->fetchColumn();
-            error_log("Current icon for service ID $id: " . $currentIcon);
-
-            // Handle icon update
-            $iconPath = $currentIcon; // Default to current icon
+            // Handle icon update similar to addService
+            $iconPath = null;
             
-            // Check if new file is uploaded
             if (isset($_FILES['icon_file']) && $_FILES['icon_file']['error'] === UPLOAD_ERR_OK) {
-                error_log("New file uploaded for service ID: " . $id);
-                $iconPath = $this->handleIconUpload($_FILES, $currentIcon);
-            }
-            // Check if new URL is provided
-            elseif (isset($_POST['icon_url']) && !empty($_POST['icon_url'])) {
-                error_log("New URL provided for service ID: " . $id);
-                $iconPath = $this->handleIconUpload($_FILES, $currentIcon);
+                // Handle file upload
+                $file = $_FILES['icon_file'];
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                
+                if (!in_array($file['type'], $allowedTypes)) {
+                    throw new Exception('Invalid file type. Only JPG, PNG and GIF are allowed.');
+                }
+                
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filename = 'service_icon_' . uniqid() . '.' . $ext;
+                
+                if (move_uploaded_file($file['tmp_name'], $this->upload_dir . $filename)) {
+                    $iconPath = 'uploads/services/' . $filename;
+                    
+                    // Delete old icon if it exists
+                    $stmt = $this->pdo->prepare("SELECT icon_path FROM guidance_services WHERE id = ?");
+                    $stmt->execute([$id]);
+                    $oldIcon = $stmt->fetchColumn();
+                    
+                    if ($oldIcon && strpos($oldIcon, 'uploads/services/') === 0) {
+                        $oldPath = '../' . $oldIcon;
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath);
+                        }
+                    }
+                }
+            } elseif (isset($_POST['icon_url']) && !empty($_POST['icon_url'])) {
+                $iconPath = $_POST['icon_url'];
+            } elseif (isset($_POST['icon_class']) && !empty($_POST['icon_class'])) {
+                $iconPath = $_POST['icon_class'];
             }
 
-            error_log("Final icon path for update: " . $iconPath);
+            // Build update query
+            $sql = "UPDATE guidance_services SET 
+                    service_title = :service_title,
+                    service_description = :service_description,
+                    is_visible = :is_visible";
             
-            $stmt = $this->pdo->prepare("UPDATE guidance_services 
-                                       SET service_title = :service_title,
-                                           service_description = :service_description,
-                                           icon_path = :icon_path,
-                                           is_visible = :is_visible
-                                       WHERE id = :id");
+            if ($iconPath !== null) {
+                $sql .= ", icon_path = :icon_path";
+            }
             
-            return $stmt->execute([
+            $sql .= " WHERE id = :id";
+            
+            $stmt = $this->pdo->prepare($sql);
+            
+            $params = [
                 'id' => $id,
                 'service_title' => $data['service_title'],
                 'service_description' => $data['service_description'],
-                'icon_path' => $iconPath,
-                'is_visible' => $data['is_visible']
-            ]);
+                'is_visible' => isset($data['is_visible']) ? 1 : 0
+            ];
+            
+            if ($iconPath !== null) {
+                $params['icon_path'] = $iconPath;
+            }
+            
+            return $stmt->execute($params);
         } catch (Exception $e) {
             error_log("Error updating service: " . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 
     public function deleteService($id) {
         try {
-            // Get the icon path before deleting
+            // Get the service icon path before deleting
             $stmt = $this->pdo->prepare("SELECT icon_path FROM guidance_services WHERE id = ?");
             $stmt->execute([$id]);
-            $service = $stmt->fetch();
-
+            $iconPath = $stmt->fetchColumn();
+            
             // Delete the service
             $stmt = $this->pdo->prepare("DELETE FROM guidance_services WHERE id = ?");
             $result = $stmt->execute([$id]);
-
-            // If deletion was successful and there's an icon file
-            if ($result && $service && $service['icon_path']) {
-                $iconPath = $service['icon_path'];
-                // Only delete if it's a local file (not a URL)
-                if (!filter_var($iconPath, FILTER_VALIDATE_URL)) {
-                    $fullPath = $this->upload_dir . basename($iconPath);
-                    if (file_exists($fullPath)) {
-                        unlink($fullPath);
-                    }
+            
+            // If deletion was successful and there's an icon file, delete it
+            if ($result && $iconPath && strpos($iconPath, 'uploads/services/') === 0) {
+                $fullPath = '../' . $iconPath;
+                if (file_exists($fullPath)) {
+                    unlink($fullPath);
                 }
             }
-
+            
             return $result;
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             error_log("Error deleting service: " . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 }
 
-// Instantiate
+// Initialize and handle form
+try {
+    if (!isset($pdo)) {
+        throw new Exception("Database connection not available");
+    }
+    
 $cms = new ServicesCMS($pdo);
 
-// Handle actions
+    // Get main section data
+    $mainSection = $cms->getMainSection();
+
+    // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if (isset($_POST['update_main'])) {
@@ -310,6 +393,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 isset($_POST['main_visible']) ? 1 : 0
             );
             $_SESSION['success'] = 'Main section updated successfully';
+                $mainSection = $cms->getMainSection(); // Refresh data
         }
         
         if (isset($_POST['add_service'])) {
@@ -319,8 +403,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'is_visible' => isset($_POST['is_visible']) ? 1 : 0
             ])) {
                 $_SESSION['success'] = 'Service added successfully';
-            } else {
-                $_SESSION['error'] = 'Failed to add service';
             }
         }
 
@@ -331,50 +413,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'is_visible' => isset($_POST['is_visible']) ? 1 : 0
             ];
 
-            // Handle icon update
-            if (!empty($_FILES['icon_file']['name'])) {
-                $serviceData['icon_file'] = $_FILES['icon_file'];
-            } elseif (!empty($_POST['icon_url'])) {
-                $serviceData['icon_path'] = $_POST['icon_url'];
-            }
-
             if ($cms->updateService($_POST['id'], $serviceData)) {
                 $_SESSION['success'] = 'Service updated successfully';
-            } else {
-                $_SESSION['error'] = 'Failed to update service';
             }
         }
 
         if (isset($_POST['delete_service'])) {
             if ($cms->deleteService($_POST['id'])) {
                 $_SESSION['success'] = 'Service deleted successfully';
-            } else {
-                $_SESSION['error'] = 'Failed to delete service';
             }
         }
     } catch (Exception $e) {
         $_SESSION['error'] = $e->getMessage();
     }
 
-    // If it's an AJAX request, send JSON response
-    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-        header('Content-Type: application/json');
-        echo json_encode([
-            'success' => !isset($_SESSION['error']),
-            'message' => isset($_SESSION['error']) ? $_SESSION['error'] : $_SESSION['success']
-        ]);
-        exit;
-    }
-
-    // For regular form submissions, redirect
+        // Redirect after POST to prevent form resubmission
     header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
 
-$mainSection = $cms->getMainSection();
+    // Get services data for display
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $servicesData = $cms->getAllServices($page);
 $services = $servicesData['services'];
+} catch (Exception $e) {
+    error_log("CMS Error: " . $e->getMessage());
+    echo "<div class='error-message'>An error occurred: " . htmlspecialchars($e->getMessage()) . "</div>";
+    $mainSection = ['section_title' => 'Our Services', 'section_description' => '', 'is_visible' => 1];
+    $services = [];
+}
 
 // Convert services to JSON for JavaScript
 $servicesJson = json_encode($services);
@@ -728,6 +795,166 @@ $servicesJson = json_encode($services);
             color: white;
             border-color: #007bff;
         }
+
+        /* Additional styles for main section */
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .services-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .services-table th,
+        .services-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .services-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .icon-cell {
+            width: 60px;
+            text-align: center;
+        }
+
+        .icon-cell img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .icon-cell i {
+            font-size: 24px;
+            color: #B32134;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .status-badge.active {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-badge.inactive {
+            background: #dc3545;
+            color: white;
+        }
+
+        .actions-cell {
+            white-space: nowrap;
+            width: 150px;
+        }
+
+        .edit-btn,
+        .delete-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin: 0 2px;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #0056b3;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .add-btn:hover {
+            background: #218838;
+        }
+
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .page-link {
+            padding: 8px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .page-link.active {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .page-link:hover:not(.active) {
+            background: #e9ecef;
+        }
     </style>
     <script>
         // Make services data available to JavaScript
@@ -746,77 +973,7 @@ $servicesJson = json_encode($services);
                 </div>
                 <div class="form-group">
                     <label>Section Description:</label>
-                    <div class="editor-container">
-                        <div class="editor-toolbar">
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execMainCommand('bold')" class="tooltip" data-tooltip="Bold">
-                                    <i class="fas fa-bold"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('italic')" class="tooltip" data-tooltip="Italic">
-                                    <i class="fas fa-italic"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('underline')" class="tooltip" data-tooltip="Underline">
-                                    <i class="fas fa-underline"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('strikeThrough')" class="tooltip" data-tooltip="Strike">
-                                    <i class="fas fa-strikethrough"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <select onchange="execMainCommandWithArg('fontSize', this.value)" class="font-size-select tooltip" data-tooltip="Font Size">
-                                    <option value="1">Very Small</option>
-                                    <option value="2">Small</option>
-                                    <option value="3">Normal</option>
-                                    <option value="4">Large</option>
-                                    <option value="5">Very Large</option>
-                                    <option value="6">Extra Large</option>
-                                    <option value="7">Huge</option>
-                                </select>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execMainCommand('justifyLeft')" class="tooltip" data-tooltip="Align Left">
-                                    <i class="fas fa-align-left"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('justifyCenter')" class="tooltip" data-tooltip="Align Center">
-                                    <i class="fas fa-align-center"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('justifyRight')" class="tooltip" data-tooltip="Align Right">
-                                    <i class="fas fa-align-right"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('justifyFull')" class="tooltip" data-tooltip="Justify">
-                                    <i class="fas fa-align-justify"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execMainCommand('insertUnorderedList')" class="tooltip" data-tooltip="Bullet List">
-                                    <i class="fas fa-list-ul"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('insertOrderedList')" class="tooltip" data-tooltip="Number List">
-                                    <i class="fas fa-list-ol"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('indent')" class="tooltip" data-tooltip="Indent">
-                                    <i class="fas fa-indent"></i>
-                                </button>
-                                <button type="button" onclick="execMainCommand('outdent')" class="tooltip" data-tooltip="Outdent">
-                                    <i class="fas fa-outdent"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execMainCommand('removeFormat')" class="tooltip" data-tooltip="Clear Format">
-                                    <i class="fas fa-eraser"></i>
-                                </button>
-                                <button type="button" onclick="createMainLink()" class="tooltip" data-tooltip="Insert Link">
-                                    <i class="fas fa-link"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="editor" id="main_description" contenteditable="true"><?= htmlspecialchars($mainSection['section_description']) ?></div>
-                        <input type="hidden" name="main_description" id="main_description_input">
-                    </div>
+                    <textarea name="main_description" required><?= htmlspecialchars($mainSection['section_description']) ?></textarea>
                 </div>
                 <div class="form-group">
                     <label>
@@ -838,86 +995,78 @@ $servicesJson = json_encode($services);
             </button>
 
             <!-- Services Table -->
-<h3>Existing Services</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Icon</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-<?php foreach ($services as $service): ?>
-                    <tr data-id="<?= $service['id'] ?>">
-                        <td><?= htmlspecialchars($service['service_title']) ?></td>
-                        <td>
-                            <?= htmlspecialchars(substr(strip_tags($service['service_description']), 0, 50)) ?>...
-                            <input type="hidden" name="full_description" value="<?= htmlspecialchars($service['service_description']) ?>">
-                        </td>
-                        <td>
-                            <?php if (strpos($service['icon_path'], 'http') === 0 || strpos($service['icon_path'], '../') === 0): ?>
-                                <img src="<?= htmlspecialchars($service['icon_path']) ?>" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
-                            <?php elseif (strpos($service['icon_path'], 'uploads/') === 0): ?>
-                                <img src="../<?= htmlspecialchars($service['icon_path']) ?>" alt="Icon" style="width: 24px; height: 24px; object-fit: contain;">
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <span class="status-badge <?= $service['is_visible'] ? 'status-active' : 'status-inactive' ?>">
-                                <?= $service['is_visible'] ? 'Active' : 'Inactive' ?>
-                            </span>
-                        </td>
-                        <td><?= date('Y-m-d', strtotime($service['created_at'])) ?></td>
-                        <td>
-                            <button onclick="editService(<?= $service['id'] ?>)" type="button">Edit</button>
-                            <form method="POST" style="display: inline;">
-        <input type="hidden" name="id" value="<?= $service['id'] ?>">
-                                <button type="submit" name="delete_service" class="delete-btn" 
-                                        onclick="return confirm('Are you sure you want to delete this service?')">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <!-- Preview Cards -->
-            <h3>Preview Cards</h3>
-            <div class="preview-grid">
-                <?php foreach ($services as $service): ?>
-                <?php if ($service['is_visible']): ?>
-                <div class="preview-card">
-                    <?php if (strpos($service['icon_path'], 'http') === 0 || strpos($service['icon_path'], 'data:image') === 0 || strpos($service['icon_path'], '../') === 0): ?>
-                        <img src="<?= htmlspecialchars($service['icon_path']) ?>" alt="Icon" style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 15px;">
-                    <?php else: ?>
-                        <i class="<?= htmlspecialchars($service['icon_path']) ?>"></i>
-                    <?php endif; ?>
-                    <h3><?= htmlspecialchars($service['service_title']) ?></h3>
-                    <p><?= htmlspecialchars($service['service_description']) ?></p>
-                </div>
-                <?php endif; ?>
-                <?php endforeach; ?>
+            <div class="table-responsive">
+                <table class="services-table">
+                    <thead>
+                        <tr>
+                            <th>Icon</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $services = $cms->getAllServices();
+                        if (!empty($services['services'])): 
+                            foreach ($services['services'] as $service): 
+                        ?>
+                            <tr>
+                                <td class="icon-cell">
+                                    <?php
+                                    $iconPath = $service['icon_path'];
+                                    if (empty($iconPath)) {
+                                        echo '<i class="fas fa-cube"></i>';
+                                    } elseif (strpos($iconPath, 'fa-') !== false) {
+                                        echo '<i class="' . htmlspecialchars($iconPath) . '"></i>';
+                                    } elseif (strpos($iconPath, 'http') === 0) {
+                                        echo '<img src="' . htmlspecialchars($iconPath) . '" alt="Icon">';
+                                    } else {
+                                        $path = strpos($iconPath, '../') === 0 ? $iconPath : '../' . $iconPath;
+                                        echo '<img src="' . htmlspecialchars($path) . '" alt="Icon">';
+                                    }
+                                    ?>
+                                </td>
+                                <td><?= htmlspecialchars($service['service_title']) ?></td>
+                                <td><?= htmlspecialchars(substr(strip_tags($service['service_description']), 0, 100)) ?>...</td>
+                                <td>
+                                    <span class="status-badge <?= $service['is_visible'] ? 'active' : 'inactive' ?>">
+                                        <?= $service['is_visible'] ? 'Active' : 'Inactive' ?>
+                                    </span>
+                                </td>
+                                <td class="actions-cell">
+                                    <button onclick="editService(<?= $service['id'] ?>)" class="edit-btn">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <form method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                        <input type="hidden" name="id" value="<?= $service['id'] ?>">
+                                        <button type="submit" name="delete_service" class="delete-btn">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php 
+                            endforeach; 
+                        else: 
+                        ?>
+                            <tr>
+                                <td colspan="5" class="no-data">No services found</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Pagination -->
-            <?php if ($servicesData['pages'] > 1): ?>
+            <?php if ($services['pages'] > 1): ?>
             <div class="pagination">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?= $page - 1 ?>#services" class="pagination-button" onclick="saveScrollPosition()">&laquo; Previous</a>
-                <?php endif; ?>
-                
-                <?php for ($i = 1; $i <= $servicesData['pages']; $i++): ?>
-                    <a href="?page=<?= $i ?>#services" class="pagination-button <?= $i === $page ? 'active' : '' ?>" onclick="saveScrollPosition()">
+                <?php for ($i = 1; $i <= $services['pages']; $i++): ?>
+                    <a href="?page=<?= $i ?>" class="page-link <?= $services['current_page'] == $i ? 'active' : '' ?>">
                         <?= $i ?>
                     </a>
                 <?php endfor; ?>
-                
-                <?php if ($page < $servicesData['pages']): ?>
-                    <a href="?page=<?= $page + 1 ?>#services" class="pagination-button" onclick="saveScrollPosition()">Next &raquo;</a>
-                <?php endif; ?>
             </div>
             <?php endif; ?>
         </div>
@@ -939,95 +1088,29 @@ $servicesJson = json_encode($services);
                     <div class="tab-container">
                         <button type="button" class="tab-button active" onclick="switchIconTab('file')">Upload File</button>
                         <button type="button" class="tab-button" onclick="switchIconTab('url')">Icon URL</button>
+                        <button type="button" class="tab-button" onclick="switchIconTab('class')">Icon Class</button>
                     </div>
 
                     <div id="icon-file-tab" class="tab-content active">
-                        <input type="file" id="icon_file" name="icon_file" accept="image/*" onchange="previewIconFile(this)">
+                        <input type="file" name="icon_file" accept="image/*" onchange="previewIcon(this)">
                     </div>
 
                     <div id="icon-url-tab" class="tab-content">
-                        <input type="url" id="icon_url" name="icon_url" placeholder="Enter icon URL" onchange="updateIconFromUrl(this)">
+                        <input type="url" name="icon_url" placeholder="Enter icon URL">
                     </div>
 
-                    <input type="hidden" name="icon_path" id="icon_path">
+                    <div id="icon-class-tab" class="tab-content">
+                        <input type="text" name="icon_class" placeholder="Enter Font Awesome class (e.g., fas fa-user)">
+                    </div>
+
                     <div class="icon-preview">
-                        <img id="icon_preview_img" style="display: none; max-width: 48px; max-height: 48px; object-fit: contain;">
+                        <img id="icon-preview-img" style="display: none; max-width: 100px; margin-top: 10px;">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Service Description:</label>
-                    <div class="editor-container">
-                        <div class="editor-toolbar">
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execCommand('bold')" class="tooltip" data-tooltip="Bold">
-                                    <i class="fas fa-bold"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('italic')" class="tooltip" data-tooltip="Italic">
-                                    <i class="fas fa-italic"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('underline')" class="tooltip" data-tooltip="Underline">
-                                    <i class="fas fa-underline"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('strikeThrough')" class="tooltip" data-tooltip="Strike">
-                                    <i class="fas fa-strikethrough"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <select onchange="execCommandWithArg('fontSize', this.value)" class="font-size-select tooltip" data-tooltip="Font Size">
-                                    <option value="1">Very Small</option>
-                                    <option value="2">Small</option>
-                                    <option value="3">Normal</option>
-                                    <option value="4">Large</option>
-                                    <option value="5">Very Large</option>
-                                    <option value="6">Extra Large</option>
-                                    <option value="7">Huge</option>
-                                </select>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execCommand('justifyLeft')" class="tooltip" data-tooltip="Align Left">
-                                    <i class="fas fa-align-left"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('justifyCenter')" class="tooltip" data-tooltip="Align Center">
-                                    <i class="fas fa-align-center"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('justifyRight')" class="tooltip" data-tooltip="Align Right">
-                                    <i class="fas fa-align-right"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('justifyFull')" class="tooltip" data-tooltip="Justify">
-                                    <i class="fas fa-align-justify"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execCommand('insertUnorderedList')" class="tooltip" data-tooltip="Bullet List">
-                                    <i class="fas fa-list-ul"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('insertOrderedList')" class="tooltip" data-tooltip="Number List">
-                                    <i class="fas fa-list-ol"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('indent')" class="tooltip" data-tooltip="Indent">
-                                    <i class="fas fa-indent"></i>
-                                </button>
-                                <button type="button" onclick="execCommand('outdent')" class="tooltip" data-tooltip="Outdent">
-                                    <i class="fas fa-outdent"></i>
-                                </button>
-                            </div>
-
-                            <div class="toolbar-group">
-                                <button type="button" onclick="execCommand('removeFormat')" class="tooltip" data-tooltip="Clear Format">
-                                    <i class="fas fa-eraser"></i>
-                                </button>
-                                <button type="button" onclick="createLink()" class="tooltip" data-tooltip="Insert Link">
-                                    <i class="fas fa-link"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="editor" id="service_description" contenteditable="true"></div>
-                        <input type="hidden" name="service_description" id="service_description_input">
-                    </div>
+                    <textarea name="service_description" required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -1036,7 +1119,8 @@ $servicesJson = json_encode($services);
                         Visible
                     </label>
                 </div>
-                <button type="submit" name="add_service">Add Service</button>
+
+                <button type="submit" name="add_service" class="submit-btn">Add Service</button>
             </form>
         </div>
     </div>
@@ -1168,6 +1252,8 @@ $servicesJson = json_encode($services);
 
         function closeAddModal() {
             document.getElementById('addModal').style.display = 'none';
+            document.getElementById('addServiceForm').reset();
+            document.getElementById('icon-preview-img').style.display = 'none';
         }
 
         // Edit Service Modal Functions
@@ -1175,9 +1261,9 @@ $servicesJson = json_encode($services);
             const row = document.querySelector(`tr[data-id="${id}"]`);
             if (!row) return;
 
-            const title = row.querySelector('td:first-child').textContent;
-            const description = row.querySelector('input[name="full_description"]').value;
-            const iconCell = row.querySelector('td:nth-child(3)');
+            const title = row.querySelector('td:nth-child(2)').textContent;
+            const description = row.querySelector('td:nth-child(3)').textContent;
+            const iconCell = row.querySelector('td:nth-child(1)');
             const iconImg = iconCell.querySelector('img');
             const isVisible = row.querySelector('.status-badge').classList.contains('status-active');
 
@@ -1213,7 +1299,6 @@ $servicesJson = json_encode($services);
             // Reset form
             document.getElementById('editServiceForm').reset();
             document.getElementById('edit-icon-preview').style.display = 'none';
-            document.getElementById('edit_service_description').innerHTML = '';
         }
 
         // Icon Functions
@@ -1228,7 +1313,7 @@ $servicesJson = json_encode($services);
         }
 
         function updateIconPreview(input) {
-            const preview = document.getElementById('icon_preview_img');
+            const preview = document.getElementById('icon-preview-img');
             const iconClassInput = document.getElementById('icon_path');
             
             if (!input.value) {
@@ -1267,11 +1352,11 @@ $servicesJson = json_encode($services);
             }
         }
 
-        function previewIconFile(input) {
+        function previewIcon(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                const preview = document.getElementById('icon_preview_img');
-                const iconPreview = document.getElementById('icon_preview_icon');
+                const preview = document.getElementById('icon-preview-img');
+                const iconPreview = document.getElementById('icon-preview-icon');
                 const iconClassInput = document.getElementById('icon_path');
                 
                 reader.onload = function(e) {
@@ -1297,14 +1382,10 @@ $servicesJson = json_encode($services);
             document.getElementById(`icon-${tabName}-tab`).classList.add('active');
             event.target.classList.add('active');
 
-            // Reset preview based on active tab
-            const iconClassInput = document.getElementById('icon_path');
-            if (tabName === 'custom') {
-                iconClassInput.value = 'fas fa-'; // Default FontAwesome prefix
-            } else {
-                iconClassInput.value = ''; // Clear for other tabs
-            }
-            updateIconPreview(iconClassInput);
+            // Clear other inputs
+            if (tabName !== 'file') document.querySelector('input[name="icon_file"]').value = '';
+            if (tabName !== 'url') document.querySelector('input[name="icon_url"]').value = '';
+            if (tabName !== 'class') document.querySelector('input[name="icon_class"]').value = '';
         }
 
         // Rich text editor functions

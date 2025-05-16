@@ -20,82 +20,38 @@ try {
     $stmt->execute();
     $mvContent = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Fetch Process Info content
-    $stmt = $pdo->prepare("SELECT * FROM guidance_process_info WHERE id = 1");
-    $stmt->execute();
-    $processInfo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Fetch Objectives section
+    // If no content found, set default values
+    if (!$mvContent) {
+        $mvContent = [
+            'section_title' => 'MISSION AND VISION',
+            'mission_title' => 'MISSION',
+            'mission_image_url' => '../imgs/default.jpg',
+            'mission_description' => 'Default mission description',
+            'mission_show_more_text' => 'SHOW MORE',
+            'vision_title' => 'VISION',
+            'vision_image_url' => '../imgs/default.jpg',
+            'vision_description' => 'Default vision description',
+            'vision_show_more_text' => 'SHOW MORE',
+            'is_visible' => 1
+        ];
+    }
+    
+    // Fetch Objectives content
     $stmt = $pdo->prepare("SELECT * FROM guidance_obj WHERE id = 1");
     $stmt->execute();
     $objectivesContent = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Fetch Functions section
+    // Fetch Functions content
     $stmt = $pdo->prepare("SELECT * FROM guidance_funct WHERE id = 1");
     $stmt->execute();
     $functionsContent = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Fetch services content
-    $stmt = $pdo->query("SELECT * FROM guidance_services_main WHERE id = 1");
-    $servicesMain = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Fetch all visible services
-    $stmt = $pdo->query("SELECT * FROM guidance_services WHERE is_visible = 1 ORDER BY created_at DESC");
-    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Fetch activities content
-    $stmt = $pdo->query("SELECT * FROM guidance_settings WHERE id = 1");
-    $activitiesSettings = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    // Get visible activities ordered by date
-    $stmt = $pdo->query("SELECT * FROM guidance_activities WHERE is_visible = 1 ORDER BY event_date DESC");
-    $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Fetch facilities content
-    $stmt = $pdo->query("SELECT * FROM guidance_facilities_settings WHERE id = 1");
-    $facilitiesSettings = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    // Get visible facilities
-    $stmt = $pdo->query("SELECT * FROM guidance_facilities WHERE is_visible = 1 ORDER BY id DESC");
-    $facilities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Fetch officers
-    $stmt = $pdo->query("SELECT section_visible FROM guidance_officer LIMIT 1");
-    $sectionVisibility = $stmt->fetch(PDO::FETCH_ASSOC);
-    $isSectionVisible = $sectionVisibility ? $sectionVisibility['section_visible'] : 1;
-
-    if ($isSectionVisible) {
-        $stmt = $pdo->query("SELECT * FROM guidance_officer WHERE is_visible = 1 ORDER BY id DESC");
-        $officers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // Fetch contact information
-    $stmt = $pdo->query("SELECT section_title, section_visible FROM guidance_contact WHERE id = 1");
-    $contactSettings = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($contactSettings && $contactSettings['section_visible']) {
-        $stmt = $pdo->query("SELECT * FROM guidance_contact WHERE is_visible = 1 ORDER BY contact_type");
-        $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
     
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
-    // Set default values for all variables
     $aboutContent = null;
     $mvContent = null;
-    $processInfo = null;
     $objectivesContent = null;
     $functionsContent = null;
-    $servicesMain = null;
-    $services = [];
-    $activitiesSettings = null;
-    $activities = [];
-    $facilitiesSettings = null;
-    $facilities = [];
-    $officers = [];
-    $isSectionVisible = 0;
-    $contactSettings = null;
-    $contacts = [];
 }
 
 // Helper function to handle image paths
@@ -108,25 +64,28 @@ function getImagePath($path) {
 
 // Only display if content exists and is visible
 if ($aboutContent && $aboutContent['is_visible']):
+  
 ?>
-<!-- About Section -->
+<!-- New About Section -->
 <section class="student_affairs_about_section">
     <div class="student_affairs_about_container">
    
     <div class="student_affairs_about_header scroll-fade">
-        <div class="student_affairs_about_ontop_title"><?php echo htmlspecialchars($aboutContent['ontop_title']); ?></div>
-        <h2 class="student_affairs_about_title"><?php echo htmlspecialchars($aboutContent['main_title']); ?></h2>
-        <div class="student_affair_about_divider"></div>
+    <div class="student_affairs_about_ontop_title"><?php echo htmlspecialchars($aboutContent['ontop_title']); ?></div>
+    <h2 class="student_affairs_about_title"><?php echo htmlspecialchars($aboutContent['main_title']); ?></h2>
+    <div class="student_affair_about_divider"></div>
     </div>
    
-    <div class="student_affairs_about_content scroll-fade">
-        <div class="student_affairs_about_image">
-            <img src="<?php echo getImagePath($aboutContent['image_path']); ?>" alt="Guidance Services">
-        </div>
-        
-        <div class="student_affairs_about_text">
-            <div class="student_affairs_about_description">
-                <?php echo $aboutContent['description']; ?>
+     
+        <div class="student_affairs_about_content scroll-fade">
+            <div class="student_affairs_about_image">
+                <img src="<?php echo htmlspecialchars(getImagePath($aboutContent['image_path'])); ?>" alt="WMSU Guidance Office">
+            </div>
+            
+            <div class="student_affairs_about_text">
+                <div class="student_affairs_about_description">
+                    <?php echo $aboutContent['description']; ?>
+                </div>
             </div>
         </div>
     </div>
@@ -134,14 +93,53 @@ if ($aboutContent && $aboutContent['is_visible']):
 </section>
 <?php endif;
 
-// Update the Mission & Vision section to use correct image fields
-if ($mvContent && $mvContent['is_visible']): ?>
+// Fetch officers from database
+try {
+    // First check section visibility
+    $stmt = $pdo->query("SELECT section_visible FROM af_page_officer LIMIT 1");
+    $sectionVisibility = $stmt->fetch(PDO::FETCH_ASSOC);
+    $isSectionVisible = $sectionVisibility ? $sectionVisibility['section_visible'] : 1;
+
+    // Only fetch officers if section is visible
+    $officers = [];
+    if ($isSectionVisible) {
+        $stmt = $pdo->query("SELECT * FROM af_page_officer WHERE is_visible = 1 ORDER BY id DESC");
+        $officers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+} catch (PDOException $e) {
+    error_log("Error fetching officers: " . $e->getMessage());
+    $officers = [];
+    $isSectionVisible = 0;
+}
+?>
+
+<script>
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    document.querySelectorAll('.scroll-fade').forEach(el => {
+        observer.observe(el);
+    });
+</script>
+
+
     <section class="student_affair_mv_wrapper">
+    <?php if ($mvContent && $mvContent['is_visible']): ?>
         <h2 class="student_affair_mv_main_title"><?= htmlspecialchars($mvContent['section_title']) ?></h2>
         <div class="student_affair_mv_divider"></div>
         <section class="student_affair_mv_container">
+            <!-- Mission Box -->
             <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
-                <img src="<?= !empty($mvContent['mission_image']) ? htmlspecialchars($mvContent['mission_image']) : '../imgs/cte.jpg' ?>" alt="WMSU Mission">
+                <img src="<?= htmlspecialchars($mvContent['mission_image_url']) ?>" 
+                     alt="<?= htmlspecialchars($mvContent['mission_title']) ?>"
+                     onerror="this.src='../imgs/default.jpg';">
                 <div class="student_affair_mv_overlay_mission"></div>
                 <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['mission_title']) ?></h2>
@@ -154,8 +152,11 @@ if ($mvContent && $mvContent['is_visible']): ?>
                 </div>
             </div>
             
+            <!-- Vision Box -->
             <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
-                <img src="<?= !empty($mvContent['vision_image']) ? htmlspecialchars($mvContent['vision_image']) : '../imgs/cte-field.png' ?>" alt="WMSU Vision">
+                <img src="<?= htmlspecialchars($mvContent['vision_image_url']) ?>" 
+                     alt="<?= htmlspecialchars($mvContent['vision_title']) ?>"
+                     onerror="this.src='../imgs/default.jpg';">
                 <div class="student_affair_mv_overlay_vision"></div>
                 <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['vision_title']) ?></h2>
@@ -168,8 +169,8 @@ if ($mvContent && $mvContent['is_visible']): ?>
                 </div>
             </div>
         </section>
+    <?php endif; ?>
     </section>
-<?php endif; ?>
 
 <!-- Objectives Section -->
 <section class="student_affairs_objectives_section">
@@ -179,7 +180,7 @@ if ($mvContent && $mvContent['is_visible']): ?>
         <div class="student_affairs_objectives_divider"></div>
         
         <div class="student_affairs_objectives_content">
-            <?= $objectivesContent['description'] ?>
+             <p class="student_affairs_objectives_description"><?= $objectivesContent['description'] ?> 
         </div>
     </div>
     <?php endif; ?>
@@ -193,13 +194,29 @@ if ($mvContent && $mvContent['is_visible']): ?>
         <div class="student_affairs_functions_divider"></div>
         
         <div class="student_affairs_functions_content">
-            <?= $functionsContent['description'] ?>
+        <p class="student_affairs_objectives_description">  <?= $functionsContent['description'] ?>
         </div>
     </div>
     <?php endif; ?>
 </section>
 
-<!-- Update Services section to use icon_path instead of icon_class -->
+<?php
+// Fetch services content
+try {
+    // Fetch main section content
+    $stmt = $pdo->query("SELECT * FROM guidance_services_main WHERE id = 1");
+    $servicesMain = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Fetch all visible services
+    $stmt = $pdo->query("SELECT * FROM guidance_services WHERE is_visible = 1 ORDER BY created_at DESC");
+    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error fetching services: " . $e->getMessage());
+    $servicesMain = null;
+    $services = [];
+}
+?>
+
 <section class="student_affairs_services_section" style="display: <?= ($servicesMain && $servicesMain['is_visible']) ? 'block' : 'none' ?>">
     <div class="student_affairs_services_container">
         <div class="student_affairs_services_header">
@@ -212,11 +229,23 @@ if ($mvContent && $mvContent['is_visible']): ?>
                 <?php foreach ($services as $service): ?>
                     <div class="student_affairs_service_card">
                         <div class="student_affairs_service_icon">
-                            <?php if (strpos($service['icon_path'], 'http') === 0 || strpos($service['icon_path'], '../') === 0 || strpos($service['icon_path'], 'uploads/') === 0): ?>
-                                <img src="<?= htmlspecialchars($service['icon_path']) ?>" alt="<?= htmlspecialchars($service['service_title']) ?>">
-                            <?php else: ?>
-                                <i class="<?= htmlspecialchars($service['icon_path']) ?>"></i>
-                            <?php endif; ?>
+                            <?php
+                            $iconPath = $service['icon_path'];
+                            if (empty($iconPath)) {
+                                // Default icon if none is set
+                                echo '<i class="fas fa-cube"></i>';
+                            } elseif (strpos($iconPath, 'fa-') !== false) {
+                                // Font Awesome icon
+                                echo '<i class="' . htmlspecialchars($iconPath) . '"></i>';
+                            } elseif (strpos($iconPath, 'http') === 0) {
+                                // External URL
+                                echo '<img src="' . htmlspecialchars($iconPath) . '" alt="' . htmlspecialchars($service['service_title']) . '">';
+                            } else {
+                                // Local file path
+                                $path = strpos($iconPath, '../') === 0 ? $iconPath : '../' . $iconPath;
+                                echo '<img src="' . htmlspecialchars($path) . '" alt="' . htmlspecialchars($service['service_title']) . '">';
+                            }
+                            ?>
                         </div>
                         <div class="student_affairs_service_content">
                             <h3 class="student_affairs_service_title"><?= htmlspecialchars($service['service_title']) ?></h3>
@@ -230,6 +259,62 @@ if ($mvContent && $mvContent['is_visible']): ?>
         </div>
     </div>
 </section>
+
+<style>
+/* Add these styles if not already present */
+.student_affairs_services_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.student_affairs_service_card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.student_affairs_service_card:hover {
+    transform: translateY(-5px);
+}
+
+.student_affairs_service_icon {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.student_affairs_service_icon i {
+    font-size: 48px;
+    color: #B32134;
+}
+
+.student_affairs_service_icon img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.student_affairs_service_title {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.student_affairs_service_description {
+    color: #666;
+    line-height: 1.5;
+}
+
+.no-services-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    grid-column: 1 / -1;
+}
+</style>
 
 <?php
 // Fetch activities content
@@ -278,39 +363,39 @@ try {
                     }
                     ?>
                     <div class="student_affairs_event" data-date="<?= $event['event_date'] ?>">
-                        <div class="student_affairs_event_date">
+                <div class="student_affairs_event_date">
                             <span class="student_affairs_event_month"><?= $eventDate->format('M') ?></span>
                             <span class="student_affairs_event_day"><?= $eventDate->format('d') ?></span>
-                        </div>
-                        <div class="student_affairs_event_content">
+                </div>
+                <div class="student_affairs_event_content">
                             <?php if ($event['event_image']): ?>
-                                <div class="student_affairs_event_image">
-                                    <img src="<?= str_starts_with($event['event_image'], 'http') ? $event['event_image'] : '../' . $event['event_image'] ?>" 
-                                         alt="<?= htmlspecialchars($event['event_title']) ?>"
-                                         onerror="this.src='../imgs/cte.jpg';">
-                                </div>
+                    <div class="student_affairs_event_image">
+                                <img src="<?= str_starts_with($event['event_image'], 'http') ? $event['event_image'] : '../' . $event['event_image'] ?>" 
+                                     alt="<?= htmlspecialchars($event['event_title']) ?>"
+                                     onerror="this.src='../imgs/cte.jpg';">
+                    </div>
                             <?php endif; ?>
-                            <div class="student_affairs_event_details">
+                    <div class="student_affairs_event_details">
                                 <div class="event_status_badge <?= $statusClass ?>"><?= $status ?></div>
                                 <h3><?= htmlspecialchars($event['event_title']) ?></h3>
-                                <div class="student_affairs_event_meta">
+                        <div class="student_affairs_event_meta">
                                     <span><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($event['event_location']) ?></span>
                                     <span><i class="fas fa-clock"></i> <?= htmlspecialchars($event['event_time']) ?></span>
-                                </div>
+                        </div>
                                 <div class="student_affairs_event_description">
                                     <?= $event['event_description'] ?>
-                                </div>
-                            </div>
-                        </div>
                     </div>
+                </div>
+            </div>
+                </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="no-events-message">
                     <p>No activities scheduled at the moment.</p>
-                </div>
+                    </div>
             <?php endif; ?>
-        </div>
-    </div>
+                        </div>
+                    </div>
     <?php endif; ?>
 </section>
             
@@ -343,52 +428,54 @@ try {
             <?php if (!empty($facilities)): ?>
                 <?php foreach ($facilities as $facility): ?>
                     <div class="facility_card">
-                        <div class="facility_image">
+                <div class="facility_image">
                             <img src="<?= str_starts_with($facility['image'], 'http') ? $facility['image'] : '../' . $facility['image'] ?>" 
                                  alt="<?= htmlspecialchars($facility['title']) ?>"
                                  onerror="this.src='../imgs/cte.jpg';">
                             <div class="facility_overlay"></div>
-                        </div>
-                        <div class="facility_content">
+                </div>
+                <div class="facility_content">
                             <h3 class="facility_title"><?= htmlspecialchars($facility['title']) ?></h3>
                             <p class="facility_description"><?= $facility['description'] ?></p>
                             <?php if ($facility['operating_hours']): ?>
-                                <div class="facility_operating_hours">
-                                    <h4><i class="fas fa-clock"></i> Operating Hours</h4>
-                                    <?= $facility['operating_hours'] ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                    <div class="facility_operating_hours">
+                        <h4><i class="fas fa-clock"></i> Operating Hours</h4>
+                                <?= $facility['operating_hours'] ?>
                     </div>
+                            <?php endif; ?>
+                </div>
+            </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <div class="no-facilities-message">
                     <p>No facilities available at the moment.</p>
-                </div>
+                    </div>
             <?php endif; ?>
-        </div>
-    </div>
-    <?php endif; ?>
-</section>
-            
-<section class="process_section">
-    <?php if ($processInfo && $processInfo['is_visible']): ?>
-    <div class="process_container">
-        <h2 class="process_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
-        <div class="process_divider"></div>
-        
-        <div class="process_content">
-            <div class="process_description">
-                <?= $processInfo['section_description'] ?>
-            </div>
-        </div>
-    </div>
+                </div>
+                    </div>
     <?php endif; ?>
 </section>
 
+<section class="process_section">
+    <?php if ($objectivesContent && $objectivesContent['is_visible']): ?>
+    <div class="process_container">
+        <h2 class="process_title"><?= htmlspecialchars($objectivesContent['section_title']) ?></h2>
+        <div class="process_divider"></div>
+        
+                        <div class="process_content">
+            <div class="process_description">
+                <?= $objectivesContent['section_description'] ?>
+                        </div>
+                    </div>
+                        </div>
+    <?php endif; ?>
+</section>
+
+
+
     <?php if ($isSectionVisible): ?>
     <section class="student_affairs_officer_section">
-    <h2 class="student_affairs_officer_title">Meet Our Officers</h2>
+    <h2 class="student_affairs_officer_title"><?= htmlspecialchars($sectionTitle) ?></h2>
     <div class="student_affairs_officer_grid">
         <?php foreach ($officers as $officer): ?>
         <div class="student_affairs_officer_card">
@@ -396,14 +483,14 @@ try {
                 <img src="<?= htmlspecialchars($officer['image_url']) ?>" 
                      alt="<?= htmlspecialchars($officer['name']) ?>" 
                      class="student_affairs_officer_image">
-                </div>
+            </div>
             <div class="student_affairs_officer_info">
                 <h3 class="student_affairs_officer_name"><?= htmlspecialchars($officer['name']) ?></h3>
                 <p class="student_affairs_officer_position"><?= htmlspecialchars($officer['position']) ?></p>
             </div>
-                    </div>
+        </div>
         <?php endforeach; ?>
-                </div>
+    </div>
 </section>
 <?php endif; ?>
 
@@ -413,9 +500,10 @@ try {
         <img src="../imgs/salogo1.png" alt="Health Services Logo" class="student_affairs_logo">
         <h2>Health Services</h2>
         <p>Western Mindanao State University</p>
-                    </div>
+    </div>
 </section>
 
+<!-- Contact Section -->
 <section class="student_affairs_contact_section">
 <?php
 try {
@@ -446,12 +534,12 @@ try {
                         <?php endif; ?>
                     </div>
                 </div>
-                    </div>
-            <?php endwhile; ?>
-                </div>
             </div>
-<?php 
-    endif;
+            <?php endwhile; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+<?php
 } catch (PDOException $e) {
     error_log("Error in contact section: " . $e->getMessage());
 }
@@ -786,4 +874,3 @@ try {
         }
     })();
 </script>
-

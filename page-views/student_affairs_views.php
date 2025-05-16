@@ -20,6 +20,11 @@ try {
     $stmt->execute();
     $mvContent = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    // Fetch Objectives content
+    $stmt = $pdo->prepare("SELECT * FROM af_page_obj WHERE id = 1");
+    $stmt->execute();
+    $objectivesContent = $stmt->fetch(PDO::FETCH_ASSOC);
+
     // Fetch Process Info content
     $stmt = $pdo->prepare("SELECT * FROM af_page_process_info WHERE id = 1");
     $stmt->execute();
@@ -30,11 +35,15 @@ try {
     $stmt->execute();
     $functionsContent = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    // Set default section title for officers
+    $sectionTitle = 'Meet Our Officers';
+    
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
     $aboutContent = null;
     $sectionTitle = 'Meet Our Officers';
     $mvContent = null;
+    $objectivesContent = null;
     $processInfo = null;
     $functionsContent = null;
 }
@@ -121,7 +130,23 @@ try {
         <div class="student_affair_mv_divider"></div>
     <section class="student_affair_mv_container">
         <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
-                <img src="<?= !empty($mvContent['mission_image_url']) ? htmlspecialchars($mvContent['mission_image_url']) : '../imgs/cte.jpg' ?>" alt="WMSU Mission">
+                <?php
+                $missionImagePath = $mvContent['mission_image_url'];
+                // Handle both URL and uploaded file paths
+                if (!empty($missionImagePath)) {
+                    if (strpos($missionImagePath, 'http') === 0) {
+                        // If it's a URL, use as is
+                        $missionImagePath = $missionImagePath;
+                    } else if (strpos($missionImagePath, 'uploads/') === 0) {
+                        // If it's an uploaded file, add the proper path prefix
+                        $missionImagePath = '../' . $missionImagePath;
+                    }
+                } else {
+                    // Fallback image if none set
+                    $missionImagePath = '../imgs/cte.jpg';
+                }
+                ?>
+                <img src="<?= htmlspecialchars($missionImagePath) ?>" alt="WMSU Mission">
             <div class="student_affair_mv_overlay_mission"></div>
             <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['mission_title']) ?></h2>
@@ -135,7 +160,23 @@ try {
         </div>
         
         <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
-                <img src="<?= !empty($mvContent['vision_image_url']) ? htmlspecialchars($mvContent['vision_image_url']) : '../imgs/cte-field.png' ?>" alt="WMSU Vision">
+                <?php
+                $visionImagePath = $mvContent['vision_image_url'];
+                // Handle both URL and uploaded file paths
+                if (!empty($visionImagePath)) {
+                    if (strpos($visionImagePath, 'http') === 0) {
+                        // If it's a URL, use as is
+                        $visionImagePath = $visionImagePath;
+                    } else if (strpos($visionImagePath, 'uploads/') === 0) {
+                        // If it's an uploaded file, add the proper path prefix
+                        $visionImagePath = '../' . $visionImagePath;
+                    }
+                } else {
+                    // Fallback image if none set
+                    $visionImagePath = '../imgs/cte-field.png';
+                }
+                ?>
+                <img src="<?= htmlspecialchars($visionImagePath) ?>" alt="WMSU Vision">
             <div class="student_affair_mv_overlay_vision"></div>
             <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['vision_title']) ?></h2>
@@ -153,13 +194,13 @@ try {
 
 <!-- Objectives Section -->
     <section class="student_affairs_objectives_section">
-    <?php if ($processInfo && $processInfo['is_visible']): ?>
+    <?php if ($objectivesContent && $objectivesContent['is_visible']): ?>
     <div class="student_affairs_objectives_container">
-        <h2 class="student_affairs_objectives_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
+        <h2 class="student_affairs_objectives_title"><?= htmlspecialchars($objectivesContent['section_title']) ?></h2>
         <div class="student_affairs_objectives_divider"></div>
         
         <div class="student_affairs_objectives_content">
-        <p class="student_affairs_objectives_description">  <?= $processInfo['section_description'] ?> 
+            <div class="student_affairs_objectives_description"><?= $objectivesContent['description'] ?></div>
         </div>
     </div>
     <?php endif; ?>
@@ -173,7 +214,7 @@ try {
         <div class="student_affairs_functions_divider"></div>
         
         <div class="student_affairs_functions_content">
-            <?= $functionsContent['description'] ?>
+        <div class="student_affairs_objectives_description"> <?= $functionsContent['description'] ?>
         </div>
     </div>
     <?php endif; ?>
@@ -500,7 +541,23 @@ try {
     <!-- Add Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <script src="../js/student_affairs.js"></script>
+    <style>
+        /* Make all ul/ol text white by default */
+        ul, ol {
+            color: white;
+        }
+
+        /* Override for specific sections to keep their original text color */
+        .student_affairs_services_section ul,
+        .student_affairs_services_section ol,
+        .student_affairs_facilities_section ul,
+        .student_affairs_facilities_section ol,
+        .student_affairs_activities_section ul,
+        .student_affairs_activities_section ol {
+            color: inherit;
+        }
+    </style>
+
     <script>
     function expandSection(element, section) {
         const container = document.querySelector('.student_affair_mv_container');

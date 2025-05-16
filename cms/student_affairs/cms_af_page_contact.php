@@ -42,9 +42,16 @@ try {
 
 class ContactCMS {
     private $pdo;
+    private $upload_dir;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
+        $this->upload_dir = '../../uploads/icons/';
+        
+        // Create uploads directory if it doesn't exist
+        if (!file_exists($this->upload_dir)) {
+            mkdir($this->upload_dir, 0777, true);
+        }
     }
 
     // Get section settings
@@ -85,12 +92,17 @@ class ContactCMS {
     public function addOrUpdateContact($contact_type, $label, $value, $display_text, $icon_path, $is_visible) {
         try {
             // Check if entry exists for this contact type
-            $stmt = $this->pdo->prepare("SELECT id FROM af_page_contact WHERE contact_type = ?");
+            $stmt = $this->pdo->prepare("SELECT id, icon_path FROM af_page_contact WHERE contact_type = ?");
             $stmt->execute([$contact_type]);
             $existing = $stmt->fetch();
 
             if ($existing) {
                 // Update existing entry
+                // If no new icon was uploaded, keep the existing one
+                if (empty($icon_path)) {
+                    $icon_path = $existing['icon_path'];
+                }
+                
                 $stmt = $this->pdo->prepare("UPDATE af_page_contact SET label = ?, value = ?, display_text = ?, icon_path = ?, is_visible = ? WHERE contact_type = ?");
                 return $stmt->execute([$label, $value, $display_text, $icon_path, $is_visible, $contact_type]);
             } else {
@@ -104,11 +116,50 @@ class ContactCMS {
         }
     }
 
+    // Process icon upload
+    public function processIconUpload($file) {
+        if (empty($file['name'])) {
+            return '';
+        }
+        
+        $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'svg');
+        
+        if (!in_array($file_extension, $allowed_extensions)) {
+            throw new Exception("Invalid file type. Allowed types: jpg, jpeg, png, gif, svg");
+        }
+        
+        $new_filename = uniqid() . '.' . $file_extension;
+        $upload_path = $this->upload_dir . $new_filename;
+        
+        if (!move_uploaded_file($file['tmp_name'], $upload_path)) {
+            throw new Exception("Failed to upload file: " . error_get_last()['message']);
+        }
+        
+        return 'uploads/icons/' . $new_filename;
+    }
+
     // Delete contact entry
     public function deleteContact($id) {
         try {
+            // Get the icon path to delete the file
+            $stmt = $this->pdo->prepare("SELECT icon_path FROM af_page_contact WHERE id = ?");
+            $stmt->execute([$id]);
+            $contact = $stmt->fetch();
+            
+            // Delete the contact from database
             $stmt = $this->pdo->prepare("DELETE FROM af_page_contact WHERE id = ?");
-        return $stmt->execute([$id]);
+            $result = $stmt->execute([$id]);
+            
+            // Delete the icon file if exists
+            if ($result && $contact && !empty($contact['icon_path'])) {
+                $filepath = '../../' . $contact['icon_path'];
+                if (file_exists($filepath)) {
+                    unlink($filepath);
+                }
+            }
+            
+            return $result;
         } catch (PDOException $e) {
             error_log("Error deleting contact: " . $e->getMessage());
             return false;
@@ -145,17 +196,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             '<div style="color: red; margin: 10px 0;">Error updating section settings.</div>';
     }
     elseif (isset($_POST['add']) || isset($_POST['update'])) {
-        $result = $cms->addOrUpdateContact(
-            $_POST['contact_type'],
-            $_POST['label'],
-            $_POST['value'],
-            $_POST['contact_type'] === 'facebook' ? $_POST['display_text'] : null,
-            $_POST['icon_path'],
-            isset($_POST['is_visible']) ? 1 : 0
-        );
-        $message = $result ? 
-            '<div style="color: green; margin: 10px 0;">Contact information updated successfully!</div>' : 
-            '<div style="color: red; margin: 10px 0;">Error updating contact information.</div>';
+        try {
+            // Process the icon upload
+            $icon_path = '';
+            if (!empty($_FILES['icon_file']['name'])) {
+                $icon_path = $cms->processIconUpload($_FILES['icon_file']);
+            } else if (isset($_POST['existing_icon'])) {
+                $icon_path = $_POST['existing_icon'];
+            }
+            
+            $result = $cms->addOrUpdateContact(
+                $_POST['contact_type'],
+                $_POST['label'],
+                $_POST['value'],
+                $_POST['contact_type'] === 'facebook' ? $_POST['display_text'] : null,
+                $icon_path,
+                isset($_POST['is_visible']) ? 1 : 0
+            );
+            $message = $result ? 
+                '<div style="color: green; margin: 10px 0;">Contact information updated successfully!</div>' : 
+                '<div style="color: red; margin: 10px 0;">Error updating contact information.</div>';
+        } catch (Exception $e) {
+            $message = '<div style="color: red; margin: 10px 0;">Error: ' . $e->getMessage() . '</div>';
+        }
     } elseif (isset($_POST['delete'])) {
         $result = $cms->deleteContact($_POST['id']);
         $message = $result ? 
@@ -173,69 +236,176 @@ $sectionSettings = $cms->getSectionSettings();
 <html>
 <head>
     <title>Contact CMS</title>
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 20px auto;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
             padding: 0 20px;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
         }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
+        }
+
         .form-container {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .form-group {
             margin-bottom: 20px;
         }
-        .form-group {
-            margin-bottom: 15px;
-        }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
         }
+
         input[type="text"], select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
         }
-        .display-text-group {
-            display: none;
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #fff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            border-color: #93c5fd;
+        }
+
+        .image-preview {
+            max-width: 100px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        .current-icon {
+            margin: 15px 0;
+            padding: 15px;
+            background: #ebf8ff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .current-icon img {
+            max-width: 50px;
+            border-radius: 4px;
+            border: 1px solid #bee3f8;
+        }
+
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 25px;
             background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
+
         th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 16px;
+            border: 1px solid #bee3f8;
             text-align: left;
         }
-        th {
-            background: #f5f5f5;
-        }
-        .button {
-            padding: 8px 16px;
-            border: none;
+
+        td img {
+            max-width: 40px;
             border-radius: 4px;
+        }
+
+        th {
+            background: #ebf8ff;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background-color: #f0f5ff;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
+
         .button-primary {
-            background: #4CAF50;
+            background: #3182ce;
             color: white;
         }
+
         .button-danger {
-            background: #f44336;
+            background: #e53e3e;
             color: white;
         }
+
         .button:hover {
-            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -244,42 +414,59 @@ $sectionSettings = $cms->getSectionSettings();
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            overflow: auto;
+            background-color: rgba(26, 54, 93, 0.5);
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color: #ffffff;
             margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            padding: 30px;
+            border: none;
+            width: 90%;
             max-width: 600px;
-            border-radius: 8px;
+            border-radius: 16px;
             position: relative;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.13);
+            border: 1px solid #bee3f8;
         }
 
         .close {
             position: absolute;
-            right: 15px;
-            top: 10px;
+            right: 20px;
+            top: 15px;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: normal;
             cursor: pointer;
+            color: #4a5568;
+            transition: color 0.2s ease, background 0.2s;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: #2c5282;
+            background-color: #ebf8ff;
         }
 
         .section-settings {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #bee3f8;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 52px;
+            height: 28px;
         }
 
         .switch input {
@@ -295,33 +482,42 @@ $sectionSettings = $cms->getSectionSettings();
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
+            background-color: #cbd5e0;
+            transition: .3s;
             border-radius: 34px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
+            height: 20px;
+            width: 20px;
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: .4s;
+            transition: .3s;
             border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
         }
 
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: #3182ce;
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(24px);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #3182ce;
         }
     </style>
 </head>
 <body>
+
+<?php include 'student_affairs_sidebar.php'; ?>
+
+<div class="content-wrapper">
     <h2>Contact Information Management</h2>
     <?= $message ?>
 
@@ -358,7 +554,7 @@ $sectionSettings = $cms->getSectionSettings();
         <div class="modal-content">
             <span class="close" onclick="closeAddModal()">&times;</span>
             <h3>Add New Contact Information</h3>
-    <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label>Contact Type:</label>
                     <select name="contact_type" required onchange="toggleDisplayText(this.value)">
@@ -366,7 +562,7 @@ $sectionSettings = $cms->getSectionSettings();
                         <?php foreach ($availableTypes as $type): ?>
                         <option value="<?= $type ?>"><?= ucfirst($type) ?></option>
                         <?php endforeach; ?>
-        </select>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -385,8 +581,10 @@ $sectionSettings = $cms->getSectionSettings();
                 </div>
 
                 <div class="form-group">
-                    <label>Icon Path:</label>
-                    <input type="text" name="icon_path" required placeholder="Path to icon image">
+                    <label>Icon:</label>
+                    <input type="file" name="icon_file" accept="image/*" onchange="previewImage(this, 'add-icon-preview')" required>
+                    <img id="add-icon-preview" class="image-preview" style="display: none;" alt="Icon Preview">
+                    <p class="icon-help">Upload an icon image for this contact type (JPG, PNG, GIF, SVG)</p>
                 </div>
 
                 <div class="form-group">
@@ -397,7 +595,7 @@ $sectionSettings = $cms->getSectionSettings();
                 </div>
 
                 <button type="submit" name="add" class="button button-primary">Add Contact</button>
-    </form>
+            </form>
         </div>
     </div>
 
@@ -406,9 +604,10 @@ $sectionSettings = $cms->getSectionSettings();
         <div class="modal-content">
             <span class="close" onclick="closeEditModal()">&times;</span>
             <h3>Edit Contact Information</h3>
-            <form method="POST" id="editContactForm">
+            <form method="POST" id="editContactForm" enctype="multipart/form-data">
                 <input type="hidden" name="contact_type" id="edit_contact_type">
                 <input type="hidden" name="id" id="edit_id">
+                <input type="hidden" name="existing_icon" id="edit_existing_icon">
                 
                 <div class="form-group">
                     <label>Contact Type:</label>
@@ -431,8 +630,18 @@ $sectionSettings = $cms->getSectionSettings();
                 </div>
 
                 <div class="form-group">
-                    <label>Icon Path:</label>
-                    <input type="text" name="icon_path" id="edit_icon_path" required placeholder="Path to icon image">
+                    <label>Current Icon:</label>
+                    <div class="current-icon" id="current-icon-container">
+                        <img id="current-icon-image" src="" alt="Current Icon">
+                        <span id="current-icon-path"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload New Icon (optional):</label>
+                    <input type="file" name="icon_file" accept="image/*" onchange="previewImage(this, 'edit-icon-preview')">
+                    <img id="edit-icon-preview" class="image-preview" style="display: none;" alt="Icon Preview">
+                    <p class="icon-help">Leave empty to keep current icon</p>
                 </div>
 
                 <div class="form-group">
@@ -455,7 +664,7 @@ $sectionSettings = $cms->getSectionSettings();
                 <th>Label</th>
                 <th>Value</th>
                 <th>Display Text</th>
-                <th>Icon Path</th>
+                <th>Icon</th>
                 <th>Visible</th>
                 <th>Actions</th>
             </tr>
@@ -472,8 +681,14 @@ $sectionSettings = $cms->getSectionSettings();
                     <?php else: ?>
                         <em>N/A</em>
                     <?php endif; ?>
-                    </td>
-                <td><?= htmlspecialchars($contact['icon_path']) ?></td>
+                </td>
+                <td>
+                    <?php if (!empty($contact['icon_path'])): ?>
+                        <img src="../../<?= htmlspecialchars($contact['icon_path']) ?>" alt="<?= ucfirst($contact['contact_type']) ?> Icon">
+                    <?php else: ?>
+                        <em>No icon</em>
+                    <?php endif; ?>
+                </td>
                 <td><?= $contact['is_visible'] ? 'Yes' : 'No' ?></td>
                 <td>
                     <button type="button" class="button button-primary" 
@@ -487,13 +702,25 @@ $sectionSettings = $cms->getSectionSettings();
                             Delete
                         </button>
                     </form>
-                    </td>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
     <script>
+        function previewImage(input, previewId) {
+            const preview = document.getElementById(previewId);
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function openAddModal() {
             document.getElementById('addContactModal').style.display = 'block';
         }
@@ -509,8 +736,21 @@ $sectionSettings = $cms->getSectionSettings();
             document.getElementById('edit_contact_type_display').value = contact.contact_type.charAt(0).toUpperCase() + contact.contact_type.slice(1);
             document.getElementById('edit_label').value = contact.label;
             document.getElementById('edit_value').value = contact.value;
-            document.getElementById('edit_icon_path').value = contact.icon_path;
             document.getElementById('edit_is_visible').checked = contact.is_visible == 1;
+            document.getElementById('edit_existing_icon').value = contact.icon_path;
+
+            // Display current icon
+            const currentIconContainer = document.getElementById('current-icon-container');
+            const currentIconImage = document.getElementById('current-icon-image');
+            const currentIconPath = document.getElementById('current-icon-path');
+            
+            if (contact.icon_path) {
+                currentIconImage.src = '../../' + contact.icon_path;
+                currentIconPath.textContent = contact.icon_path;
+                currentIconContainer.style.display = 'flex';
+            } else {
+                currentIconContainer.style.display = 'none';
+            }
 
             // Handle display text field for Facebook
             const displayTextGroup = document.getElementById('edit_display_text_group');
@@ -549,6 +789,15 @@ $sectionSettings = $cms->getSectionSettings();
                 closeEditModal();
             }
         }
+
+        // Initialize display text visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('displayTextGroup').style.display = 'none';
+        });
     </script>
+    
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_sidebar.js"></script>
+</div>
 </body>
 </html>

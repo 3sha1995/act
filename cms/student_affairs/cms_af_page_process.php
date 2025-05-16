@@ -79,34 +79,256 @@ $info = $cms->getInfo();
 <html>
 <head>
     <title>Process Info CMS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
     <style>
-        .container { max-width: 800px; margin-top: 30px; }
-        .form-group { margin-bottom: 20px; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
+        }
+
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
+        }
+
+        .container { 
+            max-width: 800px; 
+            margin-top: 30px; 
+        }
+        
+        .form-group { 
+            margin-bottom: 20px; 
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        label, .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"], textarea, select, .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus, .form-control:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        .btn, button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary, .button-primary {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn:hover, button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
+        }
+
+        .btn-primary:hover {
+            background: #2b6cb0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .alert-success {
+            background-color: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .alert-danger {
+            background-color: #fed7d7;
+            color: #822727;
+            border: 1px solid #feb2b2;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            color: inherit;
+            background: transparent;
+            border: none;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c5282;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .status-active {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-inactive {
+            background-color: #fed7d7;
+            color: #822727;
+        }
+
+        /* Switch toggle */
+        .switch-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+        }
+
+        input:checked + .slider {
+            background-color: #3182ce;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #3182ce;
+        }
 
         .editor-container {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
             overflow: hidden;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.07);
+            background: #ffffff;
         }
 
         .editor-toolbar {
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 10px;
+            background: linear-gradient(to right, #ebf8ff, #f0f7ff);
+            border-bottom: 1px solid #bee3f8;
+            padding: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
 
         .toolbar-group {
             display: flex;
-            gap: 5px;
-            padding: 0 10px;
-            border-right: 1px solid #e0e0e0;
+            gap: 8px;
+            padding: 0 12px;
+            border-right: 1px solid #bee3f8;
         }
 
         .toolbar-group:last-child {
@@ -114,27 +336,30 @@ $info = $cms->getInfo();
         }
 
         .editor-toolbar button {
-            background: white;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            padding: 6px 12px;
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            padding: 8px 16px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            color: #444;
+            gap: 8px;
+            color: #3b82f6;
             transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .editor-toolbar button:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.1);
         }
 
         .editor-toolbar button.active {
-            background: #e9ecef;
-            border-color: #0056b3;
-            color: #0056b3;
+            background: #f0f5ff;
+            border-color: #3182ce;
+            color: #1d4ed8;
         }
 
         .editor-toolbar button i {
@@ -144,15 +369,17 @@ $info = $cms->getInfo();
         .editor {
             min-height: 300px;
             padding: 20px;
-            background: white;
+            background: #ffffff;
             border: none;
             outline: none;
             font-size: 16px;
             line-height: 1.6;
+            color: #1e3a8a;
         }
 
         .editor:focus {
             outline: none;
+            background: #fafbff;
         }
 
         /* Tooltip styles */
@@ -166,34 +393,49 @@ $info = $cms->getInfo();
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 4px 8px;
-            background: #333;
+            padding: 6px 12px;
+            background: #1e3a8a;
             color: white;
-            font-size: 12px;
-            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
             white-space: nowrap;
             z-index: 1000;
+            box-shadow: 0 2px 4px rgba(49,130,206,0.13);
+            opacity: 0;
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                bottom: 105%;
+            }
         }
 
         /* Font size select styles */
         .font-size-select {
-            padding: 6px 12px;
-            border: 1px solid #d1d1d1;
-            border-radius: 4px;
-            background: white;
+            padding: 8px 16px;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            background: #ffffff;
             cursor: pointer;
-            color: #444;
+            color: #3b82f6;
             font-size: 14px;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
 
         .font-size-select:hover {
-            background: #e9ecef;
-            border-color: #bbb;
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
         }
 
         .font-size-select:focus {
             outline: none;
-            border-color: #0056b3;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
 
         /* Responsive design */
@@ -201,7 +443,7 @@ $info = $cms->getInfo();
             .toolbar-group {
                 padding: 5px;
                 border-right: none;
-                border-bottom: 1px solid #e0e0e0;
+                border-bottom: 1px solid #bee3f8;
                 width: 100%;
                 justify-content: center;
             }
@@ -217,24 +459,27 @@ $info = $cms->getInfo();
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2 class="mb-4">Edit Process Information Section</h2>
+<?php include 'student_affairs_sidebar.php'; ?>
+
+<div class="content-wrapper">
+    <div class="section">
+        <h2>Edit Process Information Section</h2>
         
-    <?php if (isset($_GET['updated'])): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?php if (isset($_GET['updated'])): ?>
+            <div class="alert alert-success">
                 Section updated successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
             </div>
         <?php endif; ?>
 
         <?php if (isset($_GET['error'])): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger">
                 Failed to update section. Please try again.
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert">&times;</button>
             </div>
-    <?php endif; ?>
+        <?php endif; ?>
 
-    <form method="POST">
+        <form method="POST" class="form-container">
             <div class="form-group">
                 <label for="section_title" class="form-label">Section Title:</label>
                 <input type="text" class="form-control" id="section_title" name="section_title" 
@@ -316,17 +561,20 @@ $info = $cms->getInfo();
                 </div>
             </div>
 
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="is_visible" name="is_visible" 
-                       <?= $info['is_visible'] ? 'checked' : '' ?>>
-                <label class="form-check-label" for="is_visible">Show this section on the website</label>
+            <div class="form-group">
+                <label class="switch-label">
+                    Show this section on the website
+                    <label class="switch">
+                        <input type="checkbox" id="is_visible" name="is_visible" <?= $info['is_visible'] ? 'checked' : '' ?>>
+                        <span class="slider"></span>
+                    </label>
+                </label>
             </div>
 
             <button type="submit" class="btn btn-primary">Update Section</button>
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function execCommand(command) {
             document.execCommand(command, false, null);
@@ -370,7 +618,18 @@ $info = $cms->getInfo();
             document.querySelector('form').addEventListener('submit', function() {
                 document.getElementById('section_description').value = editor.innerHTML;
             });
+
+            // Close alert messages
+            document.querySelectorAll('.btn-close').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
         });
     </script>
+
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_persistent.js"></script>
+</div>
 </body>
 </html>

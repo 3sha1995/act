@@ -1,0 +1,363 @@
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #3b82f6;
+  --light-color: #e3f0ff;
+  --hover-color: #1d4ed8;
+  --active-color: #1e88e5;
+  --text-color: #1e293b;
+  --border-color: #bee3f8;
+  --shadow-color: rgba(37, 99, 235, 0.08);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.sa-sidebar {
+  font-family: inherit;
+}
+
+.sa-sidebar {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 250px !important;
+  height: 100% !important;
+  background-color: #f0f7ff;
+  color: var(--text-color);
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  z-index: 1000 !important;
+  box-shadow: 2px 0 8px var(--shadow-color);
+}
+
+.sa-sidebar-header {
+  padding: 20px 15px;
+  background-color: #e3f0ff;
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.sa-sidebar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.sa-sidebar-logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.sa-sidebar-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #2563eb;
+}
+
+.sa-sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sa-sidebar-item {
+  margin: 2px 0;
+}
+
+.sa-sidebar-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  color: #2563eb;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+  font-weight: 500;
+  border-radius: 0 8px 8px 0;
+}
+
+.sa-sidebar-link:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  text-decoration: none;
+  border-left: 4px solid #3b82f6;
+}
+
+.sa-sidebar-link.active {
+  background-color: #3b82f6;
+  color: #fff;
+  border-left: 4px solid #2563eb;
+}
+
+.sa-sidebar-icon {
+  margin-right: 12px;
+  width: 20px;
+  text-align: center;
+  color: #2563eb;
+}
+
+.sa-sidebar-link.active .sa-sidebar-icon,
+.sa-sidebar-link:hover .sa-sidebar-icon {
+  color: #fff;
+}
+
+.sa-sidebar-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sa-sidebar-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1.5px solid var(--border-color);
+}
+
+.sa-sidebar-section-title {
+  padding: 0 18px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #2563eb;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.sa-sidebar-toggle {
+  position: fixed;
+  left: 260px;
+  top: 10px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.sa-sidebar-toggle:hover {
+  background: #1d4ed8;
+}
+
+.sa-sidebar.collapsed {
+  width: 60px;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-text,
+.sa-sidebar.collapsed .sa-sidebar-title {
+  display: none;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-section-title {
+  text-align: center;
+  padding: 0 5px;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-link {
+  padding: 15px;
+  justify-content: center;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-toggle {
+  left: 70px;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-icon {
+  margin-right: 0;
+  font-size: 1.1rem;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-logo {
+  justify-content: center;
+}
+
+.sa-sidebar.collapsed .sa-sidebar-logo img {
+  margin-right: 0;
+}
+
+/* Mobile styles (screen width < 768px) */
+@media (max-width: 767.98px) {
+  .sa-sidebar {
+    left: -250px;
+  }
+  
+  .sa-sidebar.mobile-open {
+    left: 0 !important;
+  }
+  
+  .sa-sidebar-toggle {
+    left: 10px;
+    background: #2563eb;
+  }
+  
+  .sa-sidebar.mobile-open .sa-sidebar-toggle {
+    left: 260px;
+  }
+  
+  body.sidebar-open {
+    margin-left: 250px !important;
+  }
+}
+
+/* Tablet styles (768px <= screen width < 992px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .sa-sidebar {
+    width: 60px;
+  }
+  
+  .sa-sidebar .sa-sidebar-text,
+  .sa-sidebar .sa-sidebar-title {
+    display: none;
+  }
+  
+  .sa-sidebar .sa-sidebar-section-title {
+    text-align: center;
+    padding: 0 5px;
+  }
+  
+  .sa-sidebar .sa-sidebar-link {
+    padding: 15px;
+    justify-content: center;
+  }
+  
+  .sa-sidebar .sa-sidebar-toggle {
+    left: 70px;
+  }
+  
+  .sa-sidebar .sa-sidebar-icon {
+    margin-right: 0;
+    font-size: 1.1rem;
+  }
+  
+  .sa-sidebar .sa-sidebar-logo {
+    justify-content: center;
+  }
+  
+  .sa-sidebar .sa-sidebar-logo img {
+    margin-right: 0;
+  }
+  
+  .sa-sidebar.expanded {
+    width: 250px;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-text,
+  .sa-sidebar.expanded .sa-sidebar-title {
+    display: block;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-section-title {
+    text-align: left;
+    padding: 0 18px;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-link {
+    padding: 12px 18px;
+    justify-content: flex-start;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-toggle {
+    left: 260px;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-icon {
+    margin-right: 12px;
+    font-size: 1rem;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-logo {
+    justify-content: flex-start;
+  }
+  
+  .sa-sidebar.expanded .sa-sidebar-logo img {
+    margin-right: 10px;
+  }
+}
+
+/* Content Wrapper Styles */
+.content-wrapper {
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Universal body styles for all pages with sidebar */
+body:has(.sa-sidebar) {
+  margin-left: 250px !important;
+  transition: margin-left 0.3s ease;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Mobile correction */
+@media (max-width: 767.98px) {
+  body:has(.sa-sidebar) {
+    margin-left: 0 !important;
+  }
+  body.sidebar-open:has(.sa-sidebar) {
+    margin-left: 250px !important;
+  }
+}
+
+/* Fix content wrapper alignment for all pages */
+body:has(.sa-sidebar) .content-wrapper {
+  max-width: calc(100% - 40px);
+  margin: 20px auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Specific fixes for pages with alignment issues */
+body:has([href*="cms_af_page_facilities.php"].active) .content-wrapper,
+body:has([href*="cms_af_page_obj_funct.php"].active) .content-wrapper,
+body:has([href*="cms_af_page_services.php"].active) .content-wrapper,
+body:has([href*="cms_af_page_activities.php"].active) .content-wrapper,
+body:has([href*="cms_af_page_info.php"].active) .content-wrapper {
+  width: calc(100% - 40px);
+  max-width: none;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Ensure proper form alignment in all pages */
+body:has(.sa-sidebar) form {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure tables don't overflow in any page */
+.content-wrapper table {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Specific fixes for services page containers */
+body:has([href*="cms_af_page_services.php"].active) .container {
+  padding: 15px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Fix for Activities page */
+body:has([href*="cms_af_page_activities.php"].active) .content-wrapper,
+body:has([href*="cms_af_page_info.php"].active) .content-wrapper {
+  padding: 15px;
+  margin: 0 auto;
+}
+
+/* Universal container adjustments */
+.content-wrapper .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+} 

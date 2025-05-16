@@ -302,85 +302,111 @@ function formatImageUrl($imageUrl) {
 <html>
 <head>
     <title>Officer CMS</title>
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
     <style>
         /* Base styles */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 1200px;
-            margin: 20px auto;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
             padding: 0 20px;
-            background-color: #f5f7fa;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
+        }
+        
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
         }
 
         /* Messages */
         .success {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #c6f6d5;
+            color: #22543d;
             padding: 15px;
             margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            border: 1px solid #9ae6b4;
         }
         
         .error {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: #fed7d7;
+            color: #822727;
             padding: 15px;
             margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            border: 1px solid #feb2b2;
         }
 
         /* Forms and Inputs */
         form {
             background: #ffffff;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
             margin: 20px 0;
+            border: 1px solid #bee3f8;
         }
 
         input[type=text], select {
             width: 100%;
             padding: 12px;
             margin: 8px 0 20px;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
             box-sizing: border-box;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
         }
 
         input[type=text]:focus, select:focus {
-            border-color: #4CAF50;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
 
         /* Buttons */
         button {
-            background: #4CAF50;
-            color: white;
-            padding: 12px 20px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #3182ce;
+            color: white;
         }
 
         button:hover {
-            background: #45a049;
             transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
+            background: #2b6cb0;
         }
 
         button[name="delete"] {
-            background: #dc3545;
+            background: #e53e3e;
         }
 
         button[name="delete"]:hover {
-            background: #c82333;
+            background: #c53030;
         }
 
         /* Table Styles */
@@ -388,27 +414,31 @@ function formatImageUrl($imageUrl) {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin: 20px 0;
-            background: #fff;
-            border-radius: 10px;
+            margin-top: 25px;
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
 
         th, td {
-            padding: 15px;
+            padding: 16px;
+            border: 1px solid #bee3f8;
             text-align: left;
-            border-bottom: 1px solid #e1e4e8;
         }
 
         th {
-            background-color: #f8f9fa;
+            background: #ebf8ff;
             font-weight: 600;
-            color: #2c3e50;
+            color: #2c5282;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        tr:hover {
+            background-color: #f0f5ff;
         }
 
         /* Modal Styles */
@@ -420,47 +450,55 @@ function formatImageUrl($imageUrl) {
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            overflow: hidden;
+            background-color: rgba(26, 54, 93, 0.5);
+            backdrop-filter: blur(4px);
+            overflow-y: auto;
+            padding: 20px 0;
         }
         
         .modal-content {
             background-color: #ffffff;
-            margin: 3vh auto;
+            margin: 2% auto;
+            padding: 0;
+            border: none;
             width: 90%;
             max-width: 600px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            border-radius: 16px;
             position: relative;
-            animation: modalSlideIn 0.3s ease-out;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.13);
+            border: 1px solid #bee3f8;
             display: flex;
             flex-direction: column;
-            max-height: 94vh;
-            padding: 0;
+            max-height: 85vh;
         }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        
+        #addModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            background-color: rgba(26, 54, 93, 0.5);
+        }
+        
+        #addModal .modal-content {
+            margin: 20px auto;
+            overflow-y: visible;
+            max-height: none;
         }
         
         .close {
             position: absolute;
             right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
+            top: 15px;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: normal;
             cursor: pointer;
-            transition: color 0.3s ease;
+            color: #4a5568;
+            transition: color 0.2s ease, background 0.2s;
             width: 30px;
             height: 30px;
             display: flex;
@@ -471,8 +509,8 @@ function formatImageUrl($imageUrl) {
         }
         
         .close:hover {
-            color: #000;
-            background-color: #f0f0f0;
+            color: #2c5282;
+            background-color: #ebf8ff;
         }
 
         /* Form Groups */
@@ -483,8 +521,9 @@ function formatImageUrl($imageUrl) {
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #2c3e50;
-            font-weight: 500;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
         }
 
         /* Image Preview */
@@ -492,55 +531,51 @@ function formatImageUrl($imageUrl) {
             max-width: 200px;
             margin: 15px 0;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
         
         .preview-container {
             margin: 15px 0;
             text-align: center;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bee3f8;
         }
 
         /* Tabs */
         .tab-container {
-            margin-bottom: 20px;
             display: flex;
-            gap: 10px;
-            padding: 5px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #bee3f8;
         }
         
         .tab-button {
-            padding: 10px 20px;
-            border-radius: 6px;
-            background: transparent;
-            color: #666;
-            border: none;
-            flex: 1;
+            background: #f0f7ff;
+            border: 1px solid #bee3f8;
+            border-bottom: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
             font-weight: 500;
+            color: #4a5568;
+            margin-right: 5px;
         }
         
         .tab-button.active {
-            background: #4CAF50;
-            color: white;
+            background: #ebf8ff;
+            color: #2c5282;
+            border-color: #93c5fd;
         }
         
         .tab-content {
             display: none;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            padding: 15px 0;
         }
         
         .tab-content.active {
             display: block;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         /* File Input */
@@ -549,20 +584,20 @@ function formatImageUrl($imageUrl) {
             padding: 10px;
             margin: 8px 0;
             background: #fff;
-            border: 2px dashed #e1e4e8;
-            border-radius: 6px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
             cursor: pointer;
         }
 
         input[type="file"]:hover {
-            border-color: #4CAF50;
+            border-color: #93c5fd;
         }
 
         /* Checkbox Style */
         .checkbox-group {
             display: flex;
             align-items: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .checkbox-group input[type="checkbox"] {
@@ -574,9 +609,9 @@ function formatImageUrl($imageUrl) {
         /* Modal Header */
         .modal-header {
             padding: 20px 30px;
-            background: #f8f9fa;
-            border-radius: 12px 12px 0 0;
-            border-bottom: 1px solid #e1e4e8;
+            background: #f8fafc;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid #bee3f8;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -584,8 +619,9 @@ function formatImageUrl($imageUrl) {
 
         .modal-header h2 {
             margin: 0;
-            color: #2c3e50;
-            font-size: 1.5em;
+            color: #2c5282;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
         .modal-body {
@@ -597,61 +633,46 @@ function formatImageUrl($imageUrl) {
 
         .modal-footer {
             padding: 20px 30px;
-            background: #f8f9fa;
-            border-radius: 0 0 12px 12px;
-            border-top: 1px solid #e1e4e8;
+            background: #f8fafc;
+            border-radius: 0 0 16px 16px;
+            border-top: 1px solid #bee3f8;
             text-align: right;
             position: sticky;
             bottom: 0;
             z-index: 10;
         }
 
-        /* Add scrollbar styling */
-        .modal-body::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-body::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .modal-body::-webkit-scrollbar-thumb:hover {
-            background: #555;
+        .modal-footer button {
+            margin-left: 10px;
         }
 
         /* Add Button */
         .add-button {
-            background: #4CAF50;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 10px 20px;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background: #3182ce;
+            color: white;
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.3s ease;
         }
 
         .add-button:hover {
-            background: #45a049;
             transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
+            background: #2b6cb0;
         }
 
         .add-button i {
-            font-size: 18px;
+            font-size: 16px;
         }
 
-        /* Add these styles to your existing CSS */
+        /* Table preview image */
         .image-preview-container {
             display: flex;
             flex-direction: column;
@@ -660,53 +681,36 @@ function formatImageUrl($imageUrl) {
         }
 
         .table-preview-image {
-            max-width: 100px;
-            max-height: 100px;
+            max-width: 80px;
+            max-height: 80px;
             border-radius: 6px;
             object-fit: cover;
-            border: 1px solid #e1e4e8;
+            border: 1px solid #bee3f8;
             padding: 2px;
         }
 
         .image-url {
             font-size: 12px;
-            color: #666;
+            color: #718096;
             word-break: break-all;
             max-width: 200px;
         }
 
-        /* Update the modal image preview styles */
-        .modal .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid #e1e4e8;
-            padding: 3px;
-        }
-
-        .preview-container {
-            margin: 15px 0;
-            text-align: center;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-        }
-
-        /* Add these styles for the toggle switch */
+        /* Switch styles */
         .switch-label {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 500;
-            color: #2c3e50;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 52px;
+            height: 28px;
         }
 
         .switch input {
@@ -722,228 +726,231 @@ function formatImageUrl($imageUrl) {
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
+            background-color: #cbd5e0;
+            transition: .3s;
+            border-radius: 34px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
+            height: 20px;
+            width: 20px;
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: .4s;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
         }
 
         input:checked + .slider {
-            background-color: #4CAF50;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #4CAF50;
+            background-color: #3182ce;
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(24px);
         }
 
-        .slider.round {
-            border-radius: 34px;
+        input:focus + .slider {
+            box-shadow: 0 0 1px #3182ce;
         }
 
-        .slider.round:before {
-            border-radius: 50%;
+        h1, h2 {
+            color: #2c5282;
         }
     </style>
 </head>
 <body>
-    <h1>Officer Management System</h1>
-    
-    <?php echo $message; ?>
+<?php include 'student_affairs_sidebar.php'; ?>
 
-    <h2>Edit Section Title</h2>
-    <form method="POST">
-        <div class="form-group">
-            <label for="section_title">Section Title:</label>
-            <input type="text" id="section_title" name="section_title" value="<?= htmlspecialchars($sectionTitle) ?>" required>
+<div class="content-wrapper">
+        <h1>Officer Management System</h1>
+        
+        <?php echo $message; ?>
+
+        <h2>Edit Section Title</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="section_title">Section Title:</label>
+                <input type="text" id="section_title" name="section_title" value="<?= htmlspecialchars($sectionTitle) ?>" required>
+            </div>
+            <button type="submit" name="update_title">Update Title</button>
+        </form>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
+            <h2>Section Settings</h2>
+            <form method="POST" style="margin: 0; padding: 0; background: none; box-shadow: none; display: flex; align-items: center; gap: 10px;">
+                <label class="switch-label">
+                    Section Visibility:
+                    <div class="switch">
+                        <input type="checkbox" name="section_visible" <?= $sectionVisible ? 'checked' : '' ?> onchange="this.form.submit()">
+                        <span class="slider round"></span>
+                    </div>
+                </label>
+                <input type="hidden" name="toggle_section" value="1">
+        </form>
         </div>
-        <button type="submit" name="update_title">Update Title</button>
-    </form>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
-        <h2>Section Settings</h2>
-        <form method="POST" style="margin: 0; padding: 0; background: none; box-shadow: none; display: flex; align-items: center; gap: 10px;">
-            <label class="switch-label">
-                Section Visibility:
-                <div class="switch">
-                    <input type="checkbox" name="section_visible" <?= $sectionVisible ? 'checked' : '' ?> onchange="this.form.submit()">
-                    <span class="slider round"></span>
-                </div>
-            </label>
-            <input type="hidden" name="toggle_section" value="1">
-    </form>
-    </div>
-
-    <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0;">
-        <h2 style="margin: 0;">Officers</h2>
-        <button class="add-button" onclick="openAddModal()">
-            <i class="fas fa-plus"></i> Add New Officer
-        </button>
-    </div>
-    
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Image</th>
-            <th>Visible</th>
-            <th>Actions</th>
-        </tr>
-        <?php foreach ($officers as $officer): ?>
-        <tr>
-            <td><?= htmlspecialchars($officer['name']) ?></td>
-            <td><?= htmlspecialchars($officer['position']) ?></td>
-            <td>
-                <?php $displayUrl = formatImageUrl($officer['image_url']); ?>
-                <div class="image-preview-container">
-                    <img src="<?= htmlspecialchars($displayUrl) ?>" 
-                         alt="<?= htmlspecialchars($officer['name']) ?>" 
-                         class="table-preview-image"
-                         onerror="this.src='../imgs/default-avatar.png'; this.onerror=null;">
-                    <div class="image-url"><?= htmlspecialchars($officer['image_url']) ?></div>
-                </div>
-            </td>
-            <td>
-                <form method="POST" style="display: inline; background: none; padding: 0; margin: 0; box-shadow: none;">
-                    <input type="hidden" name="id" value="<?= $officer['id'] ?>">
-                    <select name="is_visible" onchange="this.form.submit()" style="width: auto;">
-                        <option value="1" <?= $officer['is_visible'] ? 'selected' : '' ?>>Yes</option>
-                        <option value="0" <?= !$officer['is_visible'] ? 'selected' : '' ?>>No</option>
-                    </select>
-                    <input type="hidden" name="toggle" value="1">
-                </form>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 30px 0;">
+            <h2 style="margin: 0;">Officers</h2>
+            <button class="add-button" onclick="openAddModal()">
+                <i class="fas fa-plus"></i> Add New Officer
+            </button>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Image</th>
+                <th>Visible</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($officers as $officer): ?>
+            <tr>
+                <td><?= htmlspecialchars($officer['name']) ?></td>
+                <td><?= htmlspecialchars($officer['position']) ?></td>
+                <td>
+                    <?php $displayUrl = formatImageUrl($officer['image_url']); ?>
+                    <div class="image-preview-container">
+                        <img src="<?= htmlspecialchars($displayUrl) ?>" 
+                             alt="<?= htmlspecialchars($officer['name']) ?>" 
+                             class="table-preview-image"
+                             onerror="this.src='../imgs/default-avatar.png'; this.onerror=null;">
+                        <div class="image-url"><?= htmlspecialchars($officer['image_url']) ?></div>
+                    </div>
                 </td>
                 <td>
-                <button onclick="openEditModal(<?= htmlspecialchars(json_encode($officer)) ?>)" style="margin-right: 10px;">
-                    <i class="fas fa-edit"></i> Edit
-                </button>
-                <form method="POST" style="display: inline; background: none; padding: 0; margin: 0; box-shadow: none;">
-                    <input type="hidden" name="id" value="<?= $officer['id'] ?>">
-                    <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this officer?')" style="background: #dc3545;">
-                        <i class="fas fa-trash"></i> Delete
+                    <form method="POST" style="display: inline; background: none; padding: 0; margin: 0; box-shadow: none;">
+                        <input type="hidden" name="id" value="<?= $officer['id'] ?>">
+                        <select name="is_visible" onchange="this.form.submit()" style="width: auto;">
+                            <option value="1" <?= $officer['is_visible'] ? 'selected' : '' ?>>Yes</option>
+                            <option value="0" <?= !$officer['is_visible'] ? 'selected' : '' ?>>No</option>
+                        </select>
+                        <input type="hidden" name="toggle" value="1">
+                    </form>
+                    </td>
+                    <td>
+                    <button onclick="openEditModal(<?= htmlspecialchars(json_encode($officer)) ?>)" style="margin-right: 10px;">
+                        <i class="fas fa-edit"></i> Edit
                     </button>
-                </form>
-                </td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+                    <form method="POST" style="display: inline; background: none; padding: 0; margin: 0; box-shadow: none;">
+                        <input type="hidden" name="id" value="<?= $officer['id'] ?>">
+                        <button type="submit" name="delete" onclick="return confirm('Are you sure you want to delete this officer?')" style="background: #dc3545;">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
+                    </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
 
-    <!-- Add Officer Modal -->
-    <div id="addModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add New Officer</h2>
-                <span class="close" onclick="closeAddModal()">&times;</span>
-            </div>
-            
-            <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data" id="addOfficerForm">
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required placeholder="Enter officer's name">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="position">Position:</label>
-                        <input type="text" id="position" name="position" required placeholder="Enter officer's position">
-                    </div>
-                    
-                    <div class="tab-container">
-                        <button type="button" class="tab-button active" onclick="switchTab('file', this)">Upload File</button>
-                        <button type="button" class="tab-button" onclick="switchTab('url', this)">Image URL</button>
-                    </div>
-                    
-                    <div id="fileTab" class="tab-content active">
-                        <label>Choose Image File:</label>
-                        <input type="file" name="image_file" accept="image/*" onchange="previewImage(this)">
-                    </div>
-                    
-                    <div id="urlTab" class="tab-content">
-                        <label>Image URL:</label>
-                        <input type="text" name="image_url" placeholder="Enter image URL">
-                    </div>
-                    
-                    <div class="preview-container">
-                        <img id="imagePreview" class="image-preview" style="display: none;">
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="is_visible" name="is_visible" checked>
-                        <label for="is_visible">Visible on website</label>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" onclick="closeAddModal()" style="background: #6c757d; margin-right: 10px;">Cancel</button>
-                <button type="submit" form="addOfficerForm" name="add">Add Officer</button>
+        <!-- Add Officer Modal -->
+        <div id="addModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Officer</h2>
+                    <span class="close" onclick="closeAddModal()">&times;</span>
+                </div>
+                
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" id="addOfficerForm">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter officer's name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="position">Position:</label>
+                            <input type="text" id="position" name="position" required placeholder="Enter officer's position">
+                        </div>
+                        
+                        <div class="tab-container">
+                            <button type="button" class="tab-button active" onclick="switchTab('file', this)">Upload File</button>
+                            <button type="button" class="tab-button" onclick="switchTab('url', this)">Image URL</button>
+                        </div>
+                        
+                        <div id="fileTab" class="tab-content active">
+                            <label>Choose Image File:</label>
+                            <input type="file" name="image_file" accept="image/*" onchange="previewImage(this)">
+                        </div>
+                        
+                        <div id="urlTab" class="tab-content">
+                            <label>Image URL:</label>
+                            <input type="text" name="image_url" placeholder="Enter image URL">
+                        </div>
+                        
+                        <div class="preview-container">
+                            <img id="imagePreview" class="image-preview" style="display: none;">
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="is_visible" name="is_visible" checked>
+                            <label for="is_visible">Visible on website</label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" onclick="closeAddModal()" style="background: #6c757d; margin-right: 10px;">Cancel</button>
+                    <button type="submit" form="addOfficerForm" name="add">Add Officer</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Edit Officer Modal -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Edit Officer</h2>
-                <span class="close" onclick="closeEditModal()">&times;</span>
-            </div>
-            
-            <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data" id="editOfficerForm">
-                    <input type="hidden" id="edit_id" name="id">
-                    
-                    <div class="form-group">
-                        <label for="edit_name">Name:</label>
-                        <input type="text" id="edit_name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="edit_position">Position:</label>
-                        <input type="text" id="edit_position" name="position" required>
-                    </div>
-                    
-                    <div class="tab-container">
-                        <button type="button" class="tab-button active" onclick="switchTab('edit_file', this)">Upload File</button>
-                        <button type="button" class="tab-button" onclick="switchTab('edit_url', this)">Image URL</button>
-                    </div>
-                    
-                    <div id="edit_fileTab" class="tab-content active">
-                        <label>Choose Image File:</label>
-                        <input type="file" name="image_file" accept="image/*" onchange="previewImage(this, 'edit_imagePreview')">
-                    </div>
-                    
-                    <div id="edit_urlTab" class="tab-content">
-                        <label>Image URL:</label>
-                        <input type="text" id="edit_image_url" name="image_url" placeholder="Enter image URL">
-                    </div>
-                    
-                    <div class="preview-container">
-                        <img id="edit_imagePreview" class="image-preview">
-                    </div>
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="edit_is_visible" name="is_visible">
-                        <label for="edit_is_visible">Visible on website</label>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" onclick="closeEditModal()" style="background: #6c757d; margin-right: 10px;">Cancel</button>
-                <button type="submit" form="editOfficerForm" name="update">Update Officer</button>
+        <!-- Edit Officer Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Edit Officer</h2>
+                    <span class="close" onclick="closeEditModal()">&times;</span>
+                </div>
+                
+                <div class="modal-body">
+                    <form method="POST" enctype="multipart/form-data" id="editOfficerForm">
+                        <input type="hidden" id="edit_id" name="id">
+                        
+                        <div class="form-group">
+                            <label for="edit_name">Name:</label>
+                            <input type="text" id="edit_name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit_position">Position:</label>
+                            <input type="text" id="edit_position" name="position" required>
+                        </div>
+                        
+                        <div class="tab-container">
+                            <button type="button" class="tab-button active" onclick="switchTab('edit_file', this)">Upload File</button>
+                            <button type="button" class="tab-button" onclick="switchTab('edit_url', this)">Image URL</button>
+                        </div>
+                        
+                        <div id="edit_fileTab" class="tab-content active">
+                            <label>Choose Image File:</label>
+                            <input type="file" name="image_file" accept="image/*" onchange="previewImage(this, 'edit_imagePreview')">
+                        </div>
+                        
+                        <div id="edit_urlTab" class="tab-content">
+                            <label>Image URL:</label>
+                            <input type="text" id="edit_image_url" name="image_url" placeholder="Enter image URL">
+                        </div>
+                        
+                        <div class="preview-container">
+                            <img id="edit_imagePreview" class="image-preview">
+                        </div>
+                        
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="edit_is_visible" name="is_visible">
+                            <label for="edit_is_visible">Visible on website</label>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" onclick="closeEditModal()" style="background: #6c757d; margin-right: 10px;">Cancel</button>
+                    <button type="submit" form="editOfficerForm" name="update">Update Officer</button>
+                </div>
             </div>
         </div>
     </div>
@@ -952,12 +959,12 @@ function formatImageUrl($imageUrl) {
         // Modal functions
         function openAddModal() {
             document.getElementById('addModal').style.display = 'block';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
         
         function closeAddModal() {
             document.getElementById('addModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
             // Reset form and scroll position
             document.getElementById('addOfficerForm').reset();
             document.querySelector('#addModal .modal-body').scrollTop = 0;
@@ -981,12 +988,12 @@ function formatImageUrl($imageUrl) {
             };
             
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
         
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
             // Reset scroll position
             document.querySelector('#editModal .modal-body').scrollTop = 0;
         }
@@ -1065,7 +1072,7 @@ function formatImageUrl($imageUrl) {
         window.onclick = function(event) {
             if (event.target.className === 'modal') {
                 event.target.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = 'auto'; // Restore background scrolling
             }
         }
 
@@ -1092,5 +1099,8 @@ function formatImageUrl($imageUrl) {
             return url;
         }
     </script>
+
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_persistent.js"></script>
 </body>
 </html>

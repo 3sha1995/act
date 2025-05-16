@@ -314,356 +314,477 @@ $servicesJson = json_encode($services);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Affairs Services CMS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="student_affairs_sidebar.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f5f5f5;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin-left: 250px;
+            padding: 0 20px;
+            transition: all 0.3s ease;
+            background-color: #f0f4f8;
+            color: #1a365d;
+            line-height: 1.6;
         }
 
-        .container {
+        .content-wrapper {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.1);
         }
 
-        .section {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        @media (max-width: 768px) {
+            body {
+                margin-left: 0;
+                padding: 0 15px;
+            }
+            body.sidebar-open {
+                margin-left: 250px;
+            }
         }
 
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
+        .container { 
+            max-width: 800px; 
+            margin-top: 30px; 
+        }
+        
+        .form-group { 
+            margin-bottom: 20px; 
         }
 
-        .form-group {
-            margin-bottom: 15px;
+        .form-container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.95rem;
         }
 
-        input[type="text"], textarea {
+        input[type="text"], select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
         }
 
-        textarea {
-            height: 100px;
-            resize: vertical;
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
         }
 
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
+        .button {
             padding: 10px 20px;
-            border-radius: 4px;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
         }
 
-        button:hover {
-            background: #0056b3;
+        .button-primary {
+            background: #3182ce;
+            color: white;
         }
 
-        .delete-btn {
-            background: #dc3545;
+        .button-danger {
+            background: #e53e3e;
+            color: white;
         }
 
-        .delete-btn:hover {
-            background: #c82333;
+        .button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.13);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 25px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
 
         th, td {
-            padding: 12px;
+            padding: 16px;
+            border: 1px solid #bee3f8;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background: #f8f9fa;
+            background: #ebf8ff;
+            font-weight: 600;
+            color: #2c5282;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        tr:hover {
+            background-color: #f0f5ff;
         }
 
-        .preview-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            border: 1px solid #bee3f8;
         }
-
-        .preview-card i {
-            font-size: 48px;
-            color: #007bff;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .preview-card img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .preview-card h3 {
-            margin: 10px 0;
-            color: #333;
-        }
-
-        .preview-card p {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-left: 10px;
-        }
-
-        .status-active {
-            background: #28a745;
-            color: white;
-        }
-
-        .status-inactive {
-            background: #dc3545;
-            color: white;
-        }
-
+        
         .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background-color: rgba(26, 54, 93, 0.5);
+            backdrop-filter: blur(4px);
             overflow-y: auto;
+            padding: 20px 0;
         }
 
         .modal-content {
-            position: relative;
-            background: white;
-            margin: 5% auto;
+            background-color: #ffffff;
+            margin: 2% auto;
             padding: 30px;
+            border: none;
             width: 90%;
             max-width: 600px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.13);
+            border: 1px solid #bee3f8;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        
+        #addModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+            background-color: rgba(26, 54, 93, 0.5);
+        }
+        
+        #addModal .modal-content {
+            margin: 20px auto;
+            overflow-y: visible;
+            max-height: none;
         }
 
         .close {
             position: absolute;
             right: 20px;
-            top: 20px;
-            font-size: 24px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: normal;
             cursor: pointer;
-            color: #666;
-            transition: color 0.3s;
-        }
-
-        .close:hover {
-            color: #333;
-        }
-
-        .add-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .add-btn:hover {
-            background: #218838;
-        }
-
-        .icon-preview {
-            width: 48px;
-            height: 48px;
+            color: #4a5568;
+            transition: color 0.2s ease, background 0.2s;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f8f9fa;
-            border-radius: 4px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
+            border-radius: 50%;
         }
 
-        .icon-preview img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .icon-suggestions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
-        .icon-suggestion {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9em;
-        }
-
-        .icon-suggestion:hover {
-            background: #e9ecef;
-        }
-
-        .tab-container {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .tab-button {
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            padding: 8px 15px;
-            cursor: pointer;
-            margin-right: 5px;
-            border-radius: 4px 4px 0 0;
-        }
-
-        .tab-button.active {
-            background: white;
-            border-bottom: 1px solid white;
-            margin-bottom: -1px;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-top: none;
-            background: white;
-        }
-
-        .tab-content.active {
-            display: block;
+        .close:hover {
+            color: #2c5282;
+            background-color: #ebf8ff;
         }
 
         .editor-container {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
             overflow: hidden;
             margin: 20px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.07);
+            background: #ffffff;
         }
 
         .editor-toolbar {
-            background: #f8f9fa;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 10px;
+            background: linear-gradient(to right, #ebf8ff, #f0f7ff);
+            border-bottom: 1px solid #bee3f8;
+            padding: 12px;
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
         }
 
         .toolbar-group {
             display: flex;
-            gap: 5px;
-            padding: 0 10px;
-            border-right: 1px solid #e0e0e0;
+            gap: 8px;
+            padding: 0 12px;
+            border-right: 1px solid #bee3f8;
         }
 
         .toolbar-group:last-child {
             border-right: none;
         }
 
+        .editor-toolbar button {
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #3b82f6;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .editor-toolbar button:hover {
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(49,130,206,0.1);
+        }
+
+        .editor-toolbar button.active {
+            background: #f0f5ff;
+            border-color: #3182ce;
+            color: #1d4ed8;
+        }
+
+        .editor-toolbar button i {
+            font-size: 14px;
+        }
+
         .editor {
-            min-height: 200px;
+            min-height: 300px;
             padding: 20px;
-            background: white;
+            background: #ffffff;
             border: none;
             outline: none;
             font-size: 16px;
             line-height: 1.6;
+            color: #1e3a8a;
         }
 
-        td img {
-            width: 24px;
-            height: 24px;
-            object-fit: contain;
+        .editor:focus {
+            outline: none;
+            background: #fafbff;
         }
 
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 12px;
+            background: #1e3a8a;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(49,130,206,0.13);
+            opacity: 0;
+            animation: fadeIn 0.2s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                bottom: 105%;
+            }
+        }
+
+        /* Font size select styles */
+        .font-size-select {
+            padding: 8px 16px;
+            border: 1px solid #bee3f8;
+            border-radius: 6px;
+            background: #ffffff;
+            cursor: pointer;
+            color: #3b82f6;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .font-size-select:hover {
+            background: #f0f5ff;
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+        }
+
+        .font-size-select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .toolbar-group {
+                padding: 5px;
+                border-right: none;
+                border-bottom: 1px solid #bee3f8;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .toolbar-group:last-child {
+                border-bottom: none;
+            }
+
+            .editor-toolbar {
+                flex-direction: column;
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .status-active {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-inactive {
+            background-color: #fed7d7;
+            color: #822727;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #bee3f8;
+        }
+        
+        .tab-button {
+            background: #f0f7ff;
+            border: 1px solid #bee3f8;
+            border-bottom: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            font-weight: 500;
+            color: #4a5568;
+            margin-right: 5px;
+        }
+        
+        .tab-button.active {
+            background: #ebf8ff;
+            color: #2c5282;
+            border-color: #93c5fd;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 15px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .preview-card {
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(49, 130, 206, 0.07);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.12);
+        }
+        
         .pagination {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin: 20px 0;
             gap: 10px;
+            margin-top: 30px;
         }
-
+        
         .pagination-button {
             padding: 8px 16px;
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            color: #007bff;
+            background: #ffffff;
+            border: 1px solid #bee3f8;
+            border-radius: 8px;
+            color: #3182ce;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
-
+        
         .pagination-button:hover {
-            background: #e9ecef;
-            color: #0056b3;
+            background: #ebf8ff;
+            border-color: #93c5fd;
         }
-
+        
         .pagination-button.active {
-            background: #007bff;
+            background: #3182ce;
             color: white;
-            border-color: #007bff;
+            border-color: #3182ce;
         }
     </style>
+
     <script>
         // Make services data available to JavaScript
         const services = <?= $servicesJson ?>;
     </script>
 </head>
+
 <body>
-    <div class="container">
+    <?php include 'student_affairs_sidebar.php'; ?>
+    
+    <div class="content-wrapper">
         <!-- Main Section Settings -->
         <div class="section">
             <h2>Main Section Settings</h2>
@@ -752,7 +873,7 @@ $servicesJson = json_encode($services);
                         Show this section
                     </label>
                 </div>
-                <button type="submit" name="update_main">Update Main Section</button>
+                <button type="submit" name="update_main" class="button button-primary">Update Main Section</button>
 </form>
         </div>
 
@@ -761,7 +882,7 @@ $servicesJson = json_encode($services);
             <h2>Services Management</h2>
 
             <!-- Add Service Button -->
-            <button type="button" onclick="openAddModal()" class="add-btn">
+            <button type="button" onclick="openAddModal()" class="button button-primary">
                 <i class="fas fa-plus"></i> Add New Service
             </button>
 
@@ -800,10 +921,10 @@ $servicesJson = json_encode($services);
                         </td>
                         <td><?= date('Y-m-d', strtotime($service['created_at'])) ?></td>
                         <td>
-                            <button onclick="editService(<?= $service['id'] ?>)" type="button">Edit</button>
+                            <button onclick="editService(<?= $service['id'] ?>)" type="button" class="button button-primary">Edit</button>
                             <form method="POST" style="display: inline;">
         <input type="hidden" name="id" value="<?= $service['id'] ?>">
-                                <button type="submit" name="delete_service" class="delete-btn" 
+                                <button type="submit" name="delete_service" class="button button-danger" 
                                         onclick="return confirm('Are you sure you want to delete this service?')">Delete</button>
                             </form>
                         </td>
@@ -964,7 +1085,7 @@ $servicesJson = json_encode($services);
                         Visible
                     </label>
                 </div>
-                <button type="submit" name="add_service">Add Service</button>
+                <button type="submit" name="add_service" class="button button-primary">Add Service</button>
             </form>
         </div>
     </div>
@@ -1083,19 +1204,21 @@ $servicesJson = json_encode($services);
                     </label>
                 </div>
 
-                <button type="submit" name="update_service">Update Service</button>
+                <button type="submit" name="update_service" class="button button-primary">Update Service</button>
     </form>
         </div>
-    </div>
+    
 
     <script>
         // Add Service Modal Functions
         function openAddModal() {
             document.getElementById('addModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function closeAddModal() {
             document.getElementById('addModal').style.display = 'none';
+            document.body.style.overflow = ''; // Restore background scrolling
         }
 
         // Edit Service Modal Functions
@@ -1134,10 +1257,12 @@ $servicesJson = json_encode($services);
 
             // Show modal
             document.getElementById('editModal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
         }
 
         function closeEditModal() {
             document.getElementById('editModal').style.display = 'none';
+            document.body.style.overflow = ''; // Restore background scrolling
             // Reset form
             document.getElementById('editServiceForm').reset();
             document.getElementById('edit-icon-preview').style.display = 'none';
@@ -1489,5 +1614,13 @@ $servicesJson = json_encode($services);
             }
         });
     </script>
+    </div> <!-- Close content-wrapper -->
+    
+    <!-- Include the sidebar JS -->
+    <script src="student_affairs_sidebar.js"></script>
+    </div> <!-- Close content-wrapper -->
+    
+    <!-- Include the sidebar persistence script -->
+    <script src="student_affairs_persistent.js"></script>
 </body>
 </html>
