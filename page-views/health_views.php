@@ -26,9 +26,14 @@ try {
     $processInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Fetch Functions section
-    $stmt = $pdo->prepare("SELECT * FROM af_page_funct WHERE id = 1");
+    $stmt = $pdo->prepare("SELECT * FROM health_funct WHERE id = 1");
     $stmt->execute();
     $functionsContent = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Fetch Objectives section
+    $stmt = $pdo->prepare("SELECT * FROM health_obj WHERE id = 1");
+    $stmt->execute();
+    $objectivesContent = $stmt->fetch(PDO::FETCH_ASSOC);
     
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
@@ -37,6 +42,7 @@ try {
     $mvContent = null;
     $processInfo = null;
     $functionsContent = null;
+    $objectivesContent = null;
 }
 
 // Helper function to handle image paths
@@ -54,11 +60,11 @@ if ($aboutContent && $aboutContent['is_visible']):
 <!-- New About Section -->
 <section class="student_affairs_about_section">
     <div class="student_affairs_about_container">
-        <div class="student_affairs_about_header scroll-fade">
+    <div class="student_affairs_about_header scroll-fade">
             <h2 class="student_affairs_about_title"><?php echo htmlspecialchars($aboutContent['title']); ?></h2>
-            <div class="student_affair_about_divider"></div>
-        </div>
-        
+    <div class="student_affair_about_divider"></div>
+    </div>
+     
         <div class="student_affairs_about_content scroll-fade">
             <div class="student_affairs_about_image">
                 <img src="<?php echo htmlspecialchars(getImagePath($aboutContent['image_path'])); ?>" alt="WMSU Health Center">
@@ -67,9 +73,9 @@ if ($aboutContent && $aboutContent['is_visible']):
             <div class="student_affairs_about_text">
                 <div class="student_affairs_about_description">
                     <?php echo $aboutContent['description']; ?>
-                </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <?php endif;
@@ -148,14 +154,14 @@ try {
 </section>
 
 <!-- Objectives Section -->
-    <section class="student_affairs_objectives_section">
-    <?php if ($processInfo && $processInfo['is_visible']): ?>
+<section class="student_affairs_objectives_section">
+    <?php if ($objectivesContent && $objectivesContent['is_visible']): ?>
     <div class="student_affairs_objectives_container">
-        <h2 class="student_affairs_objectives_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
+        <h2 class="student_affairs_objectives_title"><?= htmlspecialchars($objectivesContent['section_title']) ?></h2>
         <div class="student_affairs_objectives_divider"></div>
         
         <div class="student_affairs_objectives_content">
-        <p class="student_affairs_objectives_description">  <?= $processInfo['section_description'] ?> 
+            <?= $objectivesContent['description'] ?>
         </div>
     </div>
     <?php endif; ?>
@@ -178,43 +184,47 @@ try {
 <?php
 // Fetch services content
 try {
-    // Fetch main section content
-    $stmt = $pdo->query("SELECT * FROM af_page_services_main WHERE id = 1");
-    $servicesMain = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Fetch all visible services
-    $stmt = $pdo->query("SELECT * FROM af_page_services WHERE is_visible = 1 ORDER BY created_at DESC");
+    // Fetch all visible services from health_services table
+    $stmt = $pdo->prepare("SELECT * FROM health_services WHERE is_visible = 1 ORDER BY created_at DESC");
+    $stmt->execute();
     $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Get the first service for section title and description
+    $mainService = !empty($services) ? $services[0] : null;
+
+    // Debug information
+    error_log("Fetched services: " . print_r($services, true));
 } catch (PDOException $e) {
     error_log("Error fetching services: " . $e->getMessage());
-    $servicesMain = null;
     $services = [];
+    $mainService = null;
 }
 ?>
 
-<section class="student_affairs_services_section" style="display: <?= ($servicesMain && $servicesMain['is_visible']) ? 'block' : 'none' ?>">
+<!-- Services Section -->
+<section class="student_affairs_services_section" style="display: <?= (!empty($services)) ? 'block' : 'none' ?>">
     <div class="student_affairs_services_container">
         <div class="student_affairs_services_header">
-            <h2 class="student_affairs_services_title"><?= htmlspecialchars($servicesMain['section_title'] ?? 'Our Services') ?></h2>
+            <h2 class="student_affairs_services_title"><?= htmlspecialchars($mainService['section_title'] ?? 'Our Services') ?></h2>
             <div class="student_affairs_services_divider"></div>
-            <p class="student_affairs_services_description"><?= $servicesMain['section_description'] ?? 'We provide a range of services to support our university community.' ?></p>
+            <p class="student_affairs_services_description"><?= $mainService['section_description'] ?? 'We provide a range of healthcare services to support the well-being of our university community.' ?></p>
         </div>
-    <div class="student_affairs_services_grid">
+        <div class="student_affairs_services_grid">
             <?php if (!empty($services)): ?>
                 <?php foreach ($services as $service): ?>
-        <div class="student_affairs_service_card">
-                <div class="student_affairs_service_icon">
+                    <div class="student_affairs_service_card">
+                        <div class="student_affairs_service_icon">
                             <?php if (strpos($service['icon_class'], 'http') === 0 || strpos($service['icon_class'], '../') === 0 || strpos($service['icon_class'], 'uploads/') === 0): ?>
                                 <img src="<?= htmlspecialchars($service['icon_class']) ?>" alt="<?= htmlspecialchars($service['service_title']) ?>">
                             <?php else: ?>
                                 <i class="<?= htmlspecialchars($service['icon_class']) ?>"></i>
                             <?php endif; ?>
-                </div>
-                <div class="student_affairs_service_content">
+                        </div>
+                        <div class="student_affairs_service_content">
                             <h3 class="student_affairs_service_title"><?= htmlspecialchars($service['service_title']) ?></h3>
                             <p class="student_affairs_service_description"><?= $service['service_description'] ?></p>
-                </div>
-        </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p class="no-services-message">No services available at the moment.</p>

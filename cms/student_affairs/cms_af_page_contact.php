@@ -74,7 +74,7 @@ class ContactCMS {
     public function getAllContacts() {
         try {
             $stmt = $this->pdo->query("SELECT * FROM af_page_contact ORDER BY contact_type ASC");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error getting contacts: " . $e->getMessage());
             return [];
@@ -108,7 +108,7 @@ class ContactCMS {
     public function deleteContact($id) {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM af_page_contact WHERE id = ?");
-            return $stmt->execute([$id]);
+        return $stmt->execute([$id]);
         } catch (PDOException $e) {
             error_log("Error deleting contact: " . $e->getMessage());
             return false;
