@@ -115,41 +115,41 @@ try {
 </script>
 
 
-<section class="student_affair_mv_wrapper">
+    <section class="student_affair_mv_wrapper">
     <?php if ($mvContent && $mvContent['is_visible']): ?>
         <h2 class="student_affair_mv_main_title"><?= htmlspecialchars($mvContent['section_title']) ?></h2>
         <div class="student_affair_mv_divider"></div>
-        <section class="student_affair_mv_container">
-            <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
+    <section class="student_affair_mv_container">
+        <div class="student_affair_mv_box_mission" onclick="expandSection(this, 'mission')">
                 <img src="<?= !empty($mvContent['mission_image_url']) ? htmlspecialchars($mvContent['mission_image_url']) : '../imgs/cte.jpg' ?>" alt="WMSU Mission">
-                <div class="student_affair_mv_overlay_mission"></div>
-                <div class="student_affair_mv_content">
+            <div class="student_affair_mv_overlay_mission"></div>
+            <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['mission_title']) ?></h2>
-                    <div class="student_affair_mv_show_more">
+                <div class="student_affair_mv_show_more">
                         <span class="show_more_text"><?= htmlspecialchars($mvContent['mission_show_more_text']) ?></span>
-                    </div>
-                    <div class="student_affair_mv_full_content">
+                </div>
+                <div class="student_affair_mv_full_content">
                         <?= $mvContent['mission_description'] ?>
-                    </div>
                 </div>
             </div>
-            
-            <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
+        </div>
+        
+        <div class="student_affair_mv_box_vision" onclick="expandSection(this, 'vision')">
                 <img src="<?= !empty($mvContent['vision_image_url']) ? htmlspecialchars($mvContent['vision_image_url']) : '../imgs/cte-field.png' ?>" alt="WMSU Vision">
-                <div class="student_affair_mv_overlay_vision"></div>
-                <div class="student_affair_mv_content">
+            <div class="student_affair_mv_overlay_vision"></div>
+            <div class="student_affair_mv_content">
                     <h2 class="student_affair_mv_title"><?= htmlspecialchars($mvContent['vision_title']) ?></h2>
-                    <div class="student_affair_mv_show_more">
+                <div class="student_affair_mv_show_more">
                         <span class="show_more_text"><?= htmlspecialchars($mvContent['vision_show_more_text']) ?></span>
-                    </div>
-                    <div class="student_affair_mv_full_content">
+                </div>
+                <div class="student_affair_mv_full_content">
                         <?= $mvContent['vision_description'] ?>
-                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     <?php endif; ?>
-</section>
+    </section>
 
 <!-- Objectives Section -->
     <section class="student_affairs_objectives_section">
@@ -366,19 +366,19 @@ try {
                     </div>
     <?php endif; ?>
 </section>
-            
+
 <section class="process_section">
     <?php if ($processInfo && $processInfo['is_visible']): ?>
     <div class="process_container">
         <h2 class="process_title"><?= htmlspecialchars($processInfo['section_title']) ?></h2>
         <div class="process_divider"></div>
         
-        <div class="process_content">
+                        <div class="process_content">
             <div class="process_description">
                 <?= $processInfo['section_description'] ?>
-            </div>
-        </div>
-    </div>
+                        </div>
+                    </div>
+                        </div>
     <?php endif; ?>
 </section>
 
@@ -394,14 +394,14 @@ try {
                 <img src="<?= htmlspecialchars($officer['image_url']) ?>" 
                      alt="<?= htmlspecialchars($officer['name']) ?>" 
                      class="student_affairs_officer_image">
-                </div>
+            </div>
             <div class="student_affairs_officer_info">
                 <h3 class="student_affairs_officer_name"><?= htmlspecialchars($officer['name']) ?></h3>
                 <p class="student_affairs_officer_position"><?= htmlspecialchars($officer['position']) ?></p>
             </div>
-                    </div>
+        </div>
         <?php endforeach; ?>
-                </div>
+    </div>
 </section>
 <?php endif; ?>
 
@@ -411,7 +411,7 @@ try {
         <img src="../imgs/salogo1.png" alt="Health Services Logo" class="student_affairs_logo">
         <h2>Health Services</h2>
         <p>Western Mindanao State University</p>
-                    </div>
+    </div>
 </section>
 
 <section class="student_affairs_contact_section">
@@ -442,11 +442,11 @@ try {
                         <?php else: ?>
                             <p class="contact_value"><?= htmlspecialchars($contact['value']) ?></p>
                         <?php endif; ?>
-                    </div>
                 </div>
-                    </div>
+            </div>
+        </div>
             <?php endwhile; ?>
-                </div>
+    </div>
             </div>
 <?php 
     endif;

@@ -7,6 +7,7 @@
     <?php require_once '../__includes/hero.php'; ?>
     <div class="homepage-body">
         <?php require_once '../page-views/guidance_views.php'; ?>
+        
     </div>
     <?php
     require_once '../__includes/footer.php';

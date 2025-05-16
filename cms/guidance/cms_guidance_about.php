@@ -1,16 +1,43 @@
 <?php
 require_once __DIR__ . '/../db_connection.php';
 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Initialize variables
+$error_message = null;
+$success_message = null;
+$content = null;
+
 class CMS_AboutSection {
     private $pdo;
     protected $upload_dir;
 
     public function __construct() {
-        $this->pdo = getPDOConnection();
-        $this->upload_dir = '../../uploads/';
-        // Create uploads directory if it doesn't exist
-        if (!file_exists($this->upload_dir)) {
-            mkdir($this->upload_dir, 0777, true);
+        try {
+            // Get database connection
+            $this->pdo = getPDOConnection();
+            if (!$this->pdo) {
+                throw new PDOException("Failed to get database connection");
+            }
+            
+            // Set error mode to throw exceptions
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            // Create uploads directory if it doesn't exist
+            $this->upload_dir = '../../uploads/';
+            if (!file_exists($this->upload_dir)) {
+                if (!mkdir($this->upload_dir, 0777, true)) {
+                    throw new Exception("Failed to create upload directory");
+                }
+            }
+        } catch (PDOException $e) {
+            error_log("Database connection error in CMS_AboutSection constructor: " . $e->getMessage());
+            throw new Exception("Failed to connect to database: " . $e->getMessage());
+        } catch (Exception $e) {
+            error_log("Initialization error in CMS_AboutSection constructor: " . $e->getMessage());
+            throw $e;
         }
     }
 
@@ -20,53 +47,150 @@ class CMS_AboutSection {
 
     public function getContent() {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM `af_page` WHERE `id` = 1");
+            // Create table if it doesn't exist
+            $sql = "CREATE TABLE IF NOT EXISTS guidance_about (
+                id int(11) NOT NULL AUTO_INCREMENT,
+                ontop_title varchar(255) NOT NULL DEFAULT 'ABOUT US',
+                main_title varchar(255) NOT NULL DEFAULT 'GUIDANCE OFFICE',
+                image_path varchar(255) DEFAULT '../imgs/cte.jpg',
+                description text,
+                is_visible tinyint(1) DEFAULT 1,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                PRIMARY KEY (id)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci";
+            $this->pdo->exec($sql);
+
+            // Check if record exists
+            $stmt = $this->pdo->prepare("SELECT * FROM guidance_about WHERE id = 1");
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
             if (!$result) {
                 // If no record exists, create one with default values
                 $this->createDefaultContent();
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
             }
-            return $result;
+
+            return $result ?: [
+                'ontop_title' => 'ABOUT US',
+                'main_title' => 'GUIDANCE OFFICE',
+                'image_path' => '../imgs/cte.jpg',
+                'description' => 'Default content. Please update this in the CMS.',
+                'is_visible' => 1
+            ];
         } catch (PDOException $e) {
             error_log("Database error in getContent: " . $e->getMessage());
-            return null;
+            throw new Exception("Database error: " . $e->getMessage());
         }
     }
 
     private function createDefaultContent() {
         try {
-            $sql = "INSERT INTO `af_page` (`id`, `ontop_title`, `main_title`, `image_path`, `description`, `is_visible`) 
-                    VALUES (1, 'ABOUT US', 'STUDENT AFFAIRS', '../imgs/cte.jpg', 
-                    'Default content. Please update this in the CMS.', 1)";
-            $this->pdo->exec($sql);
+            $this->pdo->beginTransaction();
+
+            // Check if record already exists
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM guidance_about WHERE id = 1");
+            $stmt->execute();
+            if ($stmt->fetchColumn() > 0) {
+                $this->pdo->commit();
+                return;
+            }
+
+            // Insert default content
+            $stmt = $this->pdo->prepare("INSERT INTO guidance_about 
+                (id, ontop_title, main_title, image_path, description, is_visible) 
+                VALUES (1, :ontop_title, :main_title, :image_path, :description, :is_visible)");
+            
+            $result = $stmt->execute([
+                ':ontop_title' => 'ABOUT US',
+                ':main_title' => 'GUIDANCE OFFICE',
+                ':image_path' => '../imgs/cte.jpg',
+                ':description' => 'Default content. Please update this in the CMS.',
+                ':is_visible' => 1
+            ]);
+
+            if (!$result) {
+                throw new PDOException("Failed to insert default content");
+            }
+
+            $this->pdo->commit();
         } catch (PDOException $e) {
+            $this->pdo->rollBack();
             error_log("Error creating default content: " . $e->getMessage());
+            throw $e;
         }
     }
 
     public function updateContent($ontop_title, $main_title, $image_path, $description, $is_visible) {
         try {
-            $stmt = $this->pdo->prepare("UPDATE `af_page` SET 
-                `ontop_title` = ?, 
-                `main_title` = ?, 
-                `image_path` = ?, 
-                `description` = ?, 
-                `is_visible` = ? 
-                WHERE `id` = 1");
+            $this->pdo->beginTransaction();
+
+            // Log the values being updated
+            error_log("Updating guidance_about with values:");
+            error_log("ontop_title: " . $ontop_title);
+            error_log("main_title: " . $main_title);
+            error_log("image_path: " . $image_path);
+            error_log("description length: " . strlen($description));
+            error_log("is_visible: " . $is_visible);
+
+            // Validate input
+            if (empty($ontop_title) || empty($main_title)) {
+                throw new Exception("Title fields cannot be empty");
+            }
+
+            // Check if record exists
+            $checkStmt = $this->pdo->prepare("SELECT COUNT(*) FROM guidance_about WHERE id = 1");
+            $checkStmt->execute();
+            $exists = $checkStmt->fetchColumn() > 0;
+
+            if ($exists) {
+                $stmt = $this->pdo->prepare("UPDATE guidance_about SET 
+                    ontop_title = :ontop_title, 
+                    main_title = :main_title, 
+                    image_path = :image_path, 
+                    description = :description, 
+                    is_visible = :is_visible 
+                    WHERE id = 1");
+            } else {
+                $stmt = $this->pdo->prepare("INSERT INTO guidance_about 
+                    (id, ontop_title, main_title, image_path, description, is_visible) 
+                    VALUES (1, :ontop_title, :main_title, :image_path, :description, :is_visible)");
+            }
             
-            $result = $stmt->execute([$ontop_title, $main_title, $image_path, $description, $is_visible]);
+            $params = [
+                ':ontop_title' => $ontop_title,
+                ':main_title' => $main_title,
+                ':image_path' => $image_path,
+                ':description' => $description,
+                ':is_visible' => $is_visible
+            ];
+
+            error_log("Executing query with parameters: " . print_r($params, true));
+            
+            $result = $stmt->execute($params);
             
             if (!$result) {
-                error_log("Update failed: " . implode(", ", $stmt->errorInfo()));
-                return false;
+                throw new PDOException("Failed to update content: " . implode(", ", $stmt->errorInfo()));
             }
+            
+            $this->pdo->commit();
+            error_log("Update successful");
             return true;
         } catch (PDOException $e) {
+            $this->pdo->rollBack();
             error_log("Database error in updateContent: " . $e->getMessage());
-            return false;
+            error_log("SQL State: " . $e->errorInfo[0]);
+            error_log("Error Code: " . $e->errorInfo[1]);
+            error_log("Error Message: " . $e->errorInfo[2]);
+            throw new Exception("Database error: " . $e->getMessage());
+        } catch (Exception $e) {
+            if ($this->pdo && $this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            error_log("Error in updateContent: " . $e->getMessage());
+            throw $e;
         }
     }
 
@@ -74,7 +198,7 @@ class CMS_AboutSection {
     public static function getAboutContent() {
         try {
             $pdo = getPDOConnection();
-            $stmt = $pdo->prepare("SELECT * FROM `af_page` WHERE `id` = 1");
+            $stmt = $pdo->prepare("SELECT * FROM `guidance_about` WHERE `id` = 1");
             $stmt->execute();
             $content = $stmt->fetch(PDO::FETCH_ASSOC);
             
@@ -102,9 +226,77 @@ class CMS_AboutSection {
     }
 }
 
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// Main script
+try {
+    $cmsAbout = new CMS_AboutSection();
+    $content = $cmsAbout->getContent();
+
+    // Handling the POST request for updates
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        try {
+            // Validate required fields
+            if (empty($_POST['ontop_title']) || empty($_POST['main_title'])) {
+                throw new Exception("Title fields are required");
+            }
+
+            $ontop_title = trim($_POST['ontop_title']);
+            $main_title = trim($_POST['main_title']);
+            $description = isset($_POST['description_input']) ? trim($_POST['description_input']) : '';
+            $is_visible = isset($_POST['is_visible']) ? 1 : 0;
+            
+            // Handle image upload or URL
+            $image_path = '';
+            if (!empty($_FILES['image_file']['name'])) {
+                $file_extension = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
+                $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+                
+                if (!in_array($file_extension, $allowed_extensions)) {
+                    throw new Exception("Invalid file type. Allowed types: jpg, jpeg, png, gif");
+                }
+
+                $new_filename = uniqid() . '.' . $file_extension;
+                $upload_path = $cmsAbout->getUploadDir() . $new_filename;
+                
+                if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $upload_path)) {
+                    throw new Exception("Error uploading file: " . error_get_last()['message']);
+                }
+                
+                $image_path = 'uploads/' . $new_filename;
+                error_log("Image uploaded successfully to: " . $upload_path);
+            } elseif (!empty($_POST['image_url'])) {
+                $image_path = $_POST['image_url'];
+            } elseif (!empty($_POST['existing_image'])) {
+                $image_path = $_POST['existing_image'];
+            }
+
+            error_log("Form data received:");
+            error_log("ontop_title: " . $ontop_title);
+            error_log("main_title: " . $main_title);
+            error_log("description length: " . strlen($description));
+            error_log("is_visible: " . $is_visible);
+            error_log("image_path: " . $image_path);
+
+            $cmsAbout->updateContent($ontop_title, $main_title, $image_path, $description, $is_visible);
+            $success_message = "Content updated successfully! Visibility is " . ($is_visible ? "enabled" : "disabled");
+            
+            // Refresh content after update
+            $content = $cmsAbout->getContent();
+        } catch (Exception $e) {
+            error_log("Error in form processing: " . $e->getMessage());
+            $error_message = $e->getMessage();
+        }
+    }
+} catch (Exception $e) {
+    error_log("Critical error: " . $e->getMessage());
+    $error_message = "A critical error occurred: " . $e->getMessage();
+    $content = [
+        'ontop_title' => '',
+        'main_title' => '',
+        'image_path' => '',
+        'description' => '',
+        'is_visible' => 1
+    ];
+}
 ?>
 
 <!DOCTYPE html>
@@ -265,78 +457,56 @@ ini_set('display_errors', 1);
             text-align: center;
             color: #6c757d;
         }
+
+        /* Alert styles */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        /* Debug info styles */
+        .debug-info {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 <body>
     <h1>About Section CMS</h1>
 
-    <?php
-    $cmsAbout = new CMS_AboutSection();
+    <?php if ($error_message): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($error_message) ?></div>
+    <?php endif; ?>
 
-    // Handling the POST request for updates
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $ontop_title = $_POST['ontop_title'];
-        $main_title = $_POST['main_title'];
-        $description = $_POST['description'];
-        $is_visible = isset($_POST['is_visible']) ? 1 : 0;
-        
-        // Handle image upload or URL
-        $image_path = '';
-        if (!empty($_FILES['image_file']['name'])) {
-            $file_extension = strtolower(pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION));
-            $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
-            
-            if (in_array($file_extension, $allowed_extensions)) {
-                $new_filename = uniqid() . '.' . $file_extension;
-                $upload_path = $cmsAbout->getUploadDir() . $new_filename;
-                
-                if (move_uploaded_file($_FILES['image_file']['tmp_name'], $upload_path)) {
-                    $image_path = 'uploads/' . $new_filename; // Store path relative to root
-                    echo "<p style='color: green;'>Image uploaded successfully!</p>";
-                } else {
-                    echo "<p style='color: red;'>Error uploading file: " . error_get_last()['message'] . "</p>";
-                }
-            } else {
-                echo "<p style='color: red;'>Invalid file type. Allowed types: jpg, jpeg, png, gif</p>";
-            }
-        } elseif (!empty($_POST['image_url'])) {
-            $image_path = $_POST['image_url'];
-        } elseif (!empty($_POST['existing_image'])) {
-            $image_path = $_POST['existing_image'];
-        }
+    <?php if ($success_message): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($success_message) ?></div>
+    <?php endif; ?>
 
-        // Add debug information
-        echo "<!-- Debug: is_visible value before update: " . $is_visible . " -->";
-
-        $updated = $cmsAbout->updateContent($ontop_title, $main_title, $image_path, $description, $is_visible);
-        
-        if ($updated) {
-            echo "<p style='color: green;'>Content updated successfully! Visibility is " . ($is_visible ? "enabled" : "disabled") . "</p>";
-        } else {
-            echo "<p style='color: red;'>Error updating content. Please check the error logs.</p>";
-        }
-    }
-
-    // Fetching and displaying the updated content
-    $content = $cmsAbout->getContent();
-    if ($content === null) {
-        echo "<p style='color: red;'>Error fetching content from database.</p>";
-    } else {
-        // Debug information
-        echo "<!-- Debug Info -->";
-        echo "<div style='background: #f8f9fa; padding: 10px; margin: 10px 0; border: 1px solid #ddd; display: none;'>";
-        echo "<strong>Image Path from DB:</strong> " . htmlspecialchars($content['image_path'] ?? 'Not set') . "<br>";
-        echo "<strong>Upload Directory:</strong> " . htmlspecialchars($cmsAbout->getUploadDir()) . "<br>";
-        echo "</div>";
-    }
-
-    // Add visibility status indicator
-    if ($content !== null) {
-        echo "<div class='visibility-status' style='margin: 10px 0; padding: 10px; background: #f8f9fa; border: 1px solid #ddd;'>";
-        echo "Current visibility status: <strong>" . ($content['is_visible'] == 1 ? "Visible" : "Hidden") . "</strong>";
-        echo "</div>";
-    }
-    ?>
+    <?php if (isset($_ENV['DEBUG']) && $_ENV['DEBUG']): ?>
+        <div class="debug-info">
+            <strong>Debug Information:</strong>
+            <pre><?php print_r($content); ?></pre>
+        </div>
+    <?php endif; ?>
 
     <form method="POST" enctype="multipart/form-data">
         <label for="ontop_title">About Title:</label>
@@ -380,7 +550,7 @@ ini_set('display_errors', 1);
 
         <label for="description">Description:</label>
         <div class="editor-container">
-        <div class="editor-toolbar">
+            <div class="editor-toolbar">
                 <div class="toolbar-group">
                     <button type="button" onclick="execCommand('bold')" class="tooltip" data-tooltip="Bold">
                         <i class="fas fa-bold"></i>
@@ -447,9 +617,9 @@ ini_set('display_errors', 1);
                     </button>
                 </div>
             </div>
-            <div class="editor" id="editor" contenteditable="true"><?= $content['description'] ?? '' ?></div>
+            <div class="editor" id="description" contenteditable="true"><?= htmlspecialchars($content['description'] ?? '') ?></div>
+            <input type="hidden" name="description_input" id="description_input">
         </div>
-        <input type="hidden" name="description" id="description">
 
         <label for="is_visible">Visible:</label>
         <input type="checkbox" id="is_visible" name="is_visible" <?= ($content['is_visible'] ?? false) ? 'checked' : '' ?>><br><br>
@@ -458,6 +628,24 @@ ini_set('display_errors', 1);
     </form>
 
     <script>
+        // Form submission handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const editor = document.getElementById('description');
+            const hiddenInput = document.getElementById('description_input');
+
+            // Update hidden input with editor content before form submission
+            form.addEventListener('submit', function(e) {
+                hiddenInput.value = editor.innerHTML;
+                console.log('Description content being submitted:', hiddenInput.value);
+            });
+
+            // Initialize editor content if exists
+            if (editor.innerHTML.trim() === '') {
+                editor.innerHTML = '<?= addslashes($content['description'] ?? '') ?>';
+            }
+        });
+
         function previewImage(input) {
             const preview = document.getElementById('image-preview');
             if (input.files && input.files[0]) {
@@ -503,22 +691,6 @@ ini_set('display_errors', 1);
                 }
             });
         }
-
-        // Form submission handler
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                if (this.querySelector('#description')) {
-                    document.getElementById('description_input').value = 
-                        document.getElementById('description').innerHTML;
-                }
-                
-                if (!form.checkValidity()) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            });
-        });
     </script>
 </body>
 </html>

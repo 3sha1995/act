@@ -4,36 +4,28 @@ require_once '../db_connection.php';
 try {
     $pdo = getPDOConnection();
 
-    // Create settings table for section configuration
-    $createSettingsTableSQL = "CREATE TABLE IF NOT EXISTS `af_page_contact_settings` (
-        `id` INT PRIMARY KEY DEFAULT 1,
-        `section_title` VARCHAR(255) NOT NULL DEFAULT 'Get in Touch',
-        `section_visible` TINYINT(1) NOT NULL DEFAULT 1,
-        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
-    
-    $pdo->exec($createSettingsTableSQL);
-
     // Create contacts table
-    $createContactsTableSQL = "CREATE TABLE IF NOT EXISTS `af_page_contact` (
+    $createContactsTableSQL = "CREATE TABLE IF NOT EXISTS `guidance_contact` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `section_title` VARCHAR(255) NOT NULL DEFAULT 'Get in Touch',
         `contact_type` ENUM('phone', 'email', 'location', 'facebook') NOT NULL,
         `label` VARCHAR(100) NOT NULL,
-        `value` VARCHAR(255) NOT NULL,
-        `display_text` VARCHAR(255),
+        `value` TEXT NOT NULL,
+        `display_text` VARCHAR(255) DEFAULT NULL,
         `icon_path` VARCHAR(255) NOT NULL,
         `is_visible` TINYINT(1) NOT NULL DEFAULT 1,
-        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+        `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         UNIQUE KEY `unique_contact_type` (`contact_type`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     
     $pdo->exec($createContactsTableSQL);
 
-    // Insert default settings if not exists
-    $stmt = $pdo->query("SELECT COUNT(*) FROM af_page_contact_settings");
+    // Insert default contact if not exists
+    $stmt = $pdo->query("SELECT COUNT(*) FROM guidance_contact");
     if ($stmt->fetchColumn() == 0) {
-        $pdo->exec("INSERT INTO af_page_contact_settings (section_title, section_visible) VALUES ('Get in Touch', 1)");
+        $pdo->exec("INSERT INTO guidance_contact (section_title, contact_type, label, value, icon_path, is_visible) 
+                    VALUES ('Get in Touch', 'email', 'Email', 'default@example.com', 'default-icon', 1)");
     }
 
 } catch (PDOException $e) {
@@ -50,19 +42,19 @@ class ContactCMS {
     // Get section settings
     public function getSectionSettings() {
         try {
-            $stmt = $this->pdo->query("SELECT section_title, section_visible FROM af_page_contact_settings WHERE id = 1");
+            $stmt = $this->pdo->query("SELECT DISTINCT section_title, is_visible FROM guidance_contact LIMIT 1");
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $result ?: ['section_title' => 'Get in Touch', 'section_visible' => 1];
+            return $result ?: ['section_title' => 'Get in Touch', 'is_visible' => 1];
         } catch (PDOException $e) {
             error_log("Error getting section settings: " . $e->getMessage());
-            return ['section_title' => 'Get in Touch', 'section_visible' => 1];
+            return ['section_title' => 'Get in Touch', 'is_visible' => 1];
         }
     }
 
     // Update section settings
     public function updateSectionSettings($title, $visible) {
         try {
-            $stmt = $this->pdo->prepare("UPDATE af_page_contact_settings SET section_title = ?, section_visible = ? WHERE id = 1");
+            $stmt = $this->pdo->prepare("UPDATE guidance_contact SET section_title = ?, is_visible = ?");
             return $stmt->execute([$title, $visible]);
         } catch (PDOException $e) {
             error_log("Error updating section settings: " . $e->getMessage());
@@ -73,8 +65,8 @@ class ContactCMS {
     // Fetch all contact entries
     public function getAllContacts() {
         try {
-            $stmt = $this->pdo->query("SELECT * FROM af_page_contact ORDER BY contact_type ASC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmt = $this->pdo->query("SELECT * FROM guidance_contact ORDER BY contact_type ASC");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error getting contacts: " . $e->getMessage());
             return [];
@@ -85,17 +77,17 @@ class ContactCMS {
     public function addOrUpdateContact($contact_type, $label, $value, $display_text, $icon_path, $is_visible) {
         try {
             // Check if entry exists for this contact type
-            $stmt = $this->pdo->prepare("SELECT id FROM af_page_contact WHERE contact_type = ?");
+            $stmt = $this->pdo->prepare("SELECT id FROM guidance_contact WHERE contact_type = ?");
             $stmt->execute([$contact_type]);
             $existing = $stmt->fetch();
 
             if ($existing) {
                 // Update existing entry
-                $stmt = $this->pdo->prepare("UPDATE af_page_contact SET label = ?, value = ?, display_text = ?, icon_path = ?, is_visible = ? WHERE contact_type = ?");
+                $stmt = $this->pdo->prepare("UPDATE guidance_contact SET label = ?, value = ?, display_text = ?, icon_path = ?, is_visible = ? WHERE contact_type = ?");
                 return $stmt->execute([$label, $value, $display_text, $icon_path, $is_visible, $contact_type]);
             } else {
                 // Insert new entry
-                $stmt = $this->pdo->prepare("INSERT INTO af_page_contact (contact_type, label, value, display_text, icon_path, is_visible) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt = $this->pdo->prepare("INSERT INTO guidance_contact (contact_type, label, value, display_text, icon_path, is_visible) VALUES (?, ?, ?, ?, ?, ?)");
                 return $stmt->execute([$contact_type, $label, $value, $display_text, $icon_path, $is_visible]);
             }
         } catch (PDOException $e) {
@@ -107,8 +99,8 @@ class ContactCMS {
     // Delete contact entry
     public function deleteContact($id) {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM af_page_contact WHERE id = ?");
-        return $stmt->execute([$id]);
+            $stmt = $this->pdo->prepare("DELETE FROM guidance_contact WHERE id = ?");
+            return $stmt->execute([$id]);
         } catch (PDOException $e) {
             error_log("Error deleting contact: " . $e->getMessage());
             return false;
@@ -118,7 +110,7 @@ class ContactCMS {
     // Get contact types that don't have entries yet
     public function getAvailableContactTypes() {
         try {
-            $stmt = $this->pdo->query("SELECT contact_type FROM af_page_contact");
+            $stmt = $this->pdo->query("SELECT contact_type FROM guidance_contact");
             $existingTypes = $stmt->fetchAll(PDO::FETCH_COLUMN);
             $allTypes = ['phone', 'email', 'location', 'facebook'];
             return array_diff($allTypes, $existingTypes);
@@ -337,7 +329,7 @@ $sectionSettings = $cms->getSectionSettings();
                 <label class="switch-label">
                     Section Visibility:
                     <label class="switch">
-                        <input type="checkbox" name="section_visible" <?= $sectionSettings['section_visible'] ? 'checked' : '' ?>>
+                        <input type="checkbox" name="section_visible" <?= $sectionSettings['is_visible'] ? 'checked' : '' ?>>
                         <span class="slider"></span>
                     </label>
                 </label>
